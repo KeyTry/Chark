@@ -60,8 +60,8 @@ public class Player extends Sprite
     }
     
     public void jump()
-    {   
-        int restingLim = jumpInt;
+    {  
+        restingLim = jumpLim;
         if(brinco && !collisionTop)
         {
             //System.out.println("brinco?: "+brinco);
@@ -69,7 +69,7 @@ public class Player extends Sprite
             {
                 System.out.println("Y: "+getY());
                 y = y-1;
-                restingLim--;
+                restingLim= restingLim-1;
                 //System.out.println("Limite: "+jumpLim);
             }
             else
@@ -77,7 +77,6 @@ public class Player extends Sprite
                 //System.out.println("Terminando brinco");
                 brinco = false;
                 movingUp = false;
-                System.out.println("Brinco?: "+brinco);
                 jumpLim = 0;
                 restingLim = 0;
             }
@@ -136,20 +135,21 @@ public class Player extends Sprite
         if(key == KeyEvent.VK_LEFT)
         {
             dx = -1;
-            movingLeft = true;
+            movingLeft = true;        
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnimLeft.gif")));
         }
         
         if (key == KeyEvent.VK_RIGHT) {
             dx = 1;
             movingRight = true;
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnim.gif")));
         }
         
         if(key == KeyEvent.VK_UP) {
             System.out.println("Presionado brincar");
-            prepareJump();
+            prepareJump();            
         }
         
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnim.gif")));
         super.setIcon(icon);
     }
     
@@ -161,14 +161,15 @@ public class Player extends Sprite
         if (key == KeyEvent.VK_LEFT) {
             dx = 0;
             movingLeft = false;
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnimLeft.gif"))); 
         }
 
         if (key == KeyEvent.VK_RIGHT) {
             dx = 0;
             movingRight = false;
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 
         }
         
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 
         super.setIcon(icon);
     }
 }

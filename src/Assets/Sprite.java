@@ -41,6 +41,12 @@ public class Sprite extends JLabel
     
     public boolean brinco = false;
     
+        
+    int downLim;
+    int restingLim;
+    
+    boolean limEst;
+    
     
     ImageIcon icon;
     

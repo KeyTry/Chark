@@ -58,6 +58,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         pThread = new PlayerThread(this);
         pThread.start();
+        
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].prepareJump(getRestingLim());
+        }
     }
     
     public void loadLevel(Level level)
@@ -143,13 +148,14 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
         if(player.isMovingUp() && player.getY() > 12)
         {
-            System.out.println("Moviendo Jugador");
-            System.out.println("Posición Y: "+player.getY());
             movePlayerOnY();
         }
         if(player.isMovingUp() && player.getY() <= 12)
         {
-            System.out.println("Moviendo Mundo");
+            for(int i = 0; i < platform.length; i++)
+            {
+                platform[i].prepareJump(getRestingLim());
+            }
             jumpWorld();
         }
         if(player.isMovingDown() && player.getY2() < 350)
@@ -172,22 +178,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         player.fall();
         player.jump();
     }
-    
-    /*public void moveWorldOnY()
-    {
-        for(int i = 0; i < platform.length; i++)
-        {
-            platform[i].jump(player.isBrinco(), player.isCollisionTop(), player.isMovingUp(), player.jumpLim);
-            platform[i].fall(player.isCollisionBot(), player.isBrinco(), player.isMovingDown());
-        }
-        
-        player.setBrinco(platform[0].isBrinco());
-        player.setCollisionTop(platform[0].isCollisionTop());
-        player.setMovingUp(platform[0].isMovingUp());
-        player.setCollisionBot(platform[0].isCollisionBot());
-        player.setMovingDown(platform[0].isMovingDown());
-        player.setJumpLim(platform[0].getJumpLim());
-    }*/
     
     public void jumpWorld()
     {
@@ -216,7 +206,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         {
             platform[i].moveOnX();
         }
-
+    }
+    
+    public int getRestingLim()
+    {
+        return player.getRestingLim();
     }
 
     /**
