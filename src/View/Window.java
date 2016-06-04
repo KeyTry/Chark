@@ -53,10 +53,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         collChck = new CollisionChecker();
         
-        mThread = new MainThread(this);
-        pThread = new PlayerThread(this);
+        //mThread = new MainThread(this);
+        //mThread.start();
         
-        mThread.start();
+        pThread = new PlayerThread(this);
         pThread.start();
     }
     
@@ -102,9 +102,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void update()
     {
-        System.out.println("Intentando actualizar");
-        player.update();
-        
+        //System.out.println("Intentando actualizar");
+        player.update();        
         movePlayer();
         
         /*if(player.getX() > 650 || player.getY() > 325)
@@ -123,6 +122,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         player.moveOnX();
         player.moveOnY();
+        player.jump();
     }
     
     public void movePlatforms()
@@ -164,18 +164,18 @@ public class Window extends javax.swing.JFrame implements ActionListener{
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         player.keyPressed(evt);
-        for(int i = 0; i < platform.length; i++)
+        /*for(int i = 0; i < platform.length; i++)
         {
             platform[i].keyPressed(evt);
-        }
+        }*/
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         player.keyReleased(evt);
-        for(int i = 0; i < platform.length; i++)
+        /*for(int i = 0; i < platform.length; i++)
         {
             platform[i].keyReleased(evt);
-        }
+        }*/
     }//GEN-LAST:event_formKeyReleased
    
     /**

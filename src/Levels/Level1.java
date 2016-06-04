@@ -15,17 +15,15 @@ public class Level1 extends Level
 {
     public Level1()
     {
-        platform = new Platform[4];
+        platform = new Platform[3];
         setPlatforms();
     }
     
     public void setPlatforms()
     {
         platform[0] = new Platform(20,200,"Platform");
-        platform[1] = new Platform(300,400,"Platform");
-        platform[2] = new Platform(650,200,"Platform");
-        platform[3] = new Platform(-460,0,"Platform");
-        //platform[4] = new Platform(300,50,"Platform");
+        platform[1] = new Platform(300,50,"Platform");
+        platform[2] = new Platform(20,-200,"Platform");
         
         
         for(int i = 0; i<platform.length; i++)

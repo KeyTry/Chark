@@ -25,7 +25,7 @@ public class PlayerThread extends Thread {
         {
             while(true)
             {
-                sleep(4);   
+                sleep(3);   
                 window.update();
                 window.collisionChecker();
             }

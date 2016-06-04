@@ -32,6 +32,7 @@ public class CollisionChecker
     {
     }
     
+    
     public void setPlayer(Player player)
     {
         this.player = player;
@@ -59,7 +60,7 @@ public class CollisionChecker
         {
             if((((player.getX()) >= (platformsX[i])) && ((player.getX()) <= (platformsX2[i]))) || (((player.getX2()) >= (platformsX[i])) && ((player.getX2()) <= (platformsX2[i]))))
             {
-                if(((player.getY()) >= (platformsY[i])) && ((player.getY()) >= (platformsY2[i])))
+                if(((player.getY()) > (platformsY[i]-1)) && ((player.getY()) < (platformsY2[i]+1)))
                 {
                     colisiones++;
                 }
@@ -87,7 +88,7 @@ public class CollisionChecker
         {
             if((((player.getX()) >= (platformsX[i])) && ((player.getX()) <= (platformsX2[i]))) || (((player.getX2()) >= (platformsX[i])) && ((player.getX2()) <= (platformsX2[i]))))
             {
-                if(((player.getY2()) <= (platformsY2[i]+2)) && ((player.getY2()) >= (platformsY[i]-2)))
+                if(((player.getY2()) <= (platformsY2[i]+1)) && ((player.getY2()) >= (platformsY[i]-1)))
                 {
                     colisiones++;
                 }
@@ -115,7 +116,7 @@ public class CollisionChecker
         {
             if((((player.getY()) > platformsY[i]) && ((player.getY()) < platformsY2[i])) || (((player.getY2()) > platformsY[i]) && ((player.getY2()) < platformsY2[i])))
             {
-                if(((player.getX()) > (platformsX[i])) && ((player.getX()) < (platformsX2[i])))
+                if(((player.getX()) > (platformsX[i]-2)) && ((player.getX()) < (platformsX2[i]+2)))
                 {
                     colisiones++;
                 }
@@ -143,7 +144,7 @@ public class CollisionChecker
         {
             if((((player.getY()) > platformsY[i]) && ((player.getY()) < platformsY2[i])) || (((player.getY2()) > platformsY[i]) && ((player.getY2()) < platformsY2[i])))
             {
-                if((player.getX2() < platformsX2[i]) && (player.getX2() > platformsX[i]))
+                if((player.getX2() < platformsX2[i]+3) && (player.getX2() > platformsX[i]-3))
                 {
                     colisiones++;
                 }

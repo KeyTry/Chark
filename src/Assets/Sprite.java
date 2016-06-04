@@ -33,7 +33,7 @@ public class Sprite extends JLabel
     int dx;
     int dy;
     
-    boolean brinco;
+    boolean brinco = false;
     
     
     ImageIcon icon;
@@ -172,9 +172,9 @@ public class Sprite extends JLabel
     }
 
     /**
-     * @param colisionDerecha the collisionRight to set
+     * @param colisionRight the collisionRight to set
      */
-    public void setCollisionRight(boolean colisionDerecha) {
-        this.collisionRight = colisionDerecha;
+    public void setCollisionRight(boolean colisionRight) {
+        this.collisionRight = colisionRight;
     }
 }
