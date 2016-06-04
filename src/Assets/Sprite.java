@@ -23,17 +23,23 @@ public class Sprite extends JLabel
     int y2;
     int w;
     int h;
-    
-    boolean collisionBot;
-    boolean collisionTop;
-    boolean collisionLeft;
-    boolean collisionRight;
-    
-    
+        
     int dx;
     int dy;
     
-    boolean brinco = false;
+    public boolean collisionBot;
+    public boolean collisionTop;
+    public boolean collisionLeft;
+    public boolean collisionRight;
+    
+    public boolean movingLeft;
+    public boolean movingRight;
+    public boolean movingDown = true;
+    public boolean movingUp = true;
+    public int jumpLim;
+    int jumpInt;
+    
+    public boolean brinco = false;
     
     
     ImageIcon icon;
@@ -121,60 +127,144 @@ public class Sprite extends JLabel
         setImageDimensions();
         setSecBound();
     }
-  
+
     /**
      * @return the collisionBot
      */
-    public boolean getCollisionBot() {
+    public boolean isCollisionBot() {
         return collisionBot;
     }
 
     /**
-     * @param colisionAbajo the collisionBot to set
+     * @param collisionBot the collisionBot to set
      */
-    public void setCollisionBot(boolean colisionAbajo) {
-        this.collisionBot = colisionAbajo;
+    public void setCollisionBot(boolean collisionBot) {
+        this.collisionBot = collisionBot;
     }
 
     /**
      * @return the collisionTop
      */
-    public boolean getCollisionTop() {
+    public boolean isCollisionTop() {
         return collisionTop;
     }
 
     /**
-     * @param colisionArriba the collisionTop to set
+     * @param collisionTop the collisionTop to set
      */
-    public void setCollisionTop(boolean colisionArriba) {
-        this.collisionTop = colisionArriba;
+    public void setCollisionTop(boolean collisionTop) {
+        this.collisionTop = collisionTop;
     }
 
     /**
      * @return the collisionLeft
      */
-    public boolean getCollisionLeft() {
+    public boolean isCollisionLeft() {
         return collisionLeft;
     }
 
     /**
-     * @param colisionIzquierda the collisionLeft to set
+     * @param collisionLeft the collisionLeft to set
      */
-    public void setCollisionLeft(boolean colisionIzquierda) {
-        this.collisionLeft = colisionIzquierda;
+    public void setCollisionLeft(boolean collisionLeft) {
+        this.collisionLeft = collisionLeft;
     }
 
     /**
      * @return the collisionRight
      */
-    public boolean getCollisionRight() {
+    public boolean isCollisionRight() {
         return collisionRight;
     }
 
     /**
-     * @param colisionRight the collisionRight to set
+     * @param collisionRight the collisionRight to set
      */
-    public void setCollisionRight(boolean colisionRight) {
-        this.collisionRight = colisionRight;
+    public void setCollisionRight(boolean collisionRight) {
+        this.collisionRight = collisionRight;
+    }
+
+    /**
+     * @return the movingLeft
+     */
+    public boolean isMovingLeft() {
+        return movingLeft;
+    }
+
+    /**
+     * @param movingLeft the movingLeft to set
+     */
+    public void setMovingLeft(boolean movingLeft) {
+        this.movingLeft = movingLeft;
+    }
+
+    /**
+     * @return the movingRight
+     */
+    public boolean isMovingRight() {
+        return movingRight;
+    }
+
+    /**
+     * @param movingRight the movingRight to set
+     */
+    public void setMovingRight(boolean movingRight) {
+        this.movingRight = movingRight;
+    }
+
+    /**
+     * @return the movingDown
+     */
+    public boolean isMovingDown() {
+        return movingDown;
+    }
+
+    /**
+     * @param movingDown the movingDown to set
+     */
+    public void setMovingDown(boolean movingDown) {
+        this.movingDown = movingDown;
+    }
+
+    /**
+     * @return the movingUp
+     */
+    public boolean isMovingUp() {
+        return movingUp;
+    }
+
+    /**
+     * @param movingUp the movingUp to set
+     */
+    public void setMovingUp(boolean movingUp) {
+        this.movingUp = movingUp;
+    }
+
+    /**
+     * @return the jumpLim
+     */
+    public int getJumpLim() {
+        return jumpLim;
+    }
+
+    /**
+     * @param jumpLim the jumpLim to set
+     */
+    public void setJumpLim(int jumpLim) {
+        this.jumpLim = jumpLim;
+    }
+
+    /**
+     * @return the brinco
+     */
+    public boolean isBrinco() {
+        return brinco;
+    }
+
+    /**
+     * @param brinco the brinco to set
+     */
+    public void setBrinco(boolean brinco) {
+        this.brinco = brinco;
     }
 }

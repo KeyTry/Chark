@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
  */
 public class Player extends Sprite
 {
-    int jumpLim;
+    int restingLim;
     /*
     Estados: cayendo, suelo, subiendo
     */
@@ -26,6 +26,7 @@ public class Player extends Sprite
         icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 
         super.setIcon(icon);
         setImageDimensions();
+        jumpInt = 150;
     }
     
     public void moveOnX()
@@ -48,55 +49,84 @@ public class Player extends Sprite
         super.setLocation(x, y);
     }
     
-    public void moveOnY()
-    {
-        if(!collisionBot && !brinco)
-        {
-            System.out.println("Brinco?: "+brinco);
-            dy = 1;
-            y += dy;
-        }
-        else
-        {
-            dy = 0;
-        }
-        
-        super.setLocation(x, y);
-    }
-    
     public void prepareJump()
     {
         if(!collisionTop && collisionBot && !brinco)
         {
-            jumpLim = getY()-150;
+            jumpLim = getY()-jumpInt;
             brinco = true;
+            movingUp = true;
         }
     }
     
     public void jump()
     {   
+        int restingLim = jumpInt;
         if(brinco && !collisionTop)
         {
-            System.out.println("brinco?: "+brinco);
-            if(getY() > jumpLim)
+            //System.out.println("brinco?: "+brinco);
+            if(getY() > getJumpLim())
             {
                 System.out.println("Y: "+getY());
                 y = y-1;
-                System.out.println("Limite: "+jumpLim);
+                restingLim--;
+                //System.out.println("Limite: "+jumpLim);
             }
             else
             {
-                System.out.println("Terminando brinco");
+                //System.out.println("Terminando brinco");
                 brinco = false;
+                movingUp = false;
                 System.out.println("Brinco?: "+brinco);
                 jumpLim = 0;
+                restingLim = 0;
             }
-            System.out.println("brinco?: "+brinco);
+            //System.out.println("brinco?: "+brinco);
         }
         else
         {
+            movingUp = false;
             brinco = false;
+            restingLim = 0;
         }
+        
+        super.setLocation(x, y);
+    }
+
+    public void fall()
+    {
+        if(!collisionBot && !brinco)
+        {
+            //System.out.println("Brinco?: "+brinco);
+            dy = 1;
+            y += dy;
+            movingDown = true;
+        }
+        else
+        {
+            dy = 0;
+            movingDown = false;
+        }
+        
+        super.setLocation(x, y);
+    }
+    
+    public void setMovingDown()
+    {
+        if(!collisionBot && !brinco)
+        {
+
+            movingDown = true;
+        }
+        else
+        {
+            movingDown = false;
+        }
+    }
+    
+    public int getRestingLim()
+    {
+        return restingLim;
     }
     
     public void keyPressed(KeyEvent e)
@@ -106,10 +136,12 @@ public class Player extends Sprite
         if(key == KeyEvent.VK_LEFT)
         {
             dx = -1;
+            movingLeft = true;
         }
         
         if (key == KeyEvent.VK_RIGHT) {
             dx = 1;
+            movingRight = true;
         }
         
         if(key == KeyEvent.VK_UP) {
@@ -128,10 +160,12 @@ public class Player extends Sprite
 
         if (key == KeyEvent.VK_LEFT) {
             dx = 0;
+            movingLeft = false;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
             dx = 0;
+            movingRight = false;
         }
         
         icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 

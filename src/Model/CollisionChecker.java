@@ -68,7 +68,7 @@ public class CollisionChecker
         }
         if(colisiones != 0)
         {
-            System.out.println("Hay colisiones arriba!");
+            //System.out.println("Hay colisiones arriba!");
             collisionTop = true;
         }
         else
@@ -96,7 +96,7 @@ public class CollisionChecker
         }        
         if(colisiones != 0)
         {            
-            System.out.println("Hay colisiones abajo!");
+            //System.out.println("Hay colisiones abajo!");
             collisionBot = true;
         }
         else
@@ -125,7 +125,7 @@ public class CollisionChecker
         if(colisiones != 0)
         {
             collisionLeft = true;
-            System.out.println("Hay colisiones a la izquierda!");
+            //System.out.println("Hay colisiones a la izquierda!");
         }
         else
         {
@@ -153,7 +153,7 @@ public class CollisionChecker
         if(colisiones != 0)
         {
             collisionRight = true;
-            System.out.println("Hay colisiones a la derecha!");
+            //System.out.println("Hay colisiones a la derecha!");
         }
         else
         {

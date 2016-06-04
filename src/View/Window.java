@@ -44,11 +44,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         this.setLocationRelativeTo(null);
         
-        player = new Player(50, 10);
+        player = new Player(60, 50);
         getContentPane().add(player);
         player.setBounds(0,0, player.getW(), player.getH());
         
-        Level1 level1 = new Level1();
+        TestLevel level1 = new TestLevel();
         loadLevel(level1);
         
         collChck = new CollisionChecker();
@@ -72,12 +72,21 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         for(int i = 0; i<level.getSize(); i++)
         {
             getContentPane().add(platform[i]);
+        }
+        
+        updatePlatforms();
+    }
+    
+    public void updatePlatforms()
+    {
+        for(int i = 0; i<platform.length; i++)
+        {
             platform[i].setBounds(0,0, platform[i].getW(), platform[i].getH());
             platformsX[i] = platform[i].getX();
             platformsY[i] = platform[i].getY();
             platformsX2[i] = platform[i].getX2();
             platformsY2[i] = platform[i].getY2();
-        }
+        }  
     }
     
     public void collisionChecker()
@@ -103,36 +112,111 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public void update()
     {
         //System.out.println("Intentando actualizar");
-        player.update();        
-        movePlayer();
+        player.update();
         
-        /*if(player.getX() > 650 || player.getY() > 325)
-        {
-            movePlatforms();
-        }
-        else
-        {
-            movePlayer();
-        }*/
-
-        collisionChecker();
-    }
-    
-    public void movePlayer()
-    {
-        player.moveOnX();
-        player.moveOnY();
-        player.jump();
-    }
-    
-    public void movePlatforms()
-    {
         for(int i = 0; i < platform.length; i++)
         {
             platform[i].update();
-            platform[i].moveOnX();
-            platform[i].moveOnY();
         }
+        
+        updatePlatforms();
+        
+        collisionChecker();
+        
+        player.setMovingDown();
+        
+        if(player.isMovingLeft() && player.getX() > 50)
+        {
+            movePlayerOnX();
+        }
+        if(player.isMovingLeft() && player.getX() <= 50)
+        {
+            moveWorldOnX();
+        }
+        if(player.isMovingRight() && player.getX2() < 750)
+        {            
+            movePlayerOnX();
+        }
+        if(player.isMovingRight() && player.getX2() >= 750)
+        {  
+            moveWorldOnX();
+        }
+        if(player.isMovingUp() && player.getY() > 12)
+        {
+            System.out.println("Moviendo Jugador");
+            System.out.println("Posición Y: "+player.getY());
+            movePlayerOnY();
+        }
+        if(player.isMovingUp() && player.getY() <= 12)
+        {
+            System.out.println("Moviendo Mundo");
+            jumpWorld();
+        }
+        if(player.isMovingDown() && player.getY2() < 350)
+        {
+            movePlayerOnY();
+        }
+        if(player.isMovingDown() && player.getY2() >= 350)
+        {
+            fallWorld();
+        }
+    }
+    
+    public void movePlayerOnX()
+    {
+        player.moveOnX();
+    }
+    
+    public void movePlayerOnY()
+    {
+        player.fall();
+        player.jump();
+    }
+    
+    /*public void moveWorldOnY()
+    {
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].jump(player.isBrinco(), player.isCollisionTop(), player.isMovingUp(), player.jumpLim);
+            platform[i].fall(player.isCollisionBot(), player.isBrinco(), player.isMovingDown());
+        }
+        
+        player.setBrinco(platform[0].isBrinco());
+        player.setCollisionTop(platform[0].isCollisionTop());
+        player.setMovingUp(platform[0].isMovingUp());
+        player.setCollisionBot(platform[0].isCollisionBot());
+        player.setMovingDown(platform[0].isMovingDown());
+        player.setJumpLim(platform[0].getJumpLim());
+    }*/
+    
+    public void jumpWorld()
+    {
+        System.out.println("Brincando Mundo");
+        
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].jump(player.isBrinco(), player.isMovingUp());
+        }
+        
+        player.setBrinco(platform[0].isBrinco());
+        player.setMovingUp(platform[0].isMovingUp());
+    }
+    
+    public void fallWorld()
+    {
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].fall(player.isBrinco(), player.isMovingDown());
+        }
+    }
+    
+    public void moveWorldOnX()
+    {
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].moveOnX();
+        }
+
     }
 
     /**
@@ -164,18 +248,18 @@ public class Window extends javax.swing.JFrame implements ActionListener{
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         player.keyPressed(evt);
-        /*for(int i = 0; i < platform.length; i++)
+        for(int i = 0; i < platform.length; i++)
         {
             platform[i].keyPressed(evt);
-        }*/
+        }
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         player.keyReleased(evt);
-        /*for(int i = 0; i < platform.length; i++)
+        for(int i = 0; i < platform.length; i++)
         {
             platform[i].keyReleased(evt);
-        }*/
+        }
     }//GEN-LAST:event_formKeyReleased
    
     /**

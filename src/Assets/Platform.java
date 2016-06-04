@@ -39,23 +39,65 @@ public class Platform extends Sprite{
                 x += dx;
             }
         }
+        
         super.setLocation(x, y);
     }
     
-    public void moveOnY()
+    public void setRestingLim()
     {
-        if(!collisionBot)
+        
+    }
+    
+    public void jump(boolean brinco, boolean movingUp)
+    {   
+        System.out.println();
+        int downLim = getY();
+        this.brinco = brinco;
+        this.movingUp = movingUp;
+        
+        System.out.println("Down lim: "+downLim);
+        
+        if(brinco && !collisionTop)
         {
+            //System.out.println("brinco?: "+brinco);
+            if(getY2() < downLim)
+            {
+                System.out.println("Y: "+getY());
+                y = y+1;
+                //System.out.println("Limite: "+jumpLim);
+            }
+            else
+            {
+                //System.out.println("Terminando brinco");
+                this.brinco = false;
+                this.movingUp = false;
+                System.out.println("Brinco?: "+brinco);
+                jumpLim = 0;
+            }
+            //System.out.println("brinco?: "+brinco);
+        }
+        else
+        {
+            this.movingUp = false;
+            this.brinco = false;
+        }
+        
+        super.setLocation(x, y);
+    }
+    
+    public void fall(boolean brinco, boolean movingDown)
+    {
+        if(!collisionBot && !brinco)
+        {
+            //System.out.println("Brinco?: "+brinco);
             dy = -1;
             y += dy;
-        }
-        if(collisionBot && brinco)
-        {
-            y += dy;
+            movingDown = true;
         }
         else
         {
             dy = 0;
+            movingDown = false;
         }
         
         super.setLocation(x, y);
@@ -67,15 +109,15 @@ public class Platform extends Sprite{
         
         if(key == KeyEvent.VK_LEFT)
         {
-            dx = 2;
+            dx = 1;
         }
         
         if (key == KeyEvent.VK_RIGHT) {
-            dx = -2;
+            dx = -1;
         }
         
         if(key == KeyEvent.VK_UP) {
-            dy = 2;
+            dy = 1;
             brinco = true;
         }
     }
@@ -93,5 +135,4 @@ public class Platform extends Sprite{
             dx = 0;
         }
     }
-    
 }
