@@ -16,10 +16,6 @@ public class Player extends Sprite
     /*
     Estados: cayendo, suelo, subiendo
     */
-    private String estado = "";
-    
-    private int dx;
-    private int dy;
     
     public Player(int x, int y)
     {        
@@ -31,7 +27,7 @@ public class Player extends Sprite
         setImageDimensions();
     }
     
-    public void move()
+    public void moveOnX()
     {
         System.out.println("Colision Izquierda: "+collisionLeft);
         if(dx > 0)
@@ -51,36 +47,23 @@ public class Player extends Sprite
         super.setLocation(x, y);
     }
     
-    public void fall()
+    public void moveOnY()
     {
-        if(getCollisionBot() == false)
+        if(!collisionBot)
         {
-            y += 1;
+            dy = 1;
+            y += dy;
+        }
+        if(collisionBot && brinco && !collisionTop)
+        {
+            y += dy;
+        }
+        else
+        {
+            dy = 0;
         }
         
         super.setLocation(x, y);
-    }
-    
-    public void setEstado(String estado)
-    {
-        this.estado = estado;
-    }
-   
-    public void locateOnTopSuelo(int y)
-    {
-        if(collisionBot)
-        {
-            x = this.getX();
-            y = (y-1);
-            
-            super.setLocation(x, y);
-        }
-        update();
-    }
-    
-    public String getEstado()
-    {
-        return estado;
     }
     
     public void keyPressed(KeyEvent e)
@@ -89,14 +72,19 @@ public class Player extends Sprite
         
         if(key == KeyEvent.VK_LEFT)
         {
-                dx = -2;
+            dx = -2;
         }
         
         if (key == KeyEvent.VK_RIGHT) {
-                dx = 2;
+            dx = 2;
         }
         
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnim.gif"))); 
+        if(key == KeyEvent.VK_UP) {
+            dy = -2;
+            brinco = true;
+        }
+        
+        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnim.gif")));
         super.setIcon(icon);
     }
     

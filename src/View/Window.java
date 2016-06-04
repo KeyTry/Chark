@@ -45,7 +45,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         this.setLocationRelativeTo(null);
         
         player = new Player(50, 10);
-        player.setEstado("cayendo");
         getContentPane().add(player);
         player.setBounds(0,0, player.getW(), player.getH());
         
@@ -81,11 +80,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
     }
     
-    public void playerFall()
-    {
-            player.fall();            
-    }
-    
     public void collisionChecker()
     {
         collChck.setPlatform(platform);
@@ -96,18 +90,49 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         player.setCollisionTop(collChck.collisionTop());
         player.setCollisionRight(collChck.collisionRight());
         player.setCollisionLeft(collChck.collisionLeft());
-    }
-    
-    public void playerMove()
-    {
+        
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].setCollisionBot(collChck.collisionBot());
+            platform[i].setCollisionTop(collChck.collisionTop());
+            platform[i].setCollisionRight(collChck.collisionRight());
+            platform[i].setCollisionLeft(collChck.collisionLeft());        
+        }
     }
     
     public void update()
     {
         System.out.println("Intentando actualizar");
         player.update();
-        player.move();
+        
+        movePlayer();
+        
+        /*if(player.getX() > 650 || player.getY() > 325)
+        {
+            movePlatforms();
+        }
+        else
+        {
+            movePlayer();
+        }*/
+
         collisionChecker();
+    }
+    
+    public void movePlayer()
+    {
+        player.moveOnX();
+        player.moveOnY();
+    }
+    
+    public void movePlatforms()
+    {
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].update();
+            platform[i].moveOnX();
+            platform[i].moveOnY();
+        }
     }
 
     /**
@@ -139,10 +164,18 @@ public class Window extends javax.swing.JFrame implements ActionListener{
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         player.keyPressed(evt);
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].keyPressed(evt);
+        }
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         player.keyReleased(evt);
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].keyReleased(evt);
+        }
     }//GEN-LAST:event_formKeyReleased
    
     /**

@@ -7,6 +7,7 @@ package Assets;
 
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -27,6 +28,13 @@ public class Sprite extends JLabel
     boolean collisionTop;
     boolean collisionLeft;
     boolean collisionRight;
+    
+    
+    int dx;
+    int dy;
+    
+    boolean brinco;
+    
     
     ImageIcon icon;
     
@@ -101,6 +109,11 @@ public class Sprite extends JLabel
     {
         x2 = x + w;
         y2 = y + h;
+    }
+    
+    public int getDy()
+    {
+        return dy;
     }
     
     public void update()

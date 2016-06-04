@@ -57,9 +57,9 @@ public class CollisionChecker
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
         {
-            if(((player.getX() >= platformsX[i]) && (player.getX() <= platformsX2[i])) || ((player.getX2() >= platformsX[i]) && (player.getX2() <= platformsX2[i])))
+            if((((player.getX()) >= (platformsX[i])) && ((player.getX()) <= (platformsX2[i]))) || (((player.getX2()) >= (platformsX[i])) && ((player.getX2()) <= (platformsX2[i]))))
             {
-                if((player.getY() > platformsY[i]) && (player.getY() >= platformsY2[i]))
+                if(((player.getY()) >= (platformsY[i])) && ((player.getY()) >= (platformsY2[i])))
                 {
                     colisiones++;
                 }
@@ -85,9 +85,9 @@ public class CollisionChecker
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
         {
-            if(((player.getX() >= platformsX[i]) && (player.getX() <= platformsX2[i])) || ((player.getX2() >= platformsX[i]) && (player.getX2() <= platformsX2[i])))
+            if((((player.getX()) >= (platformsX[i])) && ((player.getX()) <= (platformsX2[i]))) || (((player.getX2()) >= (platformsX[i])) && ((player.getX2()) <= (platformsX2[i]))))
             {
-                if((player.getY2() < platformsY2[i]) && (player.getY2() >= platformsY[i]))
+                if(((player.getY2()) <= (platformsY2[i]+2)) && ((player.getY2()) >= (platformsY[i]-2)))
                 {
                     colisiones++;
                 }
@@ -115,7 +115,7 @@ public class CollisionChecker
         {
             if((((player.getY()) > platformsY[i]) && ((player.getY()) < platformsY2[i])) || (((player.getY2()) > platformsY[i]) && ((player.getY2()) < platformsY2[i])))
             {
-                if((player.getX() >= platformsX[i]) && (player.getX() <= platformsX2[i]))
+                if(((player.getX()) > (platformsX[i])) && ((player.getX()) < (platformsX2[i])))
                 {
                     colisiones++;
                 }
@@ -143,7 +143,7 @@ public class CollisionChecker
         {
             if((((player.getY()) > platformsY[i]) && ((player.getY()) < platformsY2[i])) || (((player.getY2()) > platformsY[i]) && ((player.getY2()) < platformsY2[i])))
             {
-                if((player.getX2() <= platformsX2[i]) && (player.getX2() >= platformsX[i]))
+                if((player.getX2() < platformsX2[i]) && (player.getX2() > platformsX[i]))
                 {
                     colisiones++;
                 }
