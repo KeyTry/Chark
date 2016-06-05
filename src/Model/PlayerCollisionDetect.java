@@ -13,7 +13,7 @@ import Assets.Player;
  *
  * @author DanielSQ
  */
-public class CollisionChecker
+public class PlayerCollisionDetect
 {
     Player player;
     Platform[] platform;
@@ -28,7 +28,7 @@ public class CollisionChecker
     int[] platformsX2;
     int[] platformsY2;
     
-    public CollisionChecker()
+    public PlayerCollisionDetect()
     {
     }
     

@@ -27,12 +27,13 @@ public class PlayerThread extends Thread {
             {
                 sleep(2);   
                 window.update();
-                window.collisionChecker();
+                window.playerCollDetect();
             }
         }
         catch(Exception e)
         {
-            System.out.println("Error en la ejecución del jugador: "+e);
+            System.out.println("Error en la ejecución del jugador: "+e+"\n");
+            e.printStackTrace();
         }
     }
 }

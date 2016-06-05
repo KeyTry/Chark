@@ -7,13 +7,15 @@ package View;
 
 import Assets.*;
 import Levels.*;
-import Model.CollisionChecker;
+import Model.BulletCollisionDetect;
+import Model.PlayerCollisionDetect;
 import Thread.MainThread;
 import Thread.PlayerThread;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,7 +32,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     Thread mThread;
     Thread pThread;
     
-    CollisionChecker collChck;
+    PlayerCollisionDetect playerCollChck;
+    BulletCollisionDetect bulletCollChck;
+    
+    ArrayList <Bullet> arrayBullets = new ArrayList();
     
     /**
      * Creates new form Window
@@ -44,14 +49,15 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         this.setLocationRelativeTo(null);
         
-        player = new Player(60, 50);
+        player = new Player(60, 50, this);
         getContentPane().add(player);
         player.setBounds(0,0, player.getW(), player.getH());
         
         TestLevel level1 = new TestLevel();
         loadLevel(level1);
         
-        collChck = new CollisionChecker();
+        playerCollChck = new PlayerCollisionDetect();
+        bulletCollChck = new BulletCollisionDetect();
         
         //mThread = new MainThread(this);
         //mThread.start();
@@ -94,24 +100,48 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }  
     }
     
-    public void collisionChecker()
+    public void playerCollDetect()
     {
-        collChck.setPlatform(platform);
-        collChck.setPlayer(player);
-        collChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
+        System.out.println("Detectando colision Jugador");
+        playerCollChck.setPlatform(platform);
+        playerCollChck.setPlayer(player);
+        playerCollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
         
-        player.setCollisionBot(collChck.collisionBot());
-        player.setCollisionTop(collChck.collisionTop());
-        player.setCollisionRight(collChck.collisionRight());
-        player.setCollisionLeft(collChck.collisionLeft());
+        player.setCollisionBot(playerCollChck.collisionBot());
+        player.setCollisionTop(playerCollChck.collisionTop());
+        player.setCollisionRight(playerCollChck.collisionRight());
+        player.setCollisionLeft(playerCollChck.collisionLeft());
         
         for(int i = 0; i < platform.length; i++)
         {
-            platform[i].setCollisionBot(collChck.collisionBot());
-            platform[i].setCollisionTop(collChck.collisionTop());
-            platform[i].setCollisionRight(collChck.collisionRight());
-            platform[i].setCollisionLeft(collChck.collisionLeft());        
+            platform[i].setCollisionBot(playerCollChck.collisionBot());
+            platform[i].setCollisionTop(playerCollChck.collisionTop());
+            platform[i].setCollisionRight(playerCollChck.collisionRight());
+            platform[i].setCollisionLeft(playerCollChck.collisionLeft());        
         }
+    }
+    
+    public Bullet bulletCollDetect(Bullet bullet)
+    {
+        System.out.println("Detectando colision Bala");
+        bulletCollChck.setPlatform(platform);
+        bulletCollChck.setBullet(bullet);
+        bulletCollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
+        
+        bullet.setCollisionBot(bulletCollChck.collisionBot());
+        bullet.setCollisionTop(bulletCollChck.collisionTop());
+        bullet.setCollisionRight(bulletCollChck.collisionRight());
+        bullet.setCollisionLeft(bulletCollChck.collisionLeft());
+        
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].setCollisionBot(playerCollChck.collisionBot());
+            platform[i].setCollisionTop(playerCollChck.collisionTop());
+            platform[i].setCollisionRight(playerCollChck.collisionRight());
+            platform[i].setCollisionLeft(playerCollChck.collisionLeft());        
+        }
+        
+        return bullet;
     }
     
     public void update()
@@ -126,7 +156,9 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         updatePlatforms();
         
-        collisionChecker();
+        playerCollDetect();
+        
+        updateBullets();
         
         player.setMovingDown();
         
@@ -211,6 +243,34 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public int getRestingLim()
     {
         return player.getRestingLim();
+    }
+    
+    public void updateBullets()
+    {
+        for(int i=0;i<arrayBullets.size();i++)
+        {
+            System.out.println("Tamaño del Array: "+arrayBullets.size());
+            arrayBullets.get(i).move();
+            arrayBullets.set(i, bulletCollDetect(arrayBullets.get(i)));
+            if(arrayBullets.get(i).getX() < -1000 || arrayBullets.get(i).getX() > 1000)
+            {
+                arrayBullets.remove(i);
+                System.out.println("BALA ELIMINADA! Tamaño del array: "+arrayBullets.size());
+            }
+            if(arrayBullets.get(i).getColl())
+            {
+                arrayBullets.remove(i);
+                System.out.println("BALA ELIMINADA! Tamaño del array: "+arrayBullets.size());
+            }
+        }
+    }
+    
+    public void getBullets(Bullet bullet)
+    {
+        System.out.println("Bala añadida. Tamaño: "+bullet.getWidth()+" x "+bullet.getHeight());
+        getContentPane().add(bullet);
+        bullet.setVisible(true);
+        arrayBullets.add(bullet);
     }
 
     /**

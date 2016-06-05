@@ -5,7 +5,13 @@
  */
 package Assets;
 
+import View.Window;
 import java.awt.event.KeyEvent;
+import static java.lang.Thread.sleep;
+import java.util.ArrayList;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -13,13 +19,16 @@ import java.awt.event.KeyEvent;
  */
 public class Player extends Sprite
 {
-    int restingLim;
+    Window window;
+    
+    String looking = "right";
     /*
     Estados: cayendo, suelo, subiendo
     */
     
-    public Player(int x, int y)
+    public Player(int x, int y, Window window)
     {        
+        this.window = window;
         this.x = x;
         this.y = y;
         super.setLocation(x, y);
@@ -134,12 +143,14 @@ public class Player extends Sprite
         
         if(key == KeyEvent.VK_LEFT)
         {
+            looking = "left";
             dx = -1;
             movingLeft = true;        
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnimLeft.gif")));
         }
         
         if (key == KeyEvent.VK_RIGHT) {
+            looking = "right";
             dx = 1;
             movingRight = true;
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnim.gif")));
@@ -150,9 +161,40 @@ public class Player extends Sprite
             prepareJump();            
         }
         
+        if(key == KeyEvent.VK_SPACE){
+            System.out.println("Disparando!");
+            try
+            {
+                sleep(60);
+                createBullet();
+            }
+            catch(Exception exc)
+            {
+                System.out.println("Error al crear bala");
+            }
+        }
+        
         super.setIcon(icon);
     }
     
+    public void createBullet()
+    {
+        int xBull = 0;
+        int yBull = 0;
+        if(looking.equals("right"))
+        {
+            xBull = x2-5;
+            yBull = y+42;
+        }
+        if(looking.equals("left"))
+        {
+            xBull = x+5;
+            yBull = y+42;
+        }
+        Bullet bullet = new Bullet(xBull, yBull, looking);
+        System.out.println("Bala añadida en jugador. Tamaño: "+bullet.getWidth()+" x "+bullet.getHeight());
+        window.getBullets(bullet);
+    }
     
     public void keyReleased(KeyEvent e) {
         
