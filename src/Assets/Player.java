@@ -198,7 +198,6 @@ public class Player extends Sprite
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 
         }
         
-                
         if(key == KeyEvent.VK_SPACE){
             System.out.println("Disparando!");
             try

@@ -5,7 +5,10 @@
  */
 package Levels;
 
+import Assets.Enemy;
 import Assets.Platform;
+import java.util.ArrayList;
+import Assets.Enemies.*;
 
 /**
  *
@@ -16,7 +19,9 @@ public class TestLevel extends Level
     public TestLevel()
     {
         platform = new Platform[4];
+        enemy = new ArrayList();
         setPlatforms();
+        setEnemies();
     }
     
     public void setPlatforms()
@@ -31,5 +36,11 @@ public class TestLevel extends Level
         {
             platform[i].update();
         }
+    }
+    
+    public void setEnemies()
+    {
+        Enemy enemy1 = new Slim(300, 50);
+        enemy.add(enemy1);
     }
 }

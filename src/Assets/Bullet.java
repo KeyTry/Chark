@@ -6,6 +6,7 @@
 package Assets;
 
 import java.awt.event.KeyEvent;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -171,6 +172,19 @@ public class Bullet extends Sprite{
         }
     }
     
+    public void setExplosion()
+    {
+        try
+        {
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/explosion.png"))); 
+            super.setIcon(icon);
+            sleep(100);
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }
     
     public void keyReleased(KeyEvent e) {
         

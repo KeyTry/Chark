@@ -5,7 +5,9 @@
  */
 package Levels;
 
+import Assets.Enemy;
 import Assets.Platform;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +16,7 @@ import Assets.Platform;
 public class Level 
 {
     Platform[] platform;
+    ArrayList<Enemy> enemy;
     
     public Level()
     {
@@ -25,8 +28,18 @@ public class Level
         return platform;
     }
     
-    public int getSize()
+    public ArrayList<Enemy> getEnemies()
+    {
+        return enemy;
+    }
+    
+    public int getPlatformSize()
     {
         return platform.length;
+    }
+    
+    public int getEnemySize()
+    {
+        return enemy.size();
     }
 }

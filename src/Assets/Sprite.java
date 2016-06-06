@@ -17,15 +17,15 @@ import javax.swing.JLabel;
  */
 public class Sprite extends JLabel
 {
-    int x;
-    int y;
-    int x2;
-    int y2;
-    int w;
-    int h;
+    public int x;
+    public int y;
+    public int x2;
+    public int y2;
+    public int w;
+    public int h;
         
-    int dx;
-    int dy;
+    public int dx;
+    public int dy;
     
     public boolean collisionBot;
     public boolean collisionTop;
@@ -48,7 +48,7 @@ public class Sprite extends JLabel
     boolean limEst;
     
     
-    ImageIcon icon;
+    public ImageIcon icon;
     
     boolean vis;
     Image image;

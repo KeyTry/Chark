@@ -75,12 +75,12 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         platform = level.getPlatforms();
         
-        platformsX = new int[level.getSize()];
-        platformsY = new int[level.getSize()];
-        platformsX2 = new int[level.getSize()];
-        platformsY2 = new int[level.getSize()];
+        platformsX = new int[level.getPlatformSize()];
+        platformsY = new int[level.getPlatformSize()];
+        platformsX2 = new int[level.getPlatformSize()];
+        platformsY2 = new int[level.getPlatformSize()];
 
-        for(int i = 0; i<level.getSize(); i++)
+        for(int i = 0; i<level.getPlatformSize(); i++)
         {
             getContentPane().add(platform[i]);
         }
@@ -273,6 +273,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             {
                 if(arrayBullets.get(i).getColl())
                 {
+                    arrayBullets.get(i).setExplosion();
                     arrayBullets.get(i).setVisible(false);
                     arrayBullets.remove(i);
                     System.out.println("BALA ELIMINADA! Tamaño del array: "+arrayBullets.size());
