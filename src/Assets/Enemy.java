@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,12 +8,13 @@ package Assets;
 import View.Window;
 import java.awt.event.KeyEvent;
 import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 
 /**
  *
  * @author DanielSQ
  */
-public class Enemy extends LiveAsset{
+public class Enemy extends LiveSprite{
     public Enemy(int x, int y, Window window)
     {
         super(x,y,window);
@@ -71,7 +72,7 @@ public class Enemy extends LiveAsset{
                 if(getY2() < downLim)
                 {
                     System.out.println("Moviendo Plataforma");
-                    y = y+1;
+                    y = y+gameSpeed;
                 }
                 else
                 {
@@ -100,7 +101,7 @@ public class Enemy extends LiveAsset{
         if(!collisionBot && !brinco)
         {
             //System.out.println("Brinco?: "+brinco);
-            dy = -1;
+            dy = -gameSpeed;
             y += dy;
             movingDown = true;
         }
@@ -119,15 +120,15 @@ public class Enemy extends LiveAsset{
         
         if(key == KeyEvent.VK_LEFT)
         {
-            dx = 1;
+            dx = gameSpeed;
         }
         
         if (key == KeyEvent.VK_RIGHT) {
-            dx = -1;
+            dx = -gameSpeed;
         }
         
         if(key == KeyEvent.VK_UP) {
-            dy = 1;
+            dy = gameSpeed;
             brinco = true;
         }
     }

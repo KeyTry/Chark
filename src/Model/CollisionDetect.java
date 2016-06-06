@@ -29,6 +29,8 @@ public class CollisionDetect
     int[] platformsX2;
     int[] platformsY2;
     
+    int leeway = 5;
+    
     public CollisionDetect()
     {
     }
@@ -61,7 +63,7 @@ public class CollisionDetect
         {
             if((((sprite.getX()) >= (platformsX[i])) && ((sprite.getX()) <= (platformsX2[i]))) || (((sprite.getX2()) >= (platformsX[i])) && ((sprite.getX2()) <= (platformsX2[i]))))
             {
-                if(((sprite.getY()) > (platformsY[i]-1)) && ((sprite.getY()) < (platformsY2[i]+1)))
+                if(((sprite.getY()) > (platformsY[i]-leeway)) && ((sprite.getY()) < (platformsY2[i]+leeway)))
                 {
                     colisiones++;
                 }
@@ -89,7 +91,7 @@ public class CollisionDetect
         {
             if((((sprite.getX()) >= (platformsX[i])) && ((sprite.getX()) <= (platformsX2[i]))) || (((sprite.getX2()) >= (platformsX[i])) && ((sprite.getX2()) <= (platformsX2[i]))))
             {
-                if(((sprite.getY2()) <= (platformsY2[i]+1)) && ((sprite.getY2()) >= (platformsY[i]-1)))
+                if(((sprite.getY2()) <= (platformsY2[i]+leeway)) && ((sprite.getY2()) >= (platformsY[i]-leeway)))
                 {
                     colisiones++;
                 }
@@ -117,7 +119,7 @@ public class CollisionDetect
         {
             if((((sprite.getY()) > platformsY[i]) && ((sprite.getY()) < platformsY2[i])) || (((sprite.getY2()) > platformsY[i]) && ((sprite.getY2()) < platformsY2[i])))
             {
-                if(((sprite.getX()) > (platformsX[i]-2)) && ((sprite.getX()) < (platformsX2[i]+2)))
+                if(((sprite.getX()) > (platformsX[i]-(leeway+2))) && ((sprite.getX()) < (platformsX2[i]+(leeway+2))))
                 {
                     colisiones++;
                 }
@@ -145,7 +147,7 @@ public class CollisionDetect
         {
             if((((sprite.getY()) > platformsY[i]) && ((sprite.getY()) < platformsY2[i])) || (((sprite.getY2()) > platformsY[i]) && ((sprite.getY2()) < platformsY2[i])))
             {
-                if((sprite.getX2() < platformsX2[i]+3) && (sprite.getX2() > platformsX[i]-3))
+                if((sprite.getX2() < platformsX2[i]+(leeway+2)) && (sprite.getX2() > platformsX[i]-(leeway+2)))
                 {
                     colisiones++;
                 }

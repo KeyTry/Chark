@@ -41,6 +41,7 @@ public class Sprite extends JLabel
     
     public boolean brinco = false;
     
+    public int gameSpeed = 6;
         
     int downLim;
     int restingLim;
@@ -60,8 +61,8 @@ public class Sprite extends JLabel
     
     public void setAssetLocation(int x, int y)
     {
-        this.x = x;
-        this.y = y;
+        this.x = x-3;
+        this.y = y-3;
         
         super.setLocation(x, y);
     }
@@ -119,8 +120,8 @@ public class Sprite extends JLabel
     
     public void setSecBound()
     {
-        x2 = x + w;
-        y2 = y + h;
+        x2 = (x + w)-3;
+        y2 = (y + h)-3;
     }
     
     public int getDy()

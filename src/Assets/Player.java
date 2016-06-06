@@ -7,17 +7,12 @@ package Assets;
 
 import View.Window;
 import java.awt.event.KeyEvent;
-import static java.lang.Thread.sleep;
-import java.util.ArrayList;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.sleep;
 
 /**
  *
  * @author DanielSQ
  */
-public class Player extends LiveAsset
+public class Player extends LiveSprite
 {
     /*
     Estados: cayendo, suelo, subiendo
@@ -39,14 +34,14 @@ public class Player extends LiveAsset
         if(key == KeyEvent.VK_LEFT)
         {
             looking = "left";
-            dx = -1;
+            dx = -gameSpeed;
             movingLeft = true;        
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnimLeft.gif")));
         }
         
         if (key == KeyEvent.VK_RIGHT) {
             looking = "right";
-            dx = 1;
+            dx = gameSpeed;
             movingRight = true;
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnim.gif")));
         }

@@ -11,12 +11,12 @@ import View.Window;
  *
  * @author DanielSQ
  */
-public class LiveAsset extends Sprite{
+public class LiveSprite extends Sprite{
     
     Window window;
     
     String looking = "right";
-    public LiveAsset(int x, int y, Window window)
+    public LiveSprite(int x, int y, Window window)
     {
         this.window = window;
         this.x = x;
@@ -64,8 +64,8 @@ public class LiveAsset extends Sprite{
             if(getY() > getJumpLim())
             {
                 System.out.println("Y: "+getY());
-                y = y-1;
-                restingLim= restingLim-1;
+                y = y-gameSpeed;
+                restingLim= restingLim-gameSpeed;
                 //System.out.println("Limite: "+jumpLim);
             }
             else
@@ -93,7 +93,7 @@ public class LiveAsset extends Sprite{
         if(!collisionBot && !brinco)
         {
             //System.out.println("Brinco?: "+brinco);
-            dy = 1;
+            dy = gameSpeed;
             y += dy;
             movingDown = true;
         }

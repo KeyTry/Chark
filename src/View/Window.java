@@ -9,11 +9,8 @@ import Assets.*;
 import Levels.*;
 import Model.CollisionDetect;
 import Thread.MainThread;
-import Thread.PlayerThread;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -35,7 +32,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     int[] enemiesY2;
     
     Thread mThread;
-    Thread pThread;
     
     CollisionDetect CollChck;
     
@@ -60,11 +56,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         CollChck = new CollisionDetect();
         
-        //mThread = new MainThread(this);
-        //mThread.start();
-        
-        pThread = new PlayerThread(this);
-        pThread.start();
+        mThread = new MainThread(this);
+        mThread.start();
         
         for(int i = 0; i < platform.length; i++)
         {
@@ -176,7 +169,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public Bullet bulletCollDetect(Bullet bullet)
     {
-        System.out.println("Detectando colision Bala");
         CollChck.setPlatform(platform);
         CollChck.setSprite(bullet);
         CollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);

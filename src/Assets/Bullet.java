@@ -13,6 +13,8 @@ import static java.lang.Thread.sleep;
  * @author Daniel
  */
 public class Bullet extends Sprite{
+    int bulletSpeed = gameSpeed;
+    
     String looking;
     public Bullet(int x, int y, String looking)
     {        
@@ -39,11 +41,11 @@ public class Bullet extends Sprite{
     {
         if(looking.equals("right"))
         {
-            dx=1;
+            dx=bulletSpeed;
         }
         if(looking.equals("left"))
         {
-            dx=-1;
+            dx=-bulletSpeed;
         }
         x+=dx;
         super.setLocation(x,y);
@@ -111,7 +113,7 @@ public class Bullet extends Sprite{
                 if(getY2() < downLim)
                 {
                     System.out.println("Moviendo Plataforma");
-                    y = y+1;
+                    y = y+gameSpeed;
                 }
                 else
                 {
@@ -140,7 +142,7 @@ public class Bullet extends Sprite{
         if(!collisionBot && !brinco)
         {
             //System.out.println("Brinco?: "+brinco);
-            dy = -1;
+            dy = -gameSpeed;
             y += dy;
             movingDown = true;
         }
@@ -159,15 +161,15 @@ public class Bullet extends Sprite{
         
         if(key == KeyEvent.VK_LEFT)
         {
-            dx = 1;
+            dx = gameSpeed;
         }
         
         if (key == KeyEvent.VK_RIGHT) {
-            dx = -1;
+            dx = -gameSpeed;
         }
         
         if(key == KeyEvent.VK_UP) {
-            dy = 1;
+            dy = gameSpeed;
             brinco = true;
         }
     }
@@ -178,7 +180,7 @@ public class Bullet extends Sprite{
         {
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/explosion.png"))); 
             super.setIcon(icon);
-            sleep(100);
+            sleep(50);
         }
         catch(Exception e)
         {

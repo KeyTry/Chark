@@ -27,7 +27,9 @@ public class MainThread extends Thread
         {
             while(true)
             {
-                sleep(20);                
+                sleep(12);
+                window.update();
+                window.playerCollDetect();                
             }
         }
         catch(Exception e)

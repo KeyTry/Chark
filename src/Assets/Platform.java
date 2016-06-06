@@ -75,7 +75,7 @@ public class Platform extends Sprite{
                 if(getY2() < downLim)
                 {
                     System.out.println("Moviendo Plataforma");
-                    y = y+1;
+                    y = y+gameSpeed;
                 }
                 else
                 {
@@ -104,7 +104,7 @@ public class Platform extends Sprite{
         if(!collisionBot && !brinco)
         {
             //System.out.println("Brinco?: "+brinco);
-            dy = -1;
+            dy = -gameSpeed;
             y += dy;
             movingDown = true;
         }
@@ -123,15 +123,15 @@ public class Platform extends Sprite{
         
         if(key == KeyEvent.VK_LEFT)
         {
-            dx = 1;
+            dx = gameSpeed;
         }
         
         if (key == KeyEvent.VK_RIGHT) {
-            dx = -1;
+            dx = -gameSpeed;
         }
         
         if(key == KeyEvent.VK_UP) {
-            dy = 1;
+            dy = gameSpeed;
             brinco = true;
         }
     }
