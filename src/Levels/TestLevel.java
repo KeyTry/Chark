@@ -9,6 +9,8 @@ import Assets.Enemy;
 import Assets.Platform;
 import java.util.ArrayList;
 import Assets.Enemies.*;
+import Assets.Player;
+import View.Window;
 
 /**
  *
@@ -16,10 +18,12 @@ import Assets.Enemies.*;
  */
 public class TestLevel extends Level
 {
-    public TestLevel()
+    public TestLevel(Window window)
     {
+        super(window);
         platform = new Platform[4];
         enemy = new ArrayList();
+        player = new Player(60,50,window);
         setPlatforms();
         setEnemies();
     }
@@ -40,7 +44,7 @@ public class TestLevel extends Level
     
     public void setEnemies()
     {
-        Enemy enemy1 = new Slim(300, 50);
+        Enemy enemy1 = new Slim(300, 50,window);
         enemy.add(enemy1);
     }
 }

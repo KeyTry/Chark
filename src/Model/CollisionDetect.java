@@ -2,6 +2,7 @@ package Model;
 
 import Assets.Platform;
 import Assets.Player;
+import Assets.Sprite;
 
 /*
 * To change this license header, choose License Headers in Project Properties.
@@ -13,9 +14,9 @@ import Assets.Player;
  *
  * @author DanielSQ
  */
-public class PlayerCollisionDetect
+public class CollisionDetect
 {
-    Player player;
+    Sprite sprite;
     Platform[] platform;
     
     boolean collisionTop;
@@ -28,14 +29,14 @@ public class PlayerCollisionDetect
     int[] platformsX2;
     int[] platformsY2;
     
-    public PlayerCollisionDetect()
+    public CollisionDetect()
     {
     }
     
     
-    public void setPlayer(Player player)
+    public void setSprite(Sprite sprite)
     {
-        this.player = player;
+        this.sprite = sprite;
     }
     
     public void setPlatform(Platform[] platform)
@@ -58,9 +59,9 @@ public class PlayerCollisionDetect
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
         {
-            if((((player.getX()) >= (platformsX[i])) && ((player.getX()) <= (platformsX2[i]))) || (((player.getX2()) >= (platformsX[i])) && ((player.getX2()) <= (platformsX2[i]))))
+            if((((sprite.getX()) >= (platformsX[i])) && ((sprite.getX()) <= (platformsX2[i]))) || (((sprite.getX2()) >= (platformsX[i])) && ((sprite.getX2()) <= (platformsX2[i]))))
             {
-                if(((player.getY()) > (platformsY[i]-1)) && ((player.getY()) < (platformsY2[i]+1)))
+                if(((sprite.getY()) > (platformsY[i]-1)) && ((sprite.getY()) < (platformsY2[i]+1)))
                 {
                     colisiones++;
                 }
@@ -86,9 +87,9 @@ public class PlayerCollisionDetect
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
         {
-            if((((player.getX()) >= (platformsX[i])) && ((player.getX()) <= (platformsX2[i]))) || (((player.getX2()) >= (platformsX[i])) && ((player.getX2()) <= (platformsX2[i]))))
+            if((((sprite.getX()) >= (platformsX[i])) && ((sprite.getX()) <= (platformsX2[i]))) || (((sprite.getX2()) >= (platformsX[i])) && ((sprite.getX2()) <= (platformsX2[i]))))
             {
-                if(((player.getY2()) <= (platformsY2[i]+1)) && ((player.getY2()) >= (platformsY[i]-1)))
+                if(((sprite.getY2()) <= (platformsY2[i]+1)) && ((sprite.getY2()) >= (platformsY[i]-1)))
                 {
                     colisiones++;
                 }
@@ -114,9 +115,9 @@ public class PlayerCollisionDetect
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
         {
-            if((((player.getY()) > platformsY[i]) && ((player.getY()) < platformsY2[i])) || (((player.getY2()) > platformsY[i]) && ((player.getY2()) < platformsY2[i])))
+            if((((sprite.getY()) > platformsY[i]) && ((sprite.getY()) < platformsY2[i])) || (((sprite.getY2()) > platformsY[i]) && ((sprite.getY2()) < platformsY2[i])))
             {
-                if(((player.getX()) > (platformsX[i]-2)) && ((player.getX()) < (platformsX2[i]+2)))
+                if(((sprite.getX()) > (platformsX[i]-2)) && ((sprite.getX()) < (platformsX2[i]+2)))
                 {
                     colisiones++;
                 }
@@ -142,9 +143,9 @@ public class PlayerCollisionDetect
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
         {
-            if((((player.getY()) > platformsY[i]) && ((player.getY()) < platformsY2[i])) || (((player.getY2()) > platformsY[i]) && ((player.getY2()) < platformsY2[i])))
+            if((((sprite.getY()) > platformsY[i]) && ((sprite.getY()) < platformsY2[i])) || (((sprite.getY2()) > platformsY[i]) && ((sprite.getY2()) < platformsY2[i])))
             {
-                if((player.getX2() < platformsX2[i]+3) && (player.getX2() > platformsX[i]-3))
+                if((sprite.getX2() < platformsX2[i]+3) && (sprite.getX2() > platformsX[i]-3))
                 {
                     colisiones++;
                 }

@@ -6,15 +6,16 @@
 package Assets.Enemies;
 
 import Assets.Enemy;
+import View.Window;
 
 /**
  *
  * @author DanielSQ
  */
 public class Slim extends Enemy{
-    public Slim(int x, int y)
+    public Slim(int x, int y, Window window)
     {        
-        super(x,y);
+        super(x,y,window);
         icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/slim.gif"))); 
         super.setIcon(icon);
         setImageDimensions();
