@@ -7,7 +7,6 @@ package View;
 
 import Assets.*;
 import Levels.*;
-import Model.BulletCollisionDetect;
 import Model.CollisionDetect;
 import Thread.MainThread;
 import Thread.PlayerThread;
@@ -39,7 +38,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     Thread pThread;
     
     CollisionDetect CollChck;
-    BulletCollisionDetect bulletCollChck;
     
     Level testLevel;
     
@@ -61,7 +59,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         loadLevel(testLevel);
         
         CollChck = new CollisionDetect();
-        bulletCollChck = new BulletCollisionDetect();
         
         //mThread = new MainThread(this);
         //mThread.start();
@@ -180,12 +177,12 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public Bullet bulletCollDetect(Bullet bullet)
     {
         System.out.println("Detectando colision Bala");
-        bulletCollChck.setPlatform(platform);
-        bulletCollChck.setBullet(bullet);
-        bulletCollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
+        CollChck.setPlatform(platform);
+        CollChck.setSprite(bullet);
+        CollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
         
-        bullet.setCollisionRight(bulletCollChck.collisionRight());
-        bullet.setCollisionLeft(bulletCollChck.collisionLeft());
+        bullet.setCollisionRight(CollChck.collisionRight());
+        bullet.setCollisionLeft(CollChck.collisionLeft());
         
         for(int i = 0; i < platform.length; i++)
         {
