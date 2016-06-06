@@ -102,7 +102,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void playerCollDetect()
     {
-        System.out.println("Detectando colision Jugador");
         playerCollChck.setPlatform(platform);
         playerCollChck.setPlayer(player);
         playerCollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
@@ -128,15 +127,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         bulletCollChck.setBullet(bullet);
         bulletCollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
         
-        bullet.setCollisionBot(bulletCollChck.collisionBot());
-        bullet.setCollisionTop(bulletCollChck.collisionTop());
         bullet.setCollisionRight(bulletCollChck.collisionRight());
         bullet.setCollisionLeft(bulletCollChck.collisionLeft());
         
         for(int i = 0; i < platform.length; i++)
         {
-            platform[i].setCollisionBot(playerCollChck.collisionBot());
-            platform[i].setCollisionTop(playerCollChck.collisionTop());
             platform[i].setCollisionRight(playerCollChck.collisionRight());
             platform[i].setCollisionLeft(playerCollChck.collisionLeft());        
         }
@@ -188,6 +183,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             {
                 platform[i].prepareJump(getRestingLim());
             }
+            for(int i = 0; i < arrayBullets.size(); i++)
+            {
+                arrayBullets.get(i).prepareJump(getRestingLim());
+            }
             jumpWorld();
         }
         if(player.isMovingDown() && player.getY2() < 350)
@@ -212,12 +211,15 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     }
     
     public void jumpWorld()
-    {
-        System.out.println("Brincando Mundo");
-        
+    {       
         for(int i = 0; i < platform.length; i++)
         {
             platform[i].jump(player.isBrinco(), player.isMovingUp());
+        }
+        
+        for(int i = 0; i < arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).jump(player.isBrinco(), player.isMovingUp());
         }
         
         player.setBrinco(platform[0].isBrinco());
@@ -230,6 +232,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         {
             platform[i].fall(player.isBrinco(), player.isMovingDown());
         }
+        
+        for(int i = 0; i < arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).fall(player.isBrinco(), player.isMovingDown());
+        }
     }
     
     public void moveWorldOnX()
@@ -237,6 +244,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         for(int i = 0; i < platform.length; i++)
         {
             platform[i].moveOnX();
+        }
+        
+        for(int i = 0; i<arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).moveOnX();
         }
     }
     
@@ -249,7 +261,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         for(int i=0;i<arrayBullets.size();i++)
         {
-            System.out.println("Tamaño del Array: "+arrayBullets.size());
+            arrayBullets.get(i).update();
             arrayBullets.get(i).move();
             arrayBullets.set(i, bulletCollDetect(arrayBullets.get(i)));
             if(arrayBullets.get(i).getX() < -1000 || arrayBullets.get(i).getX() > 1000)
@@ -257,17 +269,20 @@ public class Window extends javax.swing.JFrame implements ActionListener{
                 arrayBullets.remove(i);
                 System.out.println("BALA ELIMINADA! Tamaño del array: "+arrayBullets.size());
             }
-            if(arrayBullets.get(i).getColl())
+            else
             {
-                arrayBullets.remove(i);
-                System.out.println("BALA ELIMINADA! Tamaño del array: "+arrayBullets.size());
+                if(arrayBullets.get(i).getColl())
+                {
+                    arrayBullets.get(i).setVisible(false);
+                    arrayBullets.remove(i);
+                    System.out.println("BALA ELIMINADA! Tamaño del array: "+arrayBullets.size());
+                }
             }
         }
     }
     
     public void getBullets(Bullet bullet)
     {
-        System.out.println("Bala añadida. Tamaño: "+bullet.getWidth()+" x "+bullet.getHeight());
         getContentPane().add(bullet);
         bullet.setVisible(true);
         arrayBullets.add(bullet);
@@ -306,6 +321,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         {
             platform[i].keyPressed(evt);
         }
+        for(int i = 0; i<arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).keyPressed(evt);
+        }
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
@@ -313,6 +332,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         for(int i = 0; i < platform.length; i++)
         {
             platform[i].keyReleased(evt);
+        }
+        for(int i = 0; i<arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).keyReleased(evt);
         }
     }//GEN-LAST:event_formKeyReleased
    
