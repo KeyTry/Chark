@@ -18,8 +18,6 @@ public class BulletCollisionDetect
     Bullet bullet;
     Platform[] platform;
     
-    boolean collisionTop;
-    boolean collisionBot;
     boolean collisionLeft;
     boolean collisionRight;
     
@@ -50,63 +48,7 @@ public class BulletCollisionDetect
         this.platformsX2 = platformsX2;
         this.platformsY2 = platformsY2;
     }
-    
-    public boolean collisionTop()
-    {
-        boolean collisionTop = false;
-        
-        int colisiones = 0;
-        for(int i = 0; i<platform.length;i++)
-        {
-            if((((bullet.getX()) >= (platformsX[i])) && ((bullet.getX()) <= (platformsX2[i]))) || (((bullet.getX2()) >= (platformsX[i])) && ((bullet.getX2()) <= (platformsX2[i]))))
-            {
-                if(((bullet.getY()) > (platformsY[i]-1)) && ((bullet.getY()) < (platformsY2[i]+1)))
-                {
-                    colisiones++;
-                }
-            }
-        }
-        if(colisiones != 0)
-        {
-            //System.out.println("Hay colisiones arriba!");
-            collisionTop = true;
-        }
-        else
-        {
-            collisionTop = false;
-        }
-        
-        return collisionTop;
-    }
-    
-    public boolean collisionBot()
-    {
-        boolean collisionBot = false;
-        
-        int colisiones = 0;
-        for(int i = 0; i<platform.length;i++)
-        {
-            if((((bullet.getX()) >= (platformsX[i])) && ((bullet.getX()) <= (platformsX2[i]))) || (((bullet.getX2()) >= (platformsX[i])) && ((bullet.getX2()) <= (platformsX2[i]))))
-            {
-                if(((bullet.getY2()) <= (platformsY2[i]+1)) && ((bullet.getY2()) >= (platformsY[i]-1)))
-                {
-                    colisiones++;
-                }
-            }
-        }        
-        if(colisiones != 0)
-        {            
-            //System.out.println("Hay colisiones abajo!");
-            collisionBot = true;
-        }
-        else
-        {
-            collisionBot = false;
-        }
-        
-        return collisionBot;
-    }
-    
+   
     public boolean collisionLeft()
     {
         boolean collisionLeft = false;
@@ -118,6 +60,11 @@ public class BulletCollisionDetect
             {
                 if(((bullet.getX()) > (platformsX[i]-2)) && ((bullet.getX()) < (platformsX2[i]+2)))
                 {
+                    System.out.println("COLISIÓN IZQUIERDA");
+                    System.out.println("Y Plataforma: "+platformsY[i]);
+                    System.out.println("Y bala: "+bullet.getY());
+                    System.out.println("Y2: "+platformsY2[i]);
+                    System.out.println("Y2 bala: "+bullet.getY2());
                     colisiones++;
                 }
             }
@@ -125,7 +72,7 @@ public class BulletCollisionDetect
         if(colisiones != 0)
         {
             collisionLeft = true;
-            //System.out.println("Hay colisiones a la izquierda!");
+            System.out.println("BALA: Hay colisiones a la izquierda!");
         }
         else
         {
@@ -145,7 +92,12 @@ public class BulletCollisionDetect
             if((((bullet.getY()) > platformsY[i]) && ((bullet.getY()) < platformsY2[i])) || (((bullet.getY2()) > platformsY[i]) && ((bullet.getY2()) < platformsY2[i])))
             {
                 if((bullet.getX2() < platformsX2[i]+3) && (bullet.getX2() > platformsX[i]-3))
-                {
+                {                    
+                    System.out.println("COLISIÓN DERECHA");
+                    System.out.println("Y Plataforma: "+platformsY[i]);
+                    System.out.println("Y bala: "+bullet.getY());
+                    System.out.println("Y2: "+platformsY2[i]);
+                    System.out.println("Y2 bala: "+bullet.getY2());
                     colisiones++;
                 }
             }
@@ -153,7 +105,7 @@ public class BulletCollisionDetect
         if(colisiones != 0)
         {
             collisionRight = true;
-            //System.out.println("Hay colisiones a la derecha!");
+            System.out.println("BALA: Hay colisiones a la derecha!");
         }
         else
         {

@@ -159,21 +159,7 @@ public class Player extends Sprite
         if(key == KeyEvent.VK_UP) {
             System.out.println("Presionado brincar");
             prepareJump();            
-        }
-        
-        if(key == KeyEvent.VK_SPACE){
-            System.out.println("Disparando!");
-            try
-            {
-                sleep(60);
-                createBullet();
-            }
-            catch(Exception exc)
-            {
-                System.out.println("Error al crear bala");
-            }
-        }
-        
+        }        
         super.setIcon(icon);
     }
     
@@ -211,6 +197,19 @@ public class Player extends Sprite
             movingRight = false;
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 
         }
+        
+                
+        if(key == KeyEvent.VK_SPACE){
+            System.out.println("Disparando!");
+            try
+            {
+                createBullet();
+            }
+            catch(Exception exc)
+            {
+                System.out.println("Error al crear bala");
+            }
+        }       
         
         super.setIcon(icon);
     }

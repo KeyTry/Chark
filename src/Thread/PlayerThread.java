@@ -25,7 +25,7 @@ public class PlayerThread extends Thread {
         {
             while(true)
             {
-                sleep(2);   
+                sleep(3);   
                 window.update();
                 window.playerCollDetect();
             }
