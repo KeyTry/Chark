@@ -18,7 +18,6 @@ public class Bullet extends Sprite{
     String looking;
     public Bullet(int x, int y, String looking)
     {        
-        System.out.println("Bala creada");
         this.looking = looking;
         this.x = x;
         this.y = y;
@@ -34,6 +33,7 @@ public class Bullet extends Sprite{
         super.setIcon(icon);
         System.out.println("Ícono: "+icon);
         setImageDimensions();
+        
         super.setBounds(0, 0, getW(), getH());
     }
     
@@ -85,39 +85,36 @@ public class Bullet extends Sprite{
     {
         if(!limEst)
         {
-            System.out.println("Limite Restante:"+restingLim);
+            //System.out.println("Limite Restante:"+restingLim);
             this.restingLim = restingLim;
             downLim = getY2() +- this.restingLim;
             limEst = true;
-            System.out.println("ASIGNANDO LIMITE:\nY2: "+getY2()+"\nLimite: "+downLim+"\n\n");
+            //System.out.println("ASIGNANDO LIMITE:\nY2: "+getY2()+"\nLimite: "+downLim+"\n\n");
         }
     }
     
     public void jump(boolean brinco, boolean movingUp)
     {   
-        System.out.println();
+        //System.out.println();
         
         this.brinco = brinco;
         this.movingUp = movingUp;
         
-        System.out.println("Down lim: "+downLim);
+        //System.out.println("Down lim: "+downLim);
         
         if(limEst)
         {
             if(brinco && !collisionTop)
             {
-                System.out.println("brinco Mundo?: "+brinco);
                 
                 System.out.println("Y2: "+getY2());
                 System.out.println("Limite: "+downLim);
                 if(getY2() < downLim)
                 {
-                    System.out.println("Moviendo Plataforma");
                     y = y+gameSpeed;
                 }
                 else
                 {
-                    System.out.println("Terminando brinco (Plataforma)");
                     this.brinco = false;
                     this.movingUp = false;
                     System.out.println("Brinco?: "+brinco);
@@ -155,6 +152,21 @@ public class Bullet extends Sprite{
         super.setLocation(x, y);
     }
     
+    public void setExplosion()
+    {
+        try
+        {
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/explosion.png"))); 
+            super.setIcon(icon);
+            sleep(50);
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }
+    
+        
     public void keyPressed(KeyEvent e)
     {
         int key = e.getKeyCode();
@@ -171,20 +183,6 @@ public class Bullet extends Sprite{
         if(key == KeyEvent.VK_UP) {
             dy = gameSpeed;
             brinco = true;
-        }
-    }
-    
-    public void setExplosion()
-    {
-        try
-        {
-            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/explosion.png"))); 
-            super.setIcon(icon);
-            sleep(50);
-        }
-        catch(Exception e)
-        {
-            
         }
     }
     

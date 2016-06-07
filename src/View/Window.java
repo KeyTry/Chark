@@ -33,8 +33,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     Thread mThread;
     
-    CollisionDetect CollChck;
-    
     Level testLevel;
     
     ArrayList <Bullet> arrayBullets = new ArrayList();
@@ -53,16 +51,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         createLevels();
         loadLevel(testLevel);
-        
-        CollChck = new CollisionDetect();
-        
         mThread = new MainThread(this);
         mThread.start();
-        
-        for(int i = 0; i < platform.length; i++)
-        {
-            platform[i].prepareJump(getRestingLim());
-        }
     }
     
     public void createLevels()
@@ -139,6 +129,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         for(int i = 0; i<arrayEnemies.size(); i++)
         {
+            arrayEnemies.get(i).update();
             arrayEnemies.get(i).setBounds(0,0, arrayEnemies.get(i).getW(), arrayEnemies.get(i).getH());
             enemiesX[i] = arrayEnemies.get(i).getX();
             enemiesY[i] = arrayEnemies.get(i).getY();
@@ -149,37 +140,41 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void playerCollDetect()
     {
-        CollChck.setPlatform(platform);
-        CollChck.setSprite(player);
-        CollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
+        CollisionDetect plCollDetect = new CollisionDetect();
         
-        player.setCollisionBot(CollChck.collisionBot());
-        player.setCollisionTop(CollChck.collisionTop());
-        player.setCollisionRight(CollChck.collisionRight());
-        player.setCollisionLeft(CollChck.collisionLeft());
+        plCollDetect.setPlatform(platform);
+        plCollDetect.setSprite(player);
+        plCollDetect.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
+        
+        player.setCollisionBot(plCollDetect.collisionBot());
+        player.setCollisionTop(plCollDetect.collisionTop());
+        player.setCollisionRight(plCollDetect.collisionRight());
+        player.setCollisionLeft(plCollDetect.collisionLeft());
         
         for(int i = 0; i < platform.length; i++)
         {
-            platform[i].setCollisionBot(CollChck.collisionBot());
-            platform[i].setCollisionTop(CollChck.collisionTop());
-            platform[i].setCollisionRight(CollChck.collisionRight());
-            platform[i].setCollisionLeft(CollChck.collisionLeft());        
+            platform[i].setCollisionBot(plCollDetect.collisionBot());
+            platform[i].setCollisionTop(plCollDetect.collisionTop());
+            platform[i].setCollisionRight(plCollDetect.collisionRight());
+            platform[i].setCollisionLeft(plCollDetect.collisionLeft());        
         }
     }
     
     public Bullet bulletCollDetect(Bullet bullet)
     {
-        CollChck.setPlatform(platform);
-        CollChck.setSprite(bullet);
-        CollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
+        CollisionDetect bulCollDetect = new CollisionDetect();
         
-        bullet.setCollisionRight(CollChck.collisionRight());
-        bullet.setCollisionLeft(CollChck.collisionLeft());
+        bulCollDetect.setPlatform(platform);
+        bulCollDetect.setSprite(bullet);
+        bulCollDetect.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
+        
+        bullet.setCollisionRight(bulCollDetect.collisionRight());
+        bullet.setCollisionLeft(bulCollDetect.collisionLeft());
         
         for(int i = 0; i < platform.length; i++)
         {
-            platform[i].setCollisionRight(CollChck.collisionRight());
-            platform[i].setCollisionLeft(CollChck.collisionLeft());        
+            platform[i].setCollisionRight(bulCollDetect.collisionRight());
+            platform[i].setCollisionLeft(bulCollDetect.collisionLeft());        
         }
         
         return bullet;
@@ -187,21 +182,20 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public Enemy enemyCollDetect(Enemy enemy)
     {
-        CollChck.setPlatform(platform);
-        CollChck.setSprite(enemy);
-        CollChck.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
+        CollisionDetect enCollDetect = new CollisionDetect();
         
-        enemy.setCollisionBot(CollChck.collisionBot());
-        enemy.setCollisionTop(CollChck.collisionTop());
-        enemy.setCollisionRight(CollChck.collisionRight());
-        enemy.setCollisionLeft(CollChck.collisionLeft());
+        enCollDetect.setPlatform(platform);
+        enCollDetect.setSprite(enemy);
+        enCollDetect.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
         
-        for(int i = 0; i < platform.length; i++)
+        enemy.setCollisionBot(enCollDetect.collisionBot());
+        enemy.setCollisionTop(enCollDetect.collisionTop());
+        enemy.setCollisionRight(enCollDetect.collisionRight());
+        enemy.setCollisionLeft(enCollDetect.collisionLeft());
+        
+        if(enCollDetect.collisionBot())
         {
-            platform[i].setCollisionBot(CollChck.collisionBot());
-            platform[i].setCollisionTop(CollChck.collisionTop());
-            platform[i].setCollisionRight(CollChck.collisionRight());
-            platform[i].setCollisionLeft(CollChck.collisionLeft());        
+            System.out.println("Hay colisiones abajo para el enemigo!");
         }
         
         return enemy;
@@ -210,12 +204,21 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public void update()
     {
         //System.out.println("Intentando actualizar");
+        updateElements();
+        
+        decideMovements();
+
+    }
+    
+    public void updateElements()
+    {
         player.update();
         
         for(int i = 0; i < platform.length; i++)
         {
             platform[i].update();
         }
+        
         
         updatePlatforms();
         
@@ -225,8 +228,15 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         updateEnemies();
         
-        player.setMovingDown();
+        setEnemyCollisions();
         
+        moveEnemiesOnY();
+        
+        player.setMovingDown();
+    }
+    
+    public void decideMovements()
+    {
         if(player.isMovingLeft() && player.getX() > 50)
         {
             movePlayerOnX();
@@ -259,7 +269,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             }
             for(int i = 0; i < arrayEnemies.size(); i++)
             {
-                arrayEnemies.get(i).prepareJump(getRestingLim());
+                arrayEnemies.get(i).prepareJumpStatic(getRestingLim());
             }
             jumpWorld();
         }
@@ -284,6 +294,30 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         player.jump();
     }
     
+    public void moveEnemiesOnY()
+    {
+        for(int i = 0; i < arrayEnemies.size(); i++)
+        {
+            arrayEnemies.get(i).showCollisions();
+            arrayEnemies.get(i).setMovingDown();
+            System.out.println("Enemigo cayendo?: "+arrayEnemies.get(i).isMovingDown());
+            System.out.println("Brincando?: "+arrayEnemies.get(i).isBrinco());
+            if(arrayEnemies.get(i).isMovingDown())
+            {
+                System.out.println("ENEMIGO CAYENDO!");
+                arrayEnemies.get(i).fall();
+            }
+        }
+    }
+    
+    public void setEnemyCollisions()
+    {        
+        for(int i = 0; i < arrayEnemies.size(); i++)
+        {
+            arrayEnemies.set(i, enemyCollDetect(arrayEnemies.get(i)));
+        }
+    }
+    
     public void jumpWorld()
     {       
         for(int i = 0; i < platform.length; i++)
@@ -298,7 +332,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         for(int i = 0; i < arrayEnemies.size(); i++)
         {
-            arrayEnemies.get(i).jump(player.isBrinco(), player.isMovingUp());
+            arrayEnemies.get(i).jumpStatic(player.isBrinco(), player.isMovingUp());
         }
         
         player.setBrinco(platform[0].isBrinco());
@@ -319,7 +353,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         for(int i = 0; i < arrayEnemies.size(); i++)
         {
-            arrayEnemies.get(i).fall(player.isBrinco(), player.isMovingDown());
+            arrayEnemies.get(i).fallStatic(player.isBrinco(), player.isMovingDown());
         }
     }
     
@@ -337,7 +371,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         for(int i = 0; i<arrayEnemies.size(); i++)
         {
-            arrayEnemies.get(i).moveOnX();
+            arrayEnemies.get(i).moveOnXStatic();
         }
     }
     
@@ -356,7 +390,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             if(arrayBullets.get(i).getX() < -1000 || arrayBullets.get(i).getX() > 1000)
             {
                 arrayBullets.remove(i);
-                System.out.println("BALA ELIMINADA! Tamaño del array: "+arrayBullets.size());
             }
             else
             {
@@ -365,7 +398,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
                     arrayBullets.get(i).setExplosion();
                     arrayBullets.get(i).setVisible(false);
                     arrayBullets.remove(i);
-                    System.out.println("BALA ELIMINADA! Tamaño del array: "+arrayBullets.size());
                 }
             }
         }

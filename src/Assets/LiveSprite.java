@@ -63,7 +63,7 @@ public class LiveSprite extends Sprite{
             //System.out.println("brinco?: "+brinco);
             if(getY() > getJumpLim())
             {
-                System.out.println("Y: "+getY());
+                //System.out.println("Y: "+getY());
                 y = y-gameSpeed;
                 restingLim= restingLim-gameSpeed;
                 //System.out.println("Limite: "+jumpLim);
@@ -92,7 +92,6 @@ public class LiveSprite extends Sprite{
     {
         if(!collisionBot && !brinco)
         {
-            //System.out.println("Brinco?: "+brinco);
             dy = gameSpeed;
             y += dy;
             movingDown = true;
@@ -110,7 +109,6 @@ public class LiveSprite extends Sprite{
     {
         if(!collisionBot && !brinco)
         {
-
             movingDown = true;
         }
         else
@@ -139,7 +137,29 @@ public class LiveSprite extends Sprite{
             yBull = y+42;
         }
         Bullet bullet = new Bullet(xBull, yBull, looking);
-        System.out.println("Bala añadida en jugador. Tamaño: "+bullet.getWidth()+" x "+bullet.getHeight());
         window.getBullets(bullet);
+    }
+    
+    public void showCollisions()
+    {
+        if(collisionBot)
+        {
+            System.out.println("Colisiones abajo!");
+        }
+        if(collisionTop)
+        {
+            System.out.println("Colisiones arriba!");
+
+        }
+        if(collisionRight)
+        {
+            System.out.println("Colisiones derecha!");
+
+        }
+        if(collisionLeft)
+        {
+            System.out.println("Colisiones izquierda!");
+
+        }
     }
 }

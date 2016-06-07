@@ -28,8 +28,7 @@ public class MainThread extends Thread
             while(true)
             {
                 sleep(12);
-                window.update();
-                window.playerCollDetect();                
+                window.update();              
             }
         }
         catch(Exception e)

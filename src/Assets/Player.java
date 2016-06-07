@@ -25,6 +25,7 @@ public class Player extends LiveSprite
         icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 
         super.setIcon(icon);
         setImageDimensions();
+        prepareJump();   
     }
     
     public void keyPressed(KeyEvent e)
@@ -47,7 +48,6 @@ public class Player extends LiveSprite
         }
         
         if(key == KeyEvent.VK_UP) {
-            System.out.println("Presionado brincar");
             prepareJump();            
         }        
         super.setIcon(icon);

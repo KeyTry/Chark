@@ -35,7 +35,6 @@ public class CollisionDetect
     {
     }
     
-    
     public void setSprite(Sprite sprite)
     {
         this.sprite = sprite;

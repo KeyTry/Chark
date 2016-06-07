@@ -30,11 +30,10 @@ public class TestLevel extends Level
     
     public void setPlatforms()
     {
-        platform[0] = new Platform(-50,200,"Platform");
-        platform[1] = new Platform(600,200,"Platform");
-        platform[2] = new Platform(400,300,"Platform");
-        platform[3] = new Platform(300,-200,"Platform");
-        
+        platform[0] = new Platform(50,200,"Platform");
+        platform[1] = new Platform(200,200,"Platform");
+        platform[2] = new Platform(400,200,"Platform");
+        platform[3] = new Platform(600,350,"Platform");
         
         for(int i = 0; i<platform.length; i++)
         {
@@ -44,7 +43,7 @@ public class TestLevel extends Level
     
     public void setEnemies()
     {
-        Enemy enemy1 = new Slim(300, 50,window);
+        Enemy enemy1 = new Slim(600, 25,window);
         enemy.add(enemy1);
     }
 }

@@ -5,25 +5,20 @@
  */
 package Assets;
 
+import View.Window;
 import java.awt.event.KeyEvent;
 
 /**
  *
  * @author DanielSQ
  */
-public class Platform extends Sprite{
-    
-    public Platform(int x, int y, String type)
-    {        
-        this.x = x;
-        this.y = y;
-        super.setLocation(x, y);
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/"+type+".png"))); 
-        super.setIcon(icon);
-        setImageDimensions();
+public class NPLiveSprite extends LiveSprite{
+    public NPLiveSprite(int x, int y, Window window)
+    {
+        super(x,y,window);
     }
     
-    public void moveOnX()
+    public void moveOnXStatic()
     {
         if(dx > 0)
         {
@@ -43,7 +38,7 @@ public class Platform extends Sprite{
         super.setLocation(x, y);
     }
     
-    public void prepareJump(int restingLim)
+    public void prepareJumpStatic(int restingLim)
     {
         if(!limEst)
         {
@@ -53,10 +48,12 @@ public class Platform extends Sprite{
         }
     }
     
-    public void jump(boolean brinco, boolean movingUp)
+    public void jumpStatic(boolean brinco, boolean movingUp)
     {   
         this.brinco = brinco;
         this.movingUp = movingUp;
+        
+        System.out.println("Down lim: "+downLim);
         
         if(limEst)
         {
@@ -92,11 +89,11 @@ public class Platform extends Sprite{
         super.setLocation(x, y);
     }
     
-    public void fall(boolean brinco, boolean movingDown)
+    public void fallStatic(boolean brinco, boolean movingDown)
     {
         if(!collisionBot && !brinco)
         {
-            //System.out.println("Brinco?: "+brinco);
+            System.out.println("Enemigo cayendo!");
             dy = -gameSpeed;
             y += dy;
             movingDown = true;
@@ -128,7 +125,6 @@ public class Platform extends Sprite{
             brinco = true;
         }
     }
-    
     
     public void keyReleased(KeyEvent e) {
         
