@@ -91,7 +91,9 @@ public class NPLiveSprite extends LiveSprite{
     
     public void fallStatic(boolean brinco, boolean movingDown)
     {
-        if(!collisionBot && !brinco)
+        System.out.println("Enemigo - Colision abajo: "+collisionBot);
+        System.out.println("Enemigo - Brinco: "+brinco);
+        if(!brinco)
         {
             System.out.println("Enemigo cayendo!");
             dy = -gameSpeed;

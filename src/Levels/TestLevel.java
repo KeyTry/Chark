@@ -44,6 +44,13 @@ public class TestLevel extends Level
     public void setEnemies()
     {
         Enemy enemy1 = new Slim(600, 25,window);
+        Enemy enemy2 = new Slim(750, 25,window);
+        Enemy enemy3 = new Slim(900, 25,window);
+        Enemy enemy4 = new Slim(1200, 25,window);
+        
         enemy.add(enemy1);
+        enemy.add(enemy2);
+        enemy.add(enemy3);
+        enemy.add(enemy4);
     }
 }

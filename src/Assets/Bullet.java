@@ -136,7 +136,7 @@ public class Bullet extends Sprite{
     
     public void fall(boolean brinco, boolean movingDown)
     {
-        if(!collisionBot && !brinco)
+        if(!brinco)
         {
             //System.out.println("Brinco?: "+brinco);
             dy = -gameSpeed;

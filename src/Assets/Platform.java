@@ -129,7 +129,6 @@ public class Platform extends Sprite{
         }
     }
     
-    
     public void keyReleased(KeyEvent e) {
         
         int key = e.getKeyCode();

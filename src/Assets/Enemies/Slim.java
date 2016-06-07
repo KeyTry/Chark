@@ -21,11 +21,5 @@ public class Slim extends Enemy{
         setImageDimensions();
         super.setBounds(0, 0, getW(), getH());
         super.update();
-        System.out.println("X: "+this.x);
-        System.out.println("Y: "+this.y);
-        System.out.println("X2: "+this.x2);
-        System.out.println("Y2: "+this.y2);
-        System.out.println("W: "+w);
-        System.out.println("H: "+h);
     }
 }

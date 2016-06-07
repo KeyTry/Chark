@@ -1,4 +1,4 @@
-package Model;
+package Model.Detection.Collision;
 
 import Assets.Platform;
 import Assets.Player;
@@ -14,7 +14,7 @@ import Assets.Sprite;
  *
  * @author DanielSQ
  */
-public class CollisionDetect
+public class PlatformCollision
 {
     Sprite sprite;
     Platform[] platform;
@@ -31,7 +31,7 @@ public class CollisionDetect
     
     int leeway = 5;
     
-    public CollisionDetect()
+    public PlatformCollision()
     {
     }
     
@@ -55,7 +55,7 @@ public class CollisionDetect
     
     public boolean collisionTop()
     {
-        boolean collisionTop = false;
+        collisionTop = false;
         
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
@@ -83,7 +83,7 @@ public class CollisionDetect
     
     public boolean collisionBot()
     {
-        boolean collisionBot = false;
+        collisionBot = false;
         
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
@@ -111,7 +111,7 @@ public class CollisionDetect
     
     public boolean collisionLeft()
     {
-        boolean collisionLeft = false;
+        collisionLeft = false;
         
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)
@@ -139,7 +139,7 @@ public class CollisionDetect
     
     public boolean collisionRight()
     {
-        boolean collisionRight = false;
+        collisionRight = false;
         
         int colisiones = 0;
         for(int i = 0; i<platform.length;i++)

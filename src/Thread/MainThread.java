@@ -34,6 +34,7 @@ public class MainThread extends Thread
         catch(Exception e)
         {
             System.out.println("Error en la ejecución: "+e);
+            e.printStackTrace();
         }
     }
 }

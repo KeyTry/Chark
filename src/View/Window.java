@@ -7,7 +7,9 @@ package View;
 
 import Assets.*;
 import Levels.*;
-import Model.CollisionDetect;
+import Model.Detection.Hit.BulletEnemyHit;
+import Model.Detection.Collision.EnemyPlayerCollision;
+import Model.Detection.Collision.PlatformCollision;
 import Thread.MainThread;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,9 +64,9 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void loadLevel(Level level)
     {
+        loadPlayer(level);
         loadPlatforms(level);
         loadEnemies(level);
-        loadPlayer(level);
     }
     
     public void loadPlatforms(Level level)
@@ -140,16 +142,51 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void playerCollDetect()
     {
-        CollisionDetect plCollDetect = new CollisionDetect();
+        PlatformCollision plCollDetect = new PlatformCollision();
+        EnemyPlayerCollision enCollDetect = new EnemyPlayerCollision();
         
         plCollDetect.setPlatform(platform);
         plCollDetect.setSprite(player);
         plCollDetect.setPlatformVariables(platformsX, platformsY, platformsX2, platformsY2);
         
-        player.setCollisionBot(plCollDetect.collisionBot());
-        player.setCollisionTop(plCollDetect.collisionTop());
-        player.setCollisionRight(plCollDetect.collisionRight());
-        player.setCollisionLeft(plCollDetect.collisionLeft());
+        enCollDetect.setPlayer(player);
+        enCollDetect.setEnemies(arrayEnemies);
+        
+        if(plCollDetect.collisionBot() || enCollDetect.collisionBot())
+        {
+            player.setCollisionBot(true);
+        }
+        else
+        {
+            player.setCollisionBot(false);
+        }
+        
+        if(plCollDetect.collisionTop() || enCollDetect.collisionTop())
+        {
+            player.setCollisionTop(true);
+        }
+        else
+        {
+            player.setCollisionTop(false);
+        }
+        
+        if(plCollDetect.collisionLeft() || enCollDetect.collisionLeft())
+        {
+            player.setCollisionLeft(true);
+        }
+        else
+        {
+            player.setCollisionLeft(false);
+        }
+        
+        if(plCollDetect.collisionRight() || enCollDetect.collisionRight())
+        {
+            player.setCollisionRight(true);
+        }
+        else
+        {
+            player.setCollisionRight(false);
+        }
         
         for(int i = 0; i < platform.length; i++)
         {
@@ -162,7 +199,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public Bullet bulletCollDetect(Bullet bullet)
     {
-        CollisionDetect bulCollDetect = new CollisionDetect();
+        PlatformCollision bulCollDetect = new PlatformCollision();
         
         bulCollDetect.setPlatform(platform);
         bulCollDetect.setSprite(bullet);
@@ -182,7 +219,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public Enemy enemyCollDetect(Enemy enemy)
     {
-        CollisionDetect enCollDetect = new CollisionDetect();
+        PlatformCollision enCollDetect = new PlatformCollision();
         
         enCollDetect.setPlatform(platform);
         enCollDetect.setSprite(enemy);
@@ -193,12 +230,27 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         enemy.setCollisionRight(enCollDetect.collisionRight());
         enemy.setCollisionLeft(enCollDetect.collisionLeft());
         
-        if(enCollDetect.collisionBot())
-        {
-            System.out.println("Hay colisiones abajo para el enemigo!");
-        }
-        
         return enemy;
+    }
+    
+    public void detectBulletEnemyCollision()
+    {
+        BulletEnemyHit bullEnemDetect = new BulletEnemyHit();
+        
+        for(int i = 0; i<arrayBullets.size();i++)
+        {
+            for(int j = 0; j<arrayEnemies.size();j++)
+            {
+                bullEnemDetect.setBulletsEnemies(arrayBullets.get(i), arrayEnemies.get(j));
+                if(bullEnemDetect.detectCollision())
+                {
+                    removeBullet(i);
+                    removeEnemy(j);
+                    i=arrayBullets.size();
+                    j=arrayEnemies.size();
+                }
+            }
+        }
     }
     
     public void update()
@@ -207,7 +259,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         updateElements();
         
         decideMovements();
-
     }
     
     public void updateElements()
@@ -233,6 +284,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         moveEnemiesOnY();
         
         player.setMovingDown();
+        
+        detectBulletEnemyCollision();
     }
     
     public void decideMovements()
@@ -298,13 +351,9 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         for(int i = 0; i < arrayEnemies.size(); i++)
         {
-            arrayEnemies.get(i).showCollisions();
             arrayEnemies.get(i).setMovingDown();
-            System.out.println("Enemigo cayendo?: "+arrayEnemies.get(i).isMovingDown());
-            System.out.println("Brincando?: "+arrayEnemies.get(i).isBrinco());
             if(arrayEnemies.get(i).isMovingDown())
             {
-                System.out.println("ENEMIGO CAYENDO!");
                 arrayEnemies.get(i).fall();
             }
         }
@@ -395,12 +444,23 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             {
                 if(arrayBullets.get(i).getColl())
                 {
-                    arrayBullets.get(i).setExplosion();
-                    arrayBullets.get(i).setVisible(false);
-                    arrayBullets.remove(i);
+                    removeBullet(i);
                 }
             }
         }
+    }
+    
+    public void removeBullet(int i)
+    {
+        arrayBullets.get(i).setExplosion();
+        arrayBullets.get(i).setVisible(false);
+        arrayBullets.remove(i);
+    }
+    
+    public void removeEnemy(int i)
+    {
+        arrayEnemies.get(i).setVisible(false);
+        arrayEnemies.remove(i);
     }
     
     public void getBullets(Bullet bullet)

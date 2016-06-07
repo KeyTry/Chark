@@ -139,27 +139,4 @@ public class LiveSprite extends Sprite{
         Bullet bullet = new Bullet(xBull, yBull, looking);
         window.getBullets(bullet);
     }
-    
-    public void showCollisions()
-    {
-        if(collisionBot)
-        {
-            System.out.println("Colisiones abajo!");
-        }
-        if(collisionTop)
-        {
-            System.out.println("Colisiones arriba!");
-
-        }
-        if(collisionRight)
-        {
-            System.out.println("Colisiones derecha!");
-
-        }
-        if(collisionLeft)
-        {
-            System.out.println("Colisiones izquierda!");
-
-        }
-    }
 }
