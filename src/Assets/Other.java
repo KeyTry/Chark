@@ -19,7 +19,7 @@ public class Other extends Sprite{
         this.x = x;
         this.y = y;
         super.setLocation(x, y);
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/"+type+".png"))); 
+        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/"+type+""))); 
         super.setIcon(icon);
         this.name = name;
         setImageDimensions();

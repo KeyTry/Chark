@@ -28,7 +28,7 @@ public class MainThread extends Thread
             while(true)
             {
                 sleep(15);
-                window.update();              
+                window.update();  
             }
         }
         catch(Exception e)

@@ -9,6 +9,7 @@ import Assets.Enemy;
 import Assets.Platform;
 import java.util.ArrayList;
 import Assets.Enemies.*;
+import Assets.Other;
 import Assets.Player;
 import View.Window;
 
@@ -24,8 +25,14 @@ public class TestLevel extends Level
         levelName = "Test";
         platform = new Platform[9];
         player = new Player(60, 50,window,144);
+        init();
+    }
+    
+    public void init()
+    {
         setPlatforms();
         setEnemies();
+        setOther();
     }
     
     public Player getPlayer()
@@ -63,5 +70,12 @@ public class TestLevel extends Level
         enemy.add(reck1);
         enemy.add(reck2);
         enemy.add(reck3);
+    }
+    
+    public void setOther()
+    {
+        Other chest = new Other(1400,100,"Chest.gif","Chest");
+        
+        other.add(chest);
     }
 }

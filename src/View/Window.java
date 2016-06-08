@@ -7,24 +7,17 @@ package View;
 
 import Assets.*;
 import Levels.*;
-import Model.Detection.Hit.HitDetection;
 import Model.Detection.Collision.PlatformCollision;
+import Model.Detection.Hit.HitDetection;
 import Model.LevelMethods.IntroMethods;
 import Thread.MainThread;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.Thread.sleep;
 import java.util.ArrayList;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.sleep;
+import javax.swing.Icon;
 import javax.swing.JLabel;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.sleep;
-import static java.lang.Thread.sleep;
 
 /**
  *
@@ -99,6 +92,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     HUDElement health;
     
+    long startTime;
+    long endTime;
+    long totalTime;
+    
     /**
      * Creates new form Window
      */
@@ -140,7 +137,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         this.setLocationRelativeTo(null);
         getContentPane().setBackground(Color.BLACK);
         createLevels();
-        loadLevel(getTestLevel());
+        loadLevel(getIntroLevel());
         createLevelMethods();
         mThread = new MainThread(this);
         mThread.start();
@@ -167,15 +164,28 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
     }
     
+    public void startTime()
+    {
+        startTime = System.currentTimeMillis();
+    }
+    
+    public void calculateTime()
+    {
+        endTime = System.currentTimeMillis();
+        totalTime = endTime - startTime;
+    }
+    
     public void clearLevel()
     {
         try
         {
-        player = null;
-        platform = null;
-        arrayEnemies = null;
-        arrayOther = null;
-        getContentPane().removeAll();
+            player = null;
+            platform = null;
+            arrayEnemies = null;
+            arrayOther = null;
+            getContentPane().removeAll();
+            createLevels();
+            createLevelMethods();
         }
         catch(Exception e)
         {
@@ -324,6 +334,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         removeEnemies();
         
+        checkPlayerHealth();
+        
         repaint();
     }
     
@@ -366,6 +378,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             for(int i = 0;i<arrayOther.size();i++)
             {
                 arrayOther.get(i).prepareJump(getRestingLim());
+                System.out.println("Brinco preparado para otro: "+arrayOther.get(i).getName());
             }
             jumpWorld();
         }
@@ -802,6 +815,77 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             arrayEnemies.get(i).moveOnY();
         }
     }
+    
+    public void checkPlayerHealth()
+    {
+        try
+        {
+            if(player.getHealth() < 1)
+            {
+                sleep(500);
+                repaint();
+                showOverScreen();
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error perdiendo: "+e);
+            e.printStackTrace();
+        }
+    }
+    
+    public void resetTime()
+    {
+        startTime = 0;
+        endTime = 0;
+        totalTime = 0;
+    }
+    
+    public void showOverScreen()
+    {
+        calculateTime();
+        System.out.println("Mostrando pantalla final");
+        System.out.println("Tiempo total: "+totalTime);
+        long showableTime = totalTime/1000;
+        try
+        {
+            repaint();
+            clearLevel();
+            getContentPane().removeAll();
+            getContentPane().setBackground(Color.black);
+            repaint();
+            
+            JLabel gameOver = new JLabel("Game Over");
+            gameOver.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
+            gameOver.setForeground(new java.awt.Color(255, 255, 255));
+            gameOver.setText("Game Over");
+            getContentPane().add(gameOver);
+            gameOver.setBounds(240, 125, 340, 50);
+            
+            JLabel timeTaken = new JLabel();
+            timeTaken.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
+            timeTaken.setForeground(new java.awt.Color(255, 255, 255));
+            timeTaken.setText("Total Time: "+showableTime+" seconds");
+            getContentPane().add(timeTaken);
+            timeTaken.setBounds(75, 200, 800, 50);
+            
+            Icon brknChrk = new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/BrokenChark.png"));
+            JLabel brokenChark = new JLabel();
+            brokenChark.setIcon(brknChrk);
+            getContentPane().add(brokenChark);
+            brokenChark.setBounds(350,290,brknChrk.getIconHeight()+50,brknChrk.getIconWidth()+50);
+            repaint();
+            sleep(3000);
+            getContentPane().removeAll();
+            clearLevel();
+            loadLevel(getIntroLevel());
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error al mostrar Game Over: "+e);
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -812,7 +896,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
         setMaximumSize(new java.awt.Dimension(800, 450));
         setPreferredSize(new java.awt.Dimension(800, 450));
         setResizable(false);
@@ -826,6 +913,12 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             }
         });
         getContentPane().setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Game Over");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(30, 100, 340, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -876,5 +969,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -23,6 +23,7 @@ public class IntroMethods
     public IntroMethods(Window window)
     {
         this.window = window;
+        window.resetTime();
     }
     
     public void ops()
@@ -45,6 +46,7 @@ public class IntroMethods
         if((player.getY()>=arrayOther.get(index).getY()) && (player.getX()>=arrayOther.get(index).getX()))
         {
             window.loadLevel(window.getTestLevel());
+            window.startTime();
             window.createHealthLabel();
             window.showHealthLabel();
         }
