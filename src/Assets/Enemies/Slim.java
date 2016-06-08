@@ -14,11 +14,11 @@ import View.Window;
  * @author DanielSQ
  */
 public class Slim extends Enemy{
-    SlimAI ai;
     public Slim(int x, int y, Window window)
     {        
         super(x,y,window,90);
         ai = new SlimAI(this);
+        damage = 15;
         String hitDrawing = "slimHit.gif";
         String defaultDrawing = "Slim.gif";
         super.setHitDrawing(hitDrawing);
@@ -28,12 +28,6 @@ public class Slim extends Enemy{
         setImageDimensions();
         super.setBounds(0, 0, getW(), getH());
         super.update();
-    }
-    
-    @Override
-    public void aiOps()
-    {
-        ai.runOps();
     }
     
     @Override

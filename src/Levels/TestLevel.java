@@ -60,8 +60,8 @@ public class TestLevel extends Level
         Enemy reck3 = new Reck(325, 115,window);
         
         enemy.add(slim1);
-        //enemy.add(reck1);
-        //enemy.add(reck2);
-        //enemy.add(reck3);
+        enemy.add(reck1);
+        enemy.add(reck2);
+        enemy.add(reck3);
     }
 }

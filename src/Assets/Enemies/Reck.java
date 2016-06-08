@@ -16,11 +16,11 @@ import View.Window;
  * @author DanielSQ
  */
 public class Reck extends Enemy{
-    ReckAI ai;
     public Reck(int x, int y, Window window)
     {        
         super(x,y,window,40);
         ai = new ReckAI(this);
+        damage = 2;
         String hitDrawing = "ReckHit.png";
         String defaultDrawing = "Reck.gif";
         super.setHitDrawing(hitDrawing);
@@ -30,12 +30,6 @@ public class Reck extends Enemy{
         setImageDimensions();
         super.setBounds(0, 0, getW(), getH());
         super.update();
-    }
-    
-    @Override
-    public void aiOps()
-    {
-        ai.runOps();
     }
     
     @Override

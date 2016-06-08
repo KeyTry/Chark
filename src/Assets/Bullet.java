@@ -163,12 +163,12 @@ public class Bullet extends Sprite{
     {
         int key = e.getKeyCode();
         
-        if(key == KeyEvent.VK_LEFT)
+        if((key == KeyEvent.VK_LEFT) || (key == KeyEvent.VK_LEFT && key == KeyEvent.VK_RIGHT))
         {
             dx = gameSpeed;
         }
         
-        if (key == KeyEvent.VK_RIGHT) {
+        if ((key == KeyEvent.VK_RIGHT) || (key == KeyEvent.VK_RIGHT && key == KeyEvent.VK_LEFT)) {
             dx = -gameSpeed;
         }
         
@@ -182,11 +182,11 @@ public class Bullet extends Sprite{
         
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
+        if((key == KeyEvent.VK_LEFT) || (key == KeyEvent.VK_LEFT && key == KeyEvent.VK_RIGHT)) {
             dx = 0;
         }
 
-        if (key == KeyEvent.VK_RIGHT) {
+        if ((key == KeyEvent.VK_RIGHT) || (key == KeyEvent.VK_RIGHT && key == KeyEvent.VK_LEFT)) {
             dx = 0;
         }
     }

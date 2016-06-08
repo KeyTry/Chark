@@ -5,6 +5,7 @@
  */
 package Assets;
 
+import Model.AI.EnemyAI;
 import View.Window;
 import static java.lang.Thread.sleep;
 import javax.swing.Timer;
@@ -14,12 +15,29 @@ import javax.swing.Timer;
  * @author DanielSQ
  */
 public class Enemy extends NPLiveSprite{
+    public EnemyAI ai;
     String hitDrawing;
     String defaultDrawing;
+    
+    public int damage;
     
     public Enemy(int x, int y, Window window, int health)
     {
         super(x,y,window,health);
+    }
+
+    /**
+     * @return the damage
+     */
+    public int getDamage() {
+        return damage;
+    }
+
+    /**
+     * @param damage the damage to set
+     */
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
     
     public void setDefaultDrawing(String defaultDrawing)
@@ -46,6 +64,7 @@ public class Enemy extends NPLiveSprite{
     
     public void aiOps()
     {
+        ai.runOps();
     }
     
     public void fixEnemyPosition()

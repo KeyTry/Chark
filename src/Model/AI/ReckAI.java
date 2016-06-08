@@ -27,5 +27,11 @@ public class ReckAI extends EnemyAI{
         setFinalPosOnY();
         
         moveEnemyOnY();
+        
+        /*setIniPosOnX();
+        
+        setFinalPosOnX();
+        
+        moveEnemyOnX();*/
     }
 }

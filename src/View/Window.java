@@ -21,6 +21,10 @@ import static java.lang.Thread.sleep;
 import javax.swing.JLabel;
 import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -93,7 +97,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     ArrayList <Bullet> arrayBullets = new ArrayList();
     
-    JLabel health;
+    HUDElement health;
     
     /**
      * Creates new form Window
@@ -138,8 +142,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         createLevels();
         loadLevel(getTestLevel());
         createLevelMethods();
-        createHealthLabel();
-        showHealthLabel();
         mThread = new MainThread(this);
         mThread.start();
     }
@@ -173,8 +175,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         platform = null;
         arrayEnemies = null;
         arrayOther = null;
-        //getContentPane().removeAll();
-        //
+        getContentPane().removeAll();
         }
         catch(Exception e)
         {
@@ -187,33 +188,33 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         clearLevel();
         
-        
         loadPlayer(level);
         loadPlatforms(level);
         loadEnemies(level);
         loadOther(level);
         loadLevelName(level);
+        
+        createHealthLabel();
+        showHealthLabel();
     }
     
     public void createHealthLabel()
     {
-        health = new HUDElement(25,25,"<html><font color:'white'> FUCKING LABEL</font></html>");
-        
-        /*health = new JLabel("<html><font size=5 color='white'>Health: "+player.getHealth()+"</font><html>");
-        health.setFont(new Font("Serif", Font.BOLD, 14));*/
+        health = new HUDElement();
+        health.setFont(new java.awt.Font("Arial Black", 1, 25));;
+        health.setForeground(new java.awt.Color(255, 255, 255));
     }
     
     public void showHealthLabel()
-    {
+    {        
         getContentPane().add(health);
-        health.setVisible(true);
+        health.setBounds(0,0,500,100);
         getContentPane().setComponentZOrder(health, 0);
     }
     
     public void updateHealthLabel()
     {
-        health.setText("<html><font size=15 color='white'>Health: "+player.getHealth()+"</font><html>");
-        health.setLocation(25,25);
+        health.setText("HEALTH: "+player.getHealth());
     }
     
     public void loadPlatforms(Level level)
@@ -295,6 +296,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             platform[i].update();
         }
         
+        moveEnemiesAI();
+        
         updatePlatforms();
         
         playerCollDetect();
@@ -317,9 +320,9 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         runAIOps();
         
-        moveEnemiesAI();
-        
         updateLevelMethods();
+        
+        removeEnemies();
         
         repaint();
     }
@@ -527,11 +530,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
                     goodbyeBullet(i);
                     arrayEnemies.get(j).lowerHealth(12);
                     showEnemyHit(j);
-                    //System.out.println("Salud del enemigo?: "+arrayEnemies.get(j).getHealth());
-                    if(arrayEnemies.get(j).getHealth() < 1)
-                    {
-                        removeEnemy(j);
-                    }
                     i=arrayBullets.size();
                     j=arrayEnemies.size();
                 }
@@ -548,16 +546,26 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             enemyPlayerHit.setSprites(player, arrayEnemies.get(i));
             if(enemyPlayerHit.detectCollision())
             {
-                if(playerHit == false)
+                System.out.println("Player Hit?: "+playerHit);
+                if(!playerHit)
                 {
-                    player.lowerHealth(10);
+                    System.out.println("JUGADOR GOLPEADO POR ENEMIGO");
+                    player.lowerHealth(arrayEnemies.get(i).getDamage());
+                    arrayEnemies.get(i).lowerHealth(3);
+                    System.out.println("Salud del enemigo: "+arrayEnemies.get(i).getHealth());
+                    System.out.println("Player Hit?: "+playerHit);
                     System.out.println("Salud del jugador: "+player.getHealth());
                     playerHit = true;
+                    System.out.println("Player Hit?: "+playerHit);
                 }
             }
             else
             {
-                playerHit = false;
+                if(playerHit)
+                {
+                    playerHit = false;
+                    System.out.println("Player Hit?: "+playerHit);
+                }
             }
         }
     }
@@ -657,7 +665,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         for(int i = 0; i<arrayEnemies.size(); i++)
         {
             arrayEnemies.get(i).moveOnXStaticEnemy();
-            arrayEnemies.get(i).moveOnYStaticEnemy();
+            //arrayEnemies.get(i).moveOnYStaticEnemy();
             arrayEnemies.get(i).fixEnemyPosition();
         }
         
@@ -745,17 +753,23 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
     }
     
-    public void removeEnemy(int i)
+    public void removeEnemies()
     {
-        try{
-            arrayEnemies.get(i).setVisible(false);
-            sleep(3);
-            arrayEnemies.remove(i);
-        }
-        catch(Exception e)
+        for(int i = 0; i<arrayEnemies.size();i++)
         {
-            System.out.println("Error al remover enemigo! "+e);
-            e.printStackTrace();
+            if(arrayEnemies.get(i).getHealth() < 1)
+            {
+                try{
+                    arrayEnemies.get(i).setVisible(false);
+                    sleep(3);
+                    arrayEnemies.remove(i);
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Error al remover enemigo! "+e);
+                    e.printStackTrace();
+                }
+            }
         }
     }
     
@@ -767,7 +781,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public void getBullets(Bullet bullet)
     {
         getContentPane().add(bullet);
-        bullet.setVisible(true);
         getContentPane().setComponentZOrder(bullet, 0);
         arrayBullets.add(bullet);
     }

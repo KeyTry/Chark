@@ -32,7 +32,7 @@ public class Player extends LiveSprite
     {
         int key = e.getKeyCode();
         
-        if(key == KeyEvent.VK_LEFT)
+        if((key == KeyEvent.VK_LEFT) || (key == KeyEvent.VK_LEFT && key == KeyEvent.VK_RIGHT))
         {
             facing = "left";
             dx = -gameSpeed;
@@ -40,7 +40,7 @@ public class Player extends LiveSprite
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/MovementAnimLeft.gif")));
         }
         
-        if (key == KeyEvent.VK_RIGHT) {
+        if ((key == KeyEvent.VK_RIGHT) || (key == KeyEvent.VK_RIGHT && key == KeyEvent.VK_LEFT)) {
             facing = "right";
             dx = gameSpeed;
             movingRight = true;
@@ -58,13 +58,14 @@ public class Player extends LiveSprite
         
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
+        if((key == KeyEvent.VK_LEFT) || (key == KeyEvent.VK_LEFT && key == KeyEvent.VK_RIGHT))
+        {
             dx = 0;
             movingLeft = false;
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/CharkIdleAnimLeft.gif"))); 
         }
 
-        if (key == KeyEvent.VK_RIGHT) {
+        if ((key == KeyEvent.VK_RIGHT) || (key == KeyEvent.VK_RIGHT && key == KeyEvent.VK_LEFT)) {
             dx = 0;
             movingRight = false;
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/CharkIdleAnim.gif"))); 
