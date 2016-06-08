@@ -13,28 +13,30 @@ import java.awt.event.KeyEvent;
  * @author DanielSQ
  */
 public class NPLiveSprite extends LiveSprite{
-    public NPLiveSprite(int x, int y, Window window)
+    int artx;
+    
+    public NPLiveSprite(int x, int y, Window window, int health)
     {
-        super(x,y,window);
+        super(x,y,window,health);
     }
     
-    public void moveOnXStatic()
+    @Override
+        public void moveOnX()
     {
-        if(dx > 0)
+        if(artx > 0)
         {
             if(collisionRight == false)
             {
-                x += dx;
+                x += artx;
             }
         }
-        if(dx < 0)
+        if(artx < 0)
         {
             if(collisionLeft == false)
             {
-                x += dx;
+                x += artx;
             }
         }
-        
         super.setLocation(x, y);
     }
     
@@ -53,30 +55,21 @@ public class NPLiveSprite extends LiveSprite{
         this.brinco = brinco;
         this.movingUp = movingUp;
         
-        System.out.println("Down lim: "+downLim);
-        
         if(limEst)
         {
             if(brinco && !collisionTop)
             {
-                //System.out.println("brinco Mundo?: "+brinco);
-                
-                //System.out.println("Y2: "+getY2());
-                //System.out.println("Limite: "+downLim);
                 if(getY2() < downLim)
                 {
-                    //System.out.println("Moviendo Plataforma");
                     y = y+gameSpeed;
                 }
                 else
                 {
                     this.brinco = false;
                     this.movingUp = false;
-                    //System.out.println("Brinco?: "+brinco);
                     jumpLim = 0;
                     limEst = false;
                 }
-                //System.out.println("brinco?: "+brinco);
             }
             else
             {
@@ -107,6 +100,11 @@ public class NPLiveSprite extends LiveSprite{
         }
         
         super.setLocation(x, y);
+    }
+    
+    public void setArtX(int artx)
+    {
+        this.artx = artx;
     }
     
     public void keyPressed(KeyEvent e)

@@ -6,8 +6,6 @@
 package Assets;
 
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 

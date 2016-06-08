@@ -12,36 +12,36 @@ import java.awt.Rectangle;
  *
  * @author DanielSQ
  */
-public class BulletEnemyHit 
+public class HitDetection 
 {
-    Sprite bullet;
-    Sprite enemy;
+    Sprite sprite1;
+    Sprite sprite2;
     
-    Rectangle bulletRectangle;
-    Rectangle enemyRectangle;
+    Rectangle sprite1Rectangle;
+    Rectangle sprite2Rectangle;
     
     boolean collision = false;
     
-    public BulletEnemyHit()
+    public HitDetection()
     {
     }
     
-    public void setBulletsEnemies(Sprite bullet, Sprite enemy)
+    public void setSprites(Sprite sprite1, Sprite sprite2)
     {
-        this.bullet = bullet;
-        this.enemy = enemy;
+        this.sprite1 = sprite1;
+        this.sprite2 = sprite2;
         createRectangles();
     }
     
     public void createRectangles()
     {
-        enemyRectangle = new Rectangle(enemy.getX(), enemy.getY(), enemy.getW(), enemy.getH());
-        bulletRectangle = new Rectangle(bullet.getX(), bullet.getY(), bullet.getW(), bullet.getH());
+        sprite2Rectangle = new Rectangle(sprite2.getX(), sprite2.getY(), sprite2.getW(), sprite2.getH());
+        sprite1Rectangle = new Rectangle(sprite1.getX(), sprite1.getY(), sprite1.getW(), sprite1.getH());
     }
     
     public boolean detectCollision()
     {
-        if(bulletRectangle.intersects(enemyRectangle))
+        if(sprite1Rectangle.intersects(sprite2Rectangle))
         {
             collision = true;
         }

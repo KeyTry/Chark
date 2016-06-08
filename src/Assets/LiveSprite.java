@@ -14,20 +14,21 @@ import View.Window;
 public class LiveSprite extends Sprite{
     
     Window window;
+    int health;
     
     String looking = "right";
-    public LiveSprite(int x, int y, Window window)
+    public LiveSprite(int x, int y, Window window, int health)
     {
         this.window = window;
         this.x = x;
         this.y = y;
+        this.health = health;
         super.setLocation(x, y);
-        jumpInt = 150;
+        jumpInt = 200;
     }
     
     public void moveOnX()
     {
-        //System.out.println("Colision Izquierda: "+collisionLeft);
         if(dx > 0)
         {
             if(collisionRight == false)
@@ -42,6 +43,27 @@ public class LiveSprite extends Sprite{
                 x += dx;
             }
         }
+        super.setLocation(x, y);
+    }
+    
+    public void moveOnXStatic()
+    {
+        System.out.println("Moviendo jugador estático");
+        if(dx > 0)
+        {
+            if(collisionRight)
+            {
+                x += -dx;
+            }
+        }
+        if(dx < 0)
+        {
+            if(collisionLeft)
+            {
+                x += -dx;
+            }
+        }
+        
         super.setLocation(x, y);
     }
     
@@ -60,23 +82,18 @@ public class LiveSprite extends Sprite{
         restingLim = jumpLim;
         if(brinco && !collisionTop)
         {
-            //System.out.println("brinco?: "+brinco);
             if(getY() > getJumpLim())
             {
-                //System.out.println("Y: "+getY());
                 y = y-gameSpeed;
                 restingLim= restingLim-gameSpeed;
-                //System.out.println("Limite: "+jumpLim);
             }
             else
             {
-                //System.out.println("Terminando brinco");
                 brinco = false;
                 movingUp = false;
                 jumpLim = 0;
                 restingLim = 0;
             }
-            //System.out.println("brinco?: "+brinco);
         }
         else
         {
@@ -138,5 +155,30 @@ public class LiveSprite extends Sprite{
         }
         Bullet bullet = new Bullet(xBull, yBull, looking);
         window.getBullets(bullet);
+    }
+    
+    public void raiseHealth(int raise)
+    {
+        health+= raise;
+    }
+    
+    public void lowerHealth(int damage)
+    {
+        health-= damage;
+    }
+    
+    public int getHealth()
+    {
+        return health;
+    }
+    
+    public void setDx(int dx)
+    {
+        this.dx = dx;
+    }
+    
+    public void setDy(int dy)
+    {
+        this.dy = dy;
     }
 }

@@ -18,11 +18,11 @@ public class Player extends LiveSprite
     Estados: cayendo, suelo, subiendo
     */
     
-    public Player(int x, int y, Window window)
+    public Player(int x, int y, Window window, int health)
     {
-        super(x,y,window);
+        super(x,y,window,health);
         this.window = window; 
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 
+        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/CharkIdleAnim.gif"))); 
         super.setIcon(icon);
         setImageDimensions();
         prepareJump();   
@@ -37,14 +37,14 @@ public class Player extends LiveSprite
             looking = "left";
             dx = -gameSpeed;
             movingLeft = true;        
-            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnimLeft.gif")));
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/MovementAnimLeft.gif")));
         }
         
         if (key == KeyEvent.VK_RIGHT) {
             looking = "right";
             dx = gameSpeed;
             movingRight = true;
-            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/MovementAnim.gif")));
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/MovementAnim.gif")));
         }
         
         if(key == KeyEvent.VK_UP) {
@@ -60,17 +60,16 @@ public class Player extends LiveSprite
         if (key == KeyEvent.VK_LEFT) {
             dx = 0;
             movingLeft = false;
-            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnimLeft.gif"))); 
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/CharkIdleAnimLeft.gif"))); 
         }
 
         if (key == KeyEvent.VK_RIGHT) {
             dx = 0;
             movingRight = false;
-            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/CharkIdleAnim.gif"))); 
+            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/CharkIdleAnim.gif"))); 
         }
         
         if(key == KeyEvent.VK_SPACE){
-            System.out.println("Disparando!");
             try
             {
                 createBullet();

@@ -18,7 +18,7 @@ public class Platform extends Sprite{
         this.x = x;
         this.y = y;
         super.setLocation(x, y);
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/"+type+".png"))); 
+        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Platforms/"+type+".png"))); 
         super.setIcon(icon);
         setImageDimensions();
     }
@@ -62,24 +62,17 @@ public class Platform extends Sprite{
         {
             if(brinco && !collisionTop)
             {
-                //System.out.println("brinco Mundo?: "+brinco);
-                
-                //System.out.println("Y2: "+getY2());
-                //System.out.println("Limite: "+downLim);
                 if(getY2() < downLim)
                 {
-                    //System.out.println("Moviendo Plataforma");
                     y = y+gameSpeed;
                 }
                 else
                 {
                     this.brinco = false;
                     this.movingUp = false;
-                    //System.out.println("Brinco?: "+brinco);
                     jumpLim = 0;
                     limEst = false;
                 }
-                //System.out.println("brinco?: "+brinco);
             }
             else
             {
@@ -96,7 +89,6 @@ public class Platform extends Sprite{
     {
         if(!collisionBot && !brinco)
         {
-            //System.out.println("Brinco?: "+brinco);
             dy = -gameSpeed;
             y += dy;
             movingDown = true;

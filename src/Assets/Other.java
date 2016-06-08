@@ -9,55 +9,34 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author Daniel
+ * @author DanielSQ
  */
-public class Bullet extends Sprite{
-    int bulletSpeed = gameSpeed;
-    int damage = 10;
-    boolean exploding = false;
+public class Other extends Sprite{
+    private String name;
     
-    String facing;
-    public Bullet(int x, int y, String facing)
+    public Other(int x, int y, String type, String name)
     {        
-        this.facing = facing;
         this.x = x;
         this.y = y;
         super.setLocation(x, y);
-        if(facing.equals("right"))
-        {
-            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Bullet/bullet.png"))); 
-        }
-        if(facing.equals("left"))
-        {
-            icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Bullet/bulletLeft.png"))); 
-        }
-        super.setIcon(icon); 
+        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/"+type+".png"))); 
+        super.setIcon(icon);
+        this.name = name;
         setImageDimensions();
-        super.setBounds(0, 0, getW(), getH());
     }
-    
-    public void move()
-    {
-        if(facing.equals("right"))
-        {
-            dx=bulletSpeed;
-        }
-        if(facing.equals("left"))
-        {
-            dx=-bulletSpeed;
-        }
-        x+=dx;
-        super.setLocation(x,y);
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
     }
-    
-    public boolean getColl()
-    {
-        boolean collision = false;
-        if(collisionLeft || collisionRight)
-        {
-            collision = true;
-        }
-        return collision;
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
     
     public void moveOnX()
@@ -99,9 +78,6 @@ public class Bullet extends Sprite{
         {
             if(brinco && !collisionTop)
             {
-                
-                System.out.println("Y2: "+getY2());
-                System.out.println("Limite: "+downLim);
                 if(getY2() < downLim)
                 {
                     y = y+gameSpeed;
@@ -110,7 +86,6 @@ public class Bullet extends Sprite{
                 {
                     this.brinco = false;
                     this.movingUp = false;
-                    System.out.println("Brinco?: "+brinco);
                     jumpLim = 0;
                     limEst = false;
                 }
@@ -128,7 +103,7 @@ public class Bullet extends Sprite{
     
     public void fall(boolean brinco, boolean movingDown)
     {
-        if(!brinco)
+        if(!collisionBot && !brinco)
         {
             dy = -gameSpeed;
             y += dy;
@@ -141,22 +116,6 @@ public class Bullet extends Sprite{
         }
         
         super.setLocation(x, y);
-    }
-    
-    public void showExplosion()
-    {
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Bullet/explosion.gif")));
-        super.setIcon(icon);
-    }
-    
-    public void setExploding(boolean exploding)
-    {
-        this.exploding = exploding;
-    }
-    
-    public boolean isExploding()
-    {
-        return exploding;
     }
     
     public void keyPressed(KeyEvent e)
@@ -189,15 +148,5 @@ public class Bullet extends Sprite{
         if (key == KeyEvent.VK_RIGHT) {
             dx = 0;
         }
-    }
-    
-    public int getDamage()
-    {
-        return damage;
-    }
-    
-    public void stop()
-    {
-        bulletSpeed  = 0;
     }
 }

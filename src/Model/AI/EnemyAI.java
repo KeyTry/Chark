@@ -15,9 +15,33 @@ public class EnemyAI
 {
     Enemy enemy;
     
+    int curX;
+    int distance;
+    
+    int iniPos;
+    int finalPos;
+    boolean firstMove = true;
+    boolean moving = false;
+    
     public EnemyAI(Enemy enemy)
     {
         this.enemy = enemy;
     }
+
+    public void runOps()
+    {
+        
+    }
     
+    public void fixEnemyPosition(int dx)
+    {
+        if(dx > 0)
+        {
+            finalPos += dx;
+        }
+        if(dx < 0)
+        {
+            finalPos += dx;
+        }
+    }
 }

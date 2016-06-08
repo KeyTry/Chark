@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model.Detection.Hit;
+package Assets;
 
 /**
  *
  * @author DanielSQ
  */
-public class EnemyPlayerHit 
-{
+public class Static {
     
 }

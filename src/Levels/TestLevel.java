@@ -21,19 +21,28 @@ public class TestLevel extends Level
     public TestLevel(Window window)
     {
         super(window);
-        platform = new Platform[4];
-        enemy = new ArrayList();
-        player = new Player(60,50,window);
+        levelName = "Test";
+        platform = new Platform[8];
+        player = new Player(60,50,window,144);
         setPlatforms();
         setEnemies();
     }
     
+    public Player getPlayer()
+    {
+        return player;
+    }
+    
     public void setPlatforms()
     {
-        platform[0] = new Platform(50,200,"Platform");
-        platform[1] = new Platform(200,200,"Platform");
-        platform[2] = new Platform(400,200,"Platform");
-        platform[3] = new Platform(600,350,"Platform");
+        platform[0] = new Platform(-200,200,"Platform");
+        platform[1] = new Platform(50,200,"Platform");
+        platform[2] = new Platform(200,200,"Platform");
+        platform[3] = new Platform(400,200,"Platform");
+        platform[4] = new Platform(600,325,"Platform");
+        platform[5] = new Platform(800,325,"Platform");
+        platform[6] = new Platform(1000,325,"Platform");
+        platform[7] = new Platform(1300,200,"Platform");
         
         for(int i = 0; i<platform.length; i++)
         {
@@ -44,13 +53,7 @@ public class TestLevel extends Level
     public void setEnemies()
     {
         Enemy enemy1 = new Slim(600, 25,window);
-        Enemy enemy2 = new Slim(750, 25,window);
-        Enemy enemy3 = new Slim(900, 25,window);
-        Enemy enemy4 = new Slim(1200, 25,window);
         
         enemy.add(enemy1);
-        enemy.add(enemy2);
-        enemy.add(enemy3);
-        enemy.add(enemy4);
     }
 }
