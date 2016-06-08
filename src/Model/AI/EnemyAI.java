@@ -15,11 +15,14 @@ public class EnemyAI
 {
     Enemy enemy;
     
-    int curX;
     int distance;
     
-    int iniPos;
-    int finalPos;
+    int iniPosX;
+    int finPosX;
+    
+    int iniPosY;
+    int finPosY;
+    
     boolean firstMove = true;
     boolean moving = false;
     
@@ -33,15 +36,155 @@ public class EnemyAI
         
     }
     
-    public void fixEnemyPosition(int dx)
+    public void fixEnemyPositionOnX(int dx)
     {
-        if(dx > 0)
+        finPosX += dx;
+        iniPosX += dx;
+    }
+    
+    public void fixEnemyPositionOnY(int dy)
+    {
+        finPosY += dy;
+        iniPosY += dy;
+    }
+    
+    public void setIniPosOnY()
+    {
+        if(!moving)
         {
-            finalPos += dx;
+            iniPosY = enemy.getY2();
         }
-        if(dx < 0)
+    }
+    
+    public void setFinalPosOnY()
+    {
+        if(firstMove)
         {
-            finalPos += dx;
+            finPosY = (iniPosY - distance);
+            //System.out.println("Posición final: "+finPosX);
+        }
+        else
+        {
+            finPosY = (iniPosY + distance);
+            //System.out.println("Posición final: "+finPosX);
+        }
+    }
+    
+    public void moveEnemyOnY()
+    {
+        if(enemy.isCollisionBot())
+        {
+            moving = false;
+            firstMove = true;
+            setIniPosOnY();
+            setFinalPosOnY();
+        }
+        if(enemy.isCollisionTop())
+        {
+            moving = false;
+            firstMove = false;
+            setIniPosOnY();
+            setFinalPosOnY();
+        }
+        if(firstMove)
+        {
+            if(enemy.getY2() > finPosY)
+            {
+                moving = true;
+                enemy.setArtY(-10);
+            }
+            else
+            {
+                moving = false;
+                firstMove = false;
+                setIniPosOnY();
+                setFinalPosOnY();
+            }
+        }
+        else
+        {
+            if(enemy.getY2() < finPosY)
+            {
+                moving = true;
+                enemy.setArtY(10);
+            }
+            else
+            {
+                moving = false;
+                firstMove = true;
+                setIniPosOnY();
+                setFinalPosOnY();
+            }
+        }
+    }
+    
+    public void setIniPosOnX()
+    {
+        if(!moving)
+        {
+            iniPosX = enemy.getX();
+        }
+    }
+    
+    public void setFinalPosOnX()
+    {
+        if(firstMove)
+        {
+            finPosX = (iniPosX - distance);
+            //System.out.println("Posición final: "+finPosX);
+        }
+        else
+        {
+            finPosX = (iniPosX + distance);
+            //System.out.println("Posición final: "+finPosX);
+        }
+    }
+    
+    public void moveEnemyOnX()
+    {
+        if(enemy.isCollisionLeft())
+        {
+            moving = false;
+            firstMove = false;
+            setIniPosOnX();
+            setFinalPosOnX();
+        }
+        if(enemy.isCollisionRight())
+        {
+            moving = false;
+            firstMove = true;
+            setIniPosOnX();
+            setFinalPosOnX();
+        }
+        if(firstMove)
+        {
+            if(enemy.getX() > finPosX)
+            {
+                moving = true;
+                enemy.setArtX(-10);
+            }
+            else
+            {
+                moving = false;
+                firstMove = false;
+                setIniPosOnX();
+                setFinalPosOnX();
+            }
+        }
+        else
+        {
+            if(enemy.getX() < finPosX)
+            {
+                moving = true;
+                enemy.setArtX(10);
+            }
+            else
+            {
+                moving = false;
+                firstMove = true;
+                setIniPosOnX();
+                setFinalPosOnX();
+            }
         }
     }
 }

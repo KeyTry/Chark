@@ -11,9 +11,15 @@ import Model.Detection.Hit.HitDetection;
 import Model.Detection.Collision.PlatformCollision;
 import Model.LevelMethods.IntroMethods;
 import Thread.MainThread;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import javax.swing.JLabel;
+import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
 
 /**
@@ -87,6 +93,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     ArrayList <Bullet> arrayBullets = new ArrayList();
     
+    JLabel health;
+    
     /**
      * Creates new form Window
      */
@@ -126,10 +134,12 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public void initWindow()
     {
         this.setLocationRelativeTo(null);
-        
+        getContentPane().setBackground(Color.BLACK);
         createLevels();
-        loadLevel(getIntroLevel());
+        loadLevel(getTestLevel());
         createLevelMethods();
+        createHealthLabel();
+        showHealthLabel();
         mThread = new MainThread(this);
         mThread.start();
     }
@@ -163,8 +173,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         platform = null;
         arrayEnemies = null;
         arrayOther = null;
-        getContentPane().removeAll();
-        sleep(50);
+        //getContentPane().removeAll();
+        //
         }
         catch(Exception e)
         {
@@ -177,11 +187,33 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         clearLevel();
         
+        
         loadPlayer(level);
         loadPlatforms(level);
         loadEnemies(level);
         loadOther(level);
         loadLevelName(level);
+    }
+    
+    public void createHealthLabel()
+    {
+        health = new HUDElement(25,25,"<html><font color:'white'> FUCKING LABEL</font></html>");
+        
+        /*health = new JLabel("<html><font size=5 color='white'>Health: "+player.getHealth()+"</font><html>");
+        health.setFont(new Font("Serif", Font.BOLD, 14));*/
+    }
+    
+    public void showHealthLabel()
+    {
+        getContentPane().add(health);
+        health.setVisible(true);
+        getContentPane().setComponentZOrder(health, 0);
+    }
+    
+    public void updateHealthLabel()
+    {
+        health.setText("<html><font size=15 color='white'>Health: "+player.getHealth()+"</font><html>");
+        health.setLocation(25,25);
     }
     
     public void loadPlatforms(Level level)
@@ -252,8 +284,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         decideMovements();
     }
     
-        public void updateElements()
+    public void updateElements()
     {
+        repaint();
+        
         player.update();
         
         for(int i = 0; i < platform.length; i++)
@@ -279,11 +313,15 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         detectEnemyPlayerHit();
         
+        updateHealthLabel();
+        
         runAIOps();
         
-        moveEnemiesOnX();
+        moveEnemiesAI();
         
         updateLevelMethods();
+        
+        repaint();
     }
     
     public void decideMovements()
@@ -473,14 +511,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         return enemy;
     }
     
-    public void fixEnemyPosition()
-    {
-        for(int i=0; i<arrayEnemies.size();i++)
-        {
-           arrayEnemies.get(i).fixEnemyPosition();
-        }
-    }
-    
     public void detectBulletEnemyHit()
     {
         HitDetection bullEnemHit = new HitDetection();
@@ -626,8 +656,9 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         for(int i = 0; i<arrayEnemies.size(); i++)
         {
-            arrayEnemies.get(i).moveOnXStatic();
-            //arrayEnemies.get(i).fixEnemyPosition();
+            arrayEnemies.get(i).moveOnXStaticEnemy();
+            arrayEnemies.get(i).moveOnYStaticEnemy();
+            arrayEnemies.get(i).fixEnemyPosition();
         }
         
         for(int i = 0; i<arrayOther.size(); i++)
@@ -750,11 +781,12 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
     }
     
-    public void moveEnemiesOnX()
+    public void moveEnemiesAI()
     {
         for(int i=0; i<arrayEnemies.size();i++)
         {
             arrayEnemies.get(i).moveOnX();
+            arrayEnemies.get(i).moveOnY();
         }
     }
 

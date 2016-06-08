@@ -13,7 +13,8 @@ import java.awt.event.KeyEvent;
  * @author DanielSQ
  */
 public class NPLiveSprite extends LiveSprite{
-    int artx;
+    int artX;
+    int artY;
     
     public NPLiveSprite(int x, int y, Window window, int health)
     {
@@ -21,22 +22,82 @@ public class NPLiveSprite extends LiveSprite{
     }
     
     @Override
-        public void moveOnX()
+    public void moveOnX()
     {
-        if(artx > 0)
+        if(artX > 0)
         {
             if(collisionRight == false)
             {
-                x += artx;
+                x += artX;
             }
         }
-        if(artx < 0)
+        if(artX < 0)
         {
             if(collisionLeft == false)
             {
-                x += artx;
+                x += artX;
             }
         }
+        super.setLocation(x, y);
+    }
+    
+        
+    public void moveOnY()
+    {
+        if(artY > 0)
+        {
+            if(collisionBot == false)
+            {
+                y += artY;
+            }
+        }
+        if(artY < 0)
+        {
+            if(collisionTop == false)
+            {
+                y += artY;
+            }
+        }
+        super.setLocation(x, y);
+    }
+    
+    public void moveOnXStaticEnemy()
+    {
+        if(dx > 0)
+        {
+            if(!collisionRight)
+            {
+                x += dx;
+            }
+        }
+        if(dx < 0)
+        {
+            if(!collisionLeft)
+            {
+                x += dx;
+            }
+        }
+        
+        super.setLocation(x, y);
+    }
+    
+    public void moveOnYStaticEnemy()
+    {
+        if(dy > 0)
+        {
+            if(!collisionBot)
+            {
+                y += dy;
+            }
+        }
+        if(dy < 0)
+        {
+            if(!collisionTop)
+            {
+                y += dy;
+            }
+        }
+        
         super.setLocation(x, y);
     }
     
@@ -102,9 +163,14 @@ public class NPLiveSprite extends LiveSprite{
         super.setLocation(x, y);
     }
     
-    public void setArtX(int artx)
+    public void setArtX(int artX)
     {
-        this.artx = artx;
+        this.artX = artX;
+    }
+    
+    public void setArtY(int artY)
+    {
+        this.artY = artY;
     }
     
     public void keyPressed(KeyEvent e)

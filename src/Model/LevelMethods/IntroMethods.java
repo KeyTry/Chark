@@ -45,6 +45,8 @@ public class IntroMethods
         if((player.getY()>=arrayOther.get(index).getY()) && (player.getX()>=arrayOther.get(index).getX()))
         {
             window.loadLevel(window.getTestLevel());
+            window.createHealthLabel();
+            window.showHealthLabel();
         }
     }
 

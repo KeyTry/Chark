@@ -9,6 +9,12 @@ package Assets;
  *
  * @author DanielSQ
  */
-public class Static {
-    
+public class HUDElement extends Sprite{
+    public HUDElement(int x, int y, String text)
+    {
+        this.x = x;
+        this.y = y;
+        super.setLocation(x, y);
+        super.setText(text);
+    }
 }

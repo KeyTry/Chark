@@ -11,22 +11,21 @@ import Assets.Enemy;
  *
  * @author DanielSQ
  */
-public class SlimAI extends EnemyAI
-{
-    public SlimAI(Enemy enemy)
-    {
+public class ReckAI extends EnemyAI{
+    
+    public ReckAI(Enemy enemy) {
         super(enemy);
-        distance = 200;
+        distance = 300;
     }
     
-    @Override
+     @Override
     public void runOps()
     {
         //System.out.println("Corriendo operaciones para Slim");
-        setIniPosOnX();
+        setIniPosOnY();
         
-        setFinalPosOnX();
+        setFinalPosOnY();
         
-        moveEnemyOnX();
+        moveEnemyOnY();
     }
 }

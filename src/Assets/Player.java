@@ -34,14 +34,14 @@ public class Player extends LiveSprite
         
         if(key == KeyEvent.VK_LEFT)
         {
-            looking = "left";
+            facing = "left";
             dx = -gameSpeed;
             movingLeft = true;        
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/MovementAnimLeft.gif")));
         }
         
         if (key == KeyEvent.VK_RIGHT) {
-            looking = "right";
+            facing = "right";
             dx = gameSpeed;
             movingRight = true;
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/MovementAnim.gif")));
@@ -49,7 +49,8 @@ public class Player extends LiveSprite
         
         if(key == KeyEvent.VK_UP) {
             prepareJump();            
-        }        
+        }            
+                
         super.setIcon(icon);
     }
     
@@ -78,7 +79,7 @@ public class Player extends LiveSprite
             {
                 System.out.println("Error al crear bala");
             }
-        }       
+        }    
         
         super.setIcon(icon);
     }

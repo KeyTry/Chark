@@ -16,7 +16,8 @@ public class LiveSprite extends Sprite{
     Window window;
     int health;
     
-    String looking = "right";
+    String facing = "right";
+    
     public LiveSprite(int x, int y, Window window, int health)
     {
         this.window = window;
@@ -143,17 +144,17 @@ public class LiveSprite extends Sprite{
     {
         int xBull = 0;
         int yBull = 0;
-        if(looking.equals("right"))
+        if(facing.equals("right"))
         {
             xBull = x2-5;
             yBull = y+42;
         }
-        if(looking.equals("left"))
+        if(facing.equals("left"))
         {
             xBull = x+5;
             yBull = y+42;
         }
-        Bullet bullet = new Bullet(xBull, yBull, looking);
+        Bullet bullet = new Bullet(xBull, yBull, facing);
         window.getBullets(bullet);
     }
     
