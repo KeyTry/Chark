@@ -11,8 +11,8 @@ import java.awt.event.KeyEvent;
  *
  * @author DanielSQ
  */
-public class StaticObject extends Sprite{
-    public StaticObject(int x, int y)
+public class StaticSprite extends Sprite{
+    public StaticSprite(int x, int y)
     {
         this.x = x;
         this.y = y;
@@ -41,11 +41,14 @@ public class StaticObject extends Sprite{
     
     public void prepareJump(int restingLim)
     {
-        if(!limEst)
+        if(restingLim != 0)
         {
-            this.restingLim = restingLim;
-            downLim = getY2() +- this.restingLim;
-            limEst = true;
+            if(!limEst)
+            {
+                this.restingLim = restingLim;
+                downLim = getY2() +- this.restingLim;
+                limEst = true;
+            }
         }
     }
     
@@ -54,27 +57,32 @@ public class StaticObject extends Sprite{
         this.brinco = brinco;
         this.movingUp = movingUp;
         
-        if(limEst)
-        {
-            if(brinco && !collisionTop)
+        if(restingLim != 0)
+        {        
+            this.brinco = brinco;
+            this.movingUp = movingUp;
+            if(limEst)
             {
-                if(getY2() < downLim)
+                if(brinco && !collisionTop)
                 {
-                    y = y+gameSpeed;
+                    if(getY2() < downLim)
+                    {
+                        y = y+gameSpeed;
+                    }
+                    else
+                    {
+                        this.brinco = false;
+                        this.movingUp = false;
+                        jumpLim = 0;
+                        limEst = false;
+                    }
                 }
                 else
                 {
-                    this.brinco = false;
                     this.movingUp = false;
-                    jumpLim = 0;
+                    this.brinco = false;
                     limEst = false;
                 }
-            }
-            else
-            {
-                this.movingUp = false;
-                this.brinco = false;
-                limEst = false;
             }
         }
         

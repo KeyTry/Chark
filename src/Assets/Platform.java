@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
  *
  * @author DanielSQ
  */
-public class Platform extends StaticObject{
+public class Platform extends StaticSprite{
     
     public Platform(int x, int y, String type)
     {       

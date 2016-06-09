@@ -39,7 +39,7 @@ public class Sprite extends JLabel
     
     public boolean brinco = false;
     
-    public int gameSpeed = 6;
+    public int gameSpeed = 12;
         
     int downLim;
     int restingLim;
@@ -118,8 +118,8 @@ public class Sprite extends JLabel
     
     public void setSecBound()
     {
-        x2 = (x + w)-3;
-        y2 = (y + h)-3;
+        x2 = (x + w)-6;
+        y2 = (y + h)-6;
     }
     
     public int getDy()

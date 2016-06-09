@@ -39,10 +39,10 @@ public class IntroLevel extends Level
     
     public void setPlatforms()
     {
-        platform[0] = new Platform(-47,-60,"top1");
-        platform[1] = new Platform(-50,400,"bot1");
+        platform[0] = new Platform(-10,-60,"top1");
+        platform[1] = new Platform(-20,400,"bot1");
         platform[2] = new Platform(-20,-5,"Side");
-        platform[3] = new Platform(740,-5,"Side");
+        platform[3] = new Platform(740,-5,"Side2");
         platform[4] = new Platform(560,220,"Wooden");
         
         for(int i = 0; i<platform.length; i++)
@@ -53,11 +53,11 @@ public class IntroLevel extends Level
     
     public void setOther()
     {
-        Other chest = new Other(280,400,"Chest.gif","Chest");
-        Other door1 = new Other(630,257,"door1.png","door1");
-        Other board = new Other(600,80,"boardObj.png","Board");
-        Other logo = new Other(45,60,"Logo.png","logo");
-        Other fondo = new Other(0,0,"FondoIntro.png","fondo");
+        Other chest = new Other(280,355,"Intro/Chest.gif","chest1");
+        Other door1 = new Other(630,257,"Intro/door1.png","door1");
+        Other board = new Other(600,100,"Intro/boardObj.png","Board");
+        Other logo = new Other(120,100,"Intro/Logo.png","logo");
+        Other fondo = new Other(0,0,"Intro/FondoIntro.png","fondo");
         
         other.add(door1);
         other.add(chest);

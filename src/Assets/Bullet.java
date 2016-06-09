@@ -82,11 +82,14 @@ public class Bullet extends Sprite{
     
     public void prepareJump(int restingLim)
     {
-        if(!limEst)
+        if(restingLim != 0)
         {
-            this.restingLim = restingLim;
-            downLim = getY2() +- this.restingLim;
-            limEst = true;
+            if(!limEst)
+            {
+                this.restingLim = restingLim;
+                downLim = getY2() +- this.restingLim;
+                limEst = true;
+            }
         }
     }
     

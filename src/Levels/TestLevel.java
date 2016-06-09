@@ -22,7 +22,6 @@ public class TestLevel extends Level
     {
         super(window);
         levelName = "Test";
-        platform = new Platform[11];
         player = new Player(60, 50,window,144);
         init();
     }
@@ -41,6 +40,7 @@ public class TestLevel extends Level
     
     public void setPlatforms()
     {
+        platform = new Platform[14];
         platform[0] = new Platform(-200,300,"Platform");
         platform[1] = new Platform(50,300,"Platform");
         platform[2] = new Platform(200,300,"Platform");
@@ -53,6 +53,9 @@ public class TestLevel extends Level
         platform[8] = new Platform(150,40,"Wooden");
         platform[9] = new Platform(-200,-100,"wall1");
         platform[10] = new Platform(1400,-100,"wall2");
+        platform[11] = new Platform(600,100,"Wooden");
+        platform[12] = new Platform(1000,200,"Wooden");
+        platform[13] = new Platform(-10,-250,"top1");
         
         for(int i = 0; i<platform.length; i++)
         {
@@ -62,10 +65,14 @@ public class TestLevel extends Level
     
     public void setEnemies()
     {
+        Enemy slim1 = new Slim(600,180,window);
+        Enemy slim2 = new Slim(1000,180,window);
         Enemy reck1 = new Reck(250, 180,window);
         Enemy reck2 = new Reck(175, 150,window);
         Enemy reck3 = new Reck(325, 115,window);
         
+        enemy.add(slim1);
+        enemy.add(slim2);
         enemy.add(reck1);
         enemy.add(reck2);
         enemy.add(reck3);
@@ -73,12 +80,14 @@ public class TestLevel extends Level
     
     public void setOther()
     {
-        Other chest = new Other(1690,255,"Chest.gif","Chest");
+        Other chest = new Other(1200,255,"Chest.gif","Chest");
         Other lifeB = new Other(400, 255,"LifeBig.png","LifeBig");
         Other lifeS = new Other(1600,255,"Life.gif","Life");
+        Other lifeS2 = new Other(1300,100,"Life.gif","Life");
         
-        //other.add(chest);
+        other.add(chest);
         other.add(lifeB);
         other.add(lifeS);
+        other.add(lifeS2);
     }
 }

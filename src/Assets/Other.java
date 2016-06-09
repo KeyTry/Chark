@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
  *
  * @author DanielSQ
  */
-public class Other extends StaticObject{
+public class Other extends StaticSprite{
     private String name;
     
     public Other(int x, int y, String type, String name)

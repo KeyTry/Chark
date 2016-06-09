@@ -420,11 +420,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         {
             moveWorldOnX();
         }
-        if(player.isMovingRight() && player.getX2() < 750)
+        if(player.isMovingRight() && player.getX2() < 600)
         {            
             movePlayerOnX();
         }
-        if(player.isMovingRight() && player.getX2() >= 750)
+        if(player.isMovingRight() && player.getX2() >= 600)
         {  
             moveWorldOnX();
         }
@@ -434,24 +434,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
         if(player.isMovingUp() && player.getY() <= 12)
         {
-            for(int i = 0; i < platform.length; i++)
+            prepareJumpWorld();
+            if(player.getRestingLim() != 0)
             {
-                platform[i].prepareJump(getRestingLim());
+                jumpWorld();
             }
-            for(int i = 0; i < arrayBullets.size(); i++)
-            {
-                arrayBullets.get(i).prepareJump(getRestingLim());
-            }
-            for(int i = 0; i < arrayEnemies.size(); i++)
-            {
-                arrayEnemies.get(i).prepareJumpStatic(getRestingLim());
-            }
-            for(int i = 0;i<arrayOther.size();i++)
-            {
-                arrayOther.get(i).prepareJump(getRestingLim());
-                System.out.println("Brinco preparado para otro: "+arrayOther.get(i).getName());
-            }
-            jumpWorld();
         }
         if(player.isMovingDown() && player.getY2() < 350)
         {
@@ -460,6 +447,27 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         if(player.isMovingDown() && player.getY2() >= 350)
         {
             fallWorld();
+        }
+    }
+    
+    public void prepareJumpWorld()
+    {
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].prepareJump(getRestingLim());
+        }
+        for(int i = 0; i < arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).prepareJump(getRestingLim());
+        }
+        for(int i = 0; i < arrayEnemies.size(); i++)
+        {
+            arrayEnemies.get(i).prepareJumpStatic(getRestingLim());
+        }
+        for(int i = 0;i<arrayOther.size();i++)
+        {
+            arrayOther.get(i).prepareJump(getRestingLim());
+            System.out.println("Brinco preparado para otro: "+arrayOther.get(i).getName());
         }
     }
     
@@ -1030,46 +1038,77 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
     }
     
+    public void setRestingLim(int restingLim)
+    {
+        for(int i = 0; i < platform.length; i++)
+        {
+            platform[i].prepareJump(restingLim);
+        }
+        for(int i = 0; i < arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).prepareJump(restingLim);
+        }
+        for(int i = 0; i < arrayEnemies.size(); i++)
+        {
+            arrayEnemies.get(i).prepareJumpStatic(restingLim);
+        }
+        for(int i = 0;i<arrayOther.size();i++)
+        {
+            arrayOther.get(i).prepareJump(restingLim);
+            System.out.println("Brinco preparado para otro: "+arrayOther.get(i).getName());
+        }
+    }
+    
     public void showScores()
     {
+        revalidate();
+        repaint();
+        
         Icon scoreBoard = new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/board.png"));
         board = new JLabel();
         board.setIcon(scoreBoard);
-        getContentPane().add(board);
-        getContentPane().setComponentZOrder(board, 0);
         board.setBounds(250,55,scoreBoard.getIconHeight()+50,scoreBoard.getIconWidth()+50);
         
         timesTitle = new JLabel();
         timesTitle.setFont(new java.awt.Font("Arial Black", 1, 32)); // NOI18N
         timesTitle.setForeground(new java.awt.Color(255, 255, 255));
         timesTitle.setText("Best Times");
-        getContentPane().add(timesTitle);
-        getContentPane().setComponentZOrder(timesTitle, 0);
-        timesTitle.setBounds(266, 70, 800, 50);
+        timesTitle.setBounds(300, 120, 800, 60);
         
         times1 = new JLabel();
         times1.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
         times1.setForeground(new java.awt.Color(255, 255, 255));
-        times1.setText(printTimes()[0]);
-        getContentPane().add(times1);
-        getContentPane().setComponentZOrder(times1, 0);
-        times1.setBounds(315, 125, 800, 50);
+        times1.setText(printTimes()[0]+" seconds");
+        times1.setBounds(300, 175, 800, 50);
         
         times2 = new JLabel();
         times2.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         times2.setForeground(new java.awt.Color(255, 255, 255));
-        times2.setText(printTimes()[1]);
-        getContentPane().add(times2);
-        getContentPane().setComponentZOrder(times2, 0);
-        times2.setBounds(315, 175, 800, 50);
+        times2.setText(printTimes()[1]+" seconds");
+        times2.setBounds(330, 225, 800, 50);
         
         times3 = new JLabel();
         times3.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         times3.setForeground(new java.awt.Color(255, 255, 255));
-        times3.setText(printTimes()[2]);
+        times3.setText(printTimes()[2]+" seconds");
+        times3.setBounds(330, 275, 800, 50);
+        
+        getContentPane().add(board);
+        getContentPane().setComponentZOrder(board, 0);
+        
+        getContentPane().add(timesTitle);
+        getContentPane().setComponentZOrder(timesTitle, 0);
+        
+        getContentPane().add(times1);
+        getContentPane().setComponentZOrder(times1, 0);
+        
+        getContentPane().add(times2);
+        getContentPane().setComponentZOrder(times2, 0);
+        
         getContentPane().add(times3);
         getContentPane().setComponentZOrder(times3, 0);
-        times3.setBounds(315, 225, 800, 50);
+        
+        revalidate();
         repaint();
     }
     

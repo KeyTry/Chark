@@ -101,6 +101,10 @@ public class LiveSprite extends Sprite{
             movingUp = false;
             brinco = false;
             restingLim = 0;
+            if(collisionTop)
+            {
+                window.setRestingLim(restingLim);
+            }
         }
         
         super.setLocation(x, y);
