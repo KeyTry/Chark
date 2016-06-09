@@ -14,7 +14,7 @@ import View.Window;
 public class LiveSprite extends Sprite{
     
     Window window;
-    int health;
+    public int health;
     
     String facing = "right";
     
@@ -160,17 +160,24 @@ public class LiveSprite extends Sprite{
     
     public void raiseHealth(int raise)
     {
-        health+= raise;
+        setHealth(getHealth() + raise);
     }
     
     public void lowerHealth(int damage)
     {
-        health-= damage;
+        setHealth(getHealth() - damage);
     }
     
     public int getHealth()
     {
         return health;
+    }
+
+    /**
+     * @param health the health to set
+     */
+    public void setHealth(int health) {
+        this.health = health;
     }
     
     public void setDx(int dx)

@@ -38,4 +38,10 @@ public class Reck extends Enemy{
         ai.fixEnemyPositionOnX(dx);
         ai.fixEnemyPositionOnY(dy);
     }
+    
+    @Override
+    public void fall()
+    {
+        dy = 0;
+    }
 }

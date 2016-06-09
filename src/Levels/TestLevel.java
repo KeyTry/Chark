@@ -7,7 +7,6 @@ package Levels;
 
 import Assets.Enemy;
 import Assets.Platform;
-import java.util.ArrayList;
 import Assets.Enemies.*;
 import Assets.Other;
 import Assets.Player;
@@ -23,7 +22,7 @@ public class TestLevel extends Level
     {
         super(window);
         levelName = "Test";
-        platform = new Platform[9];
+        platform = new Platform[11];
         player = new Player(60, 50,window,144);
         init();
     }
@@ -46,12 +45,14 @@ public class TestLevel extends Level
         platform[1] = new Platform(50,300,"Platform");
         platform[2] = new Platform(200,300,"Platform");
         platform[3] = new Platform(400,300,"Platform");
-        platform[4] = new Platform(600,425,"Platform");
-        platform[5] = new Platform(800,425,"Platform");
-        platform[6] = new Platform(1000,425,"Platform");
+        platform[4] = new Platform(600,300,"Platform");
+        platform[5] = new Platform(800,300,"Platform");
+        platform[6] = new Platform(1000,300,"Platform");
         platform[7] = new Platform(1300,300,"Platform");
         platform[8] = new Platform(90,40,"Wooden");
         platform[8] = new Platform(150,40,"Wooden");
+        platform[9] = new Platform(-200,-100,"wall1");
+        platform[10] = new Platform(1400,-100,"wall2");
         
         for(int i = 0; i<platform.length; i++)
         {
@@ -61,12 +62,10 @@ public class TestLevel extends Level
     
     public void setEnemies()
     {
-        Enemy slim1 = new Slim(900, 25,window);
         Enemy reck1 = new Reck(250, 180,window);
         Enemy reck2 = new Reck(175, 150,window);
         Enemy reck3 = new Reck(325, 115,window);
         
-        enemy.add(slim1);
         enemy.add(reck1);
         enemy.add(reck2);
         enemy.add(reck3);
@@ -74,8 +73,12 @@ public class TestLevel extends Level
     
     public void setOther()
     {
-        Other chest = new Other(1400,100,"Chest.gif","Chest");
+        Other chest = new Other(1690,255,"Chest.gif","Chest");
+        Other lifeB = new Other(400, 255,"LifeBig.png","LifeBig");
+        Other lifeS = new Other(1600,255,"Life.gif","Life");
         
-        other.add(chest);
+        //other.add(chest);
+        other.add(lifeB);
+        other.add(lifeS);
     }
 }

@@ -5,11 +5,16 @@
  */
 package View;
 
+import Model.LevelMethods.GeneralMethods;
 import Assets.*;
 import Levels.*;
 import Model.Detection.Collision.PlatformCollision;
 import Model.Detection.Hit.HitDetection;
+import Model.File.FileMethods;
+import Model.File.Time;
 import Model.LevelMethods.IntroMethods;
+import Model.LevelMethods.LevelMethods;
+import Model.LevelMethods.TestMethods;
 import Thread.MainThread;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -18,6 +23,7 @@ import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import static java.lang.Thread.sleep;
 
 /**
  *
@@ -82,7 +88,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     Level testLevel;
     Level introLevel;
     
-    IntroMethods introMethods;
+    LevelMethods introMethods;
+    LevelMethods testMethods;
+    
+    LevelMethods generalMethods;
     
     String levelName;
     
@@ -90,11 +99,22 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     ArrayList <Bullet> arrayBullets = new ArrayList();
     
-    HUDElement health;
+    JLabel health;
     
     long startTime;
     long endTime;
     long totalTime;
+    
+    FileMethods file;
+    
+    public boolean levelLoaded = false;
+    
+    JLabel board;
+    JLabel scores;
+    JLabel timesTitle;
+    JLabel times1;
+    JLabel times2;
+    JLabel times3;
     
     /**
      * Creates new form Window
@@ -135,12 +155,35 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public void initWindow()
     {
         this.setLocationRelativeTo(null);
+        file = new FileMethods(this);
+        /*enterTimes();
+        printTimes();*/
         getContentPane().setBackground(Color.BLACK);
         createLevels();
         loadLevel(getIntroLevel());
         createLevelMethods();
         mThread = new MainThread(this);
         mThread.start();
+    }
+    
+    public void enterTimes(Time time)
+    {
+        file.writeTime(time);
+        
+        file.writeToFile();
+    }
+    
+    public String[] printTimes()
+    {
+        String[] times = new String[3];
+        
+        file.orderTime();
+        
+        times[0] = file.getTimes()[0];
+        times[1] = file.getTimes()[1];
+        times[2] = file.getTimes()[2];
+        
+        return times;
     }
     
     public void createLevels()
@@ -151,16 +194,42 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void createLevelMethods()
     {
+        generalMethods = new GeneralMethods(this);
         introMethods = new IntroMethods(this);
+        testMethods = new TestMethods(this);
+    }
+
+    /**
+     * @return the levelLoaded
+     */
+    public boolean isLevelLoaded() {
+        return levelLoaded;
+    }
+
+    /**
+     * @param levelLoaded the levelLoaded to set
+     */
+    public void setLevelLoaded(boolean levelLoaded) {
+        this.levelLoaded = levelLoaded;
     }
     
     public void updateLevelMethods()
     {
+        generalMethods.setArrayOther(arrayOther);
+        generalMethods.setPlayer(player);
+        generalMethods.ops();
+        
         if(levelName.equals("Intro"))
         {
             introMethods.setArrayOther(arrayOther);
             introMethods.setPlayer(player);
             introMethods.ops();
+        }
+        if(levelName.equals("Test"))
+        {
+            testMethods.setArrayOther(arrayOther);
+            testMethods.setPlayer(player);
+            testMethods.ops();        
         }
     }
     
@@ -177,6 +246,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void clearLevel()
     {
+        levelLoaded = false;
         try
         {
             player = null;
@@ -204,27 +274,26 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         loadOther(level);
         loadLevelName(level);
         
-        createHealthLabel();
-        showHealthLabel();
-    }
-    
-    public void createHealthLabel()
-    {
-        health = new HUDElement();
-        health.setFont(new java.awt.Font("Arial Black", 1, 25));;
-        health.setForeground(new java.awt.Color(255, 255, 255));
+        levelLoaded = true;
     }
     
     public void showHealthLabel()
-    {        
+    {
+        health = new JLabel();
+        health.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        health.setForeground(new java.awt.Color(255, 255, 255));
+        
         getContentPane().add(health);
-        health.setBounds(0,0,500,100);
         getContentPane().setComponentZOrder(health, 0);
+        health.setBounds(50, 50, 800, 50);
     }
     
     public void updateHealthLabel()
     {
-        health.setText("HEALTH: "+player.getHealth());
+        if(health != null)
+        {
+            health.setText("HEALTH: "+player.getHealth());
+        }
     }
     
     public void loadPlatforms(Level level)
@@ -315,6 +384,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         updateBullets();
         
         updateEnemies();
+        
+        updateOther();
         
         setEnemyCollisions();
         
@@ -740,7 +811,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         arrayBullets.get(i).stop();
         arrayBullets.get(i).showExplosion();
-        System.out.println("Mostrando explosión");
     }
     
     public void removeBullet(int i)
@@ -834,6 +904,27 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
     }
     
+    public void raisePlayerHealth(int raise)
+    {
+        int currentHealth = player.getHealth();
+        int newHealth = currentHealth + raise;
+        if(newHealth > 144)
+        {
+           player.setHealth(144);
+        }
+        else
+        {
+            player.raiseHealth(raise);
+        }
+    }
+    
+    public void removeOther(int index)
+    {
+        arrayOther.get(index).setVisible(false);
+        arrayOther.remove(index);
+        repaint();
+    }
+    
     public void resetTime()
     {
         startTime = 0;
@@ -843,6 +934,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void showOverScreen()
     {
+        Time time;
         calculateTime();
         System.out.println("Mostrando pantalla final");
         System.out.println("Tiempo total: "+totalTime);
@@ -874,6 +966,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             brokenChark.setIcon(brknChrk);
             getContentPane().add(brokenChark);
             brokenChark.setBounds(350,290,brknChrk.getIconHeight()+50,brknChrk.getIconWidth()+50);
+            
             repaint();
             sleep(3000);
             getContentPane().removeAll();
@@ -884,6 +977,124 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         {
             System.out.println("Error al mostrar Game Over: "+e);
             e.printStackTrace();
+        }
+    }
+    
+    public void showVictoryScreen()
+    {
+        calculateTime();
+        System.out.println("Mostrando pantalla final");
+        System.out.println("Tiempo total: "+totalTime);
+        long showableTime = totalTime/1000;
+        try
+        {
+            repaint();
+            clearLevel();
+            getContentPane().removeAll();
+            getContentPane().setBackground(Color.black);
+            repaint();
+            
+            JLabel gameOver = new JLabel();
+            gameOver.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
+            gameOver.setForeground(new java.awt.Color(255, 255, 255));
+            gameOver.setText("Amazing!");
+            getContentPane().add(gameOver);
+            gameOver.setBounds(240, 125, 340, 50);
+            
+            JLabel timeTaken = new JLabel();
+            timeTaken.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
+            timeTaken.setForeground(new java.awt.Color(255, 255, 255));
+            timeTaken.setText("Total Time: "+showableTime+" seconds");
+            getContentPane().add(timeTaken);
+            timeTaken.setBounds(75, 200, 800, 50);
+            
+            Icon amazin = new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/Amazing.png"));
+            JLabel brokenChark = new JLabel();
+            brokenChark.setIcon(amazin);
+            getContentPane().add(brokenChark);
+            brokenChark.setBounds(25,25,amazin.getIconHeight()+50,amazin.getIconWidth()+50);
+            repaint();
+            
+            Time newTime = new Time((int) showableTime);
+            file.writeTime(newTime);
+            
+            sleep(3000);
+            getContentPane().removeAll();
+            clearLevel();
+            loadLevel(getIntroLevel());
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error al mostrar Game Over: "+e);
+            e.printStackTrace();
+        }
+    }
+    
+    public void showScores()
+    {
+        Icon scoreBoard = new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/board.png"));
+        board = new JLabel();
+        board.setIcon(scoreBoard);
+        getContentPane().add(board);
+        getContentPane().setComponentZOrder(board, 0);
+        board.setBounds(250,55,scoreBoard.getIconHeight()+50,scoreBoard.getIconWidth()+50);
+        
+        timesTitle = new JLabel();
+        timesTitle.setFont(new java.awt.Font("Arial Black", 1, 32)); // NOI18N
+        timesTitle.setForeground(new java.awt.Color(255, 255, 255));
+        timesTitle.setText("Best Times");
+        getContentPane().add(timesTitle);
+        getContentPane().setComponentZOrder(timesTitle, 0);
+        timesTitle.setBounds(266, 70, 800, 50);
+        
+        times1 = new JLabel();
+        times1.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
+        times1.setForeground(new java.awt.Color(255, 255, 255));
+        times1.setText(printTimes()[0]);
+        getContentPane().add(times1);
+        getContentPane().setComponentZOrder(times1, 0);
+        times1.setBounds(315, 125, 800, 50);
+        
+        times2 = new JLabel();
+        times2.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
+        times2.setForeground(new java.awt.Color(255, 255, 255));
+        times2.setText(printTimes()[1]);
+        getContentPane().add(times2);
+        getContentPane().setComponentZOrder(times2, 0);
+        times2.setBounds(315, 175, 800, 50);
+        
+        times3 = new JLabel();
+        times3.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
+        times3.setForeground(new java.awt.Color(255, 255, 255));
+        times3.setText(printTimes()[2]);
+        getContentPane().add(times3);
+        getContentPane().setComponentZOrder(times3, 0);
+        times3.setBounds(315, 225, 800, 50);
+        repaint();
+    }
+    
+    public void removeScores()
+    {
+        if(board != null && timesTitle != null && times1 != null & times2 != null && times3 != null)
+        {
+            System.out.println("escondiendo puntuaciones");
+            board.setVisible(false);
+            getContentPane().remove(board);
+            times1.setVisible(true);
+            getContentPane().remove(times1);
+            timesTitle.setVisible(true);
+            getContentPane().remove(timesTitle);
+            times2.setVisible(true);
+            getContentPane().remove(times2);
+            times3.setVisible(true);
+            getContentPane().remove(times3);
+            board = null;
+            timesTitle = null;
+            times1 = null;
+            times2 = null;
+            times3 = null;
+            revalidate();
+            repaint();
         }
     }
 

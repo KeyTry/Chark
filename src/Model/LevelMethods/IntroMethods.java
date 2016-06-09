@@ -5,30 +5,26 @@
  */
 package Model.LevelMethods;
 
-import Assets.Other;
-import Assets.Player;
 import View.Window;
-import java.util.ArrayList;
 
 /**
  *
  * @author DanielSQ
  */
-public class IntroMethods
-{
-    Window window;
-    private ArrayList<Other> arrayOther;
-    private Player player;
-    
+public class IntroMethods extends LevelMethods
+{    
+    boolean showingScores = false;
     public IntroMethods(Window window)
     {
-        this.window = window;
+        super(window);
         window.resetTime();
     }
     
+    @Override
     public void ops()
     {
         enterDoor1();
+        enterDoor2();
     }
     
     public void enterDoor1()
@@ -45,38 +41,41 @@ public class IntroMethods
         
         if((player.getY()>=arrayOther.get(index).getY()) && (player.getX()>=arrayOther.get(index).getX()))
         {
+            window.removeScores();
             window.loadLevel(window.getTestLevel());
             window.startTime();
-            window.createHealthLabel();
             window.showHealthLabel();
         }
     }
-
-    /**
-     * @return the arrayOther
-     */
-    public ArrayList<Other> getArrayOther() {
-        return arrayOther;
-    }
-
-    /**
-     * @param arrayOther the arrayOther to set
-     */
-    public void setArrayOther(ArrayList<Other> arrayOther) {
-        this.arrayOther = arrayOther;
-    }
-
-    /**
-     * @return the player
-     */
-    public Player getPlayer() {
-        return player;
-    }
-
-    /**
-     * @param player the player to set
-     */
-    public void setPlayer(Player player) {
-        this.player = player;
+    
+    public void enterDoor2()
+    {
+        int index = -1;
+        
+        for(int i = 0;i<arrayOther.size();i++)
+        {
+            if(arrayOther.get(i).getName().equals("Board"))
+            {
+                index = i;
+            }
+        }
+        
+        if((player.getY2() <= arrayOther.get(index).getY2()) && (player.getY()>=arrayOther.get(index).getY()) && (player.getX()>=arrayOther.get(index).getX()))
+        {
+            if(!showingScores)
+            {
+                System.out.println("Mostrando puntuaciones");
+                window.showScores();
+                showingScores = true;
+            }
+        }
+        else
+        {
+            if(showingScores)
+            {
+                window.removeScores();                
+                showingScores = false;
+            }
+        }
     }
 }
