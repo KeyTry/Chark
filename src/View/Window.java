@@ -13,6 +13,7 @@ import Model.Detection.Hit.HitDetection;
 import Model.File.FileMethods;
 import Model.File.Time;
 import Model.LevelMethods.IntroMethods;
+import Model.LevelMethods.Level1Methods;
 import Model.LevelMethods.LevelMethods;
 import Model.LevelMethods.TestMethods;
 import Thread.MainThread;
@@ -85,11 +86,13 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     Thread bThread;
     
-    Level testLevel;
-    Level introLevel;
+    public Level testLevel;
+    public Level introLevel;
+    public Level level1;
     
     LevelMethods introMethods;
     LevelMethods testMethods;
+    LevelMethods level1Methods;
     
     LevelMethods generalMethods;
     
@@ -136,6 +139,20 @@ public class Window extends javax.swing.JFrame implements ActionListener{
      */
     public void setIntroLevel(Level introLevel) {
         this.introLevel = introLevel;
+    }
+
+    /**
+     * @return the level1
+     */
+    public Level getLevel1() {
+        return level1;
+    }
+
+    /**
+     * @param level1 the level1 to set
+     */
+    public void setLevel1(Level level1) {
+        this.level1 = level1;
     }
 
     /**
@@ -190,6 +207,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {
         setIntroLevel(new IntroLevel(this));
         setTestLevel(new TestLevel(this));
+        setLevel1(new Level1(this));
     }
     
     public void createLevelMethods()
@@ -197,6 +215,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         generalMethods = new GeneralMethods(this);
         introMethods = new IntroMethods(this);
         testMethods = new TestMethods(this);
+        level1Methods = new Level1Methods(this);
     }
 
     /**
@@ -420,11 +439,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         {
             moveWorldOnX();
         }
-        if(player.isMovingRight() && player.getX2() < 600)
+        if(player.isMovingRight() && player.getX2() < 800)
         {            
             movePlayerOnX();
         }
-        if(player.isMovingRight() && player.getX2() >= 600)
+        if(player.isMovingRight() && player.getX2() >= 800)
         {  
             moveWorldOnX();
         }
@@ -435,16 +454,16 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         if(player.isMovingUp() && player.getY() <= 12)
         {
             prepareJumpWorld();
-            if(player.getRestingLim() != 0)
+            if(player.jump())
             {
                 jumpWorld();
             }
         }
-        if(player.isMovingDown() && player.getY2() < 350)
+        if(player.isMovingDown() && player.getY2() < 650)
         {
             movePlayerOnY();
         }
-        if(player.isMovingDown() && player.getY2() >= 350)
+        if(player.isMovingDown() && player.getY2() >= 650)
         {
             fallWorld();
         }
@@ -799,18 +818,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             arrayBullets.get(i).update();
             arrayBullets.get(i).move();
             arrayBullets.set(i, bulletCollDetect(arrayBullets.get(i)));
-            if(arrayBullets.get(i).getX() < -1000 || arrayBullets.get(i).getX() > 1000)
+            
+            if(arrayBullets.get(i).getColl())
             {
                 bulletExploding = true;
                 goodbyeBullet(i);
-            }
-            else
-            {
-                if(arrayBullets.get(i).getColl())
-                {
-                    bulletExploding = true;
-                    goodbyeBullet(i);
-                }
             }
         }
     }
@@ -1067,31 +1079,31 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         Icon scoreBoard = new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/board.png"));
         board = new JLabel();
         board.setIcon(scoreBoard);
-        board.setBounds(250,55,scoreBoard.getIconHeight()+50,scoreBoard.getIconWidth()+50);
+        board.setBounds(250,100,scoreBoard.getIconHeight()+50,scoreBoard.getIconWidth()+50);
         
         timesTitle = new JLabel();
         timesTitle.setFont(new java.awt.Font("Arial Black", 1, 32)); // NOI18N
         timesTitle.setForeground(new java.awt.Color(255, 255, 255));
         timesTitle.setText("Best Times");
-        timesTitle.setBounds(300, 120, 800, 60);
+        timesTitle.setBounds(300, 165, 800, 60);
         
         times1 = new JLabel();
         times1.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
         times1.setForeground(new java.awt.Color(255, 255, 255));
         times1.setText(printTimes()[0]+" seconds");
-        times1.setBounds(300, 175, 800, 50);
+        times1.setBounds(300, 225, 800, 50);
         
         times2 = new JLabel();
         times2.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         times2.setForeground(new java.awt.Color(255, 255, 255));
         times2.setText(printTimes()[1]+" seconds");
-        times2.setBounds(330, 225, 800, 50);
+        times2.setBounds(330, 270, 800, 50);
         
         times3 = new JLabel();
         times3.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
         times3.setForeground(new java.awt.Color(255, 255, 255));
         times3.setText(printTimes()[2]+" seconds");
-        times3.setBounds(330, 275, 800, 50);
+        times3.setBounds(330, 320, 800, 50);
         
         getContentPane().add(board);
         getContentPane().setComponentZOrder(board, 0);
@@ -1150,10 +1162,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
-        setMaximumSize(new java.awt.Dimension(800, 450));
-        setPreferredSize(new java.awt.Dimension(800, 450));
+        setMaximumSize(new java.awt.Dimension(1280, 720));
+        setMinimumSize(new java.awt.Dimension(1280, 720));
+        setPreferredSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
-        setSize(new java.awt.Dimension(800, 450));
+        setSize(new java.awt.Dimension(1280, 720));
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);

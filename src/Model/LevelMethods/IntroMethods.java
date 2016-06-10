@@ -42,7 +42,7 @@ public class IntroMethods extends LevelMethods
         if((player.getY()>=arrayOther.get(index).getY()) && (player.getX()>=arrayOther.get(index).getX()))
         {
             window.removeScores();
-            window.loadLevel(window.getTestLevel());
+            window.loadLevel(window.getLevel1());
             window.startTime();
             window.showHealthLabel();
         }

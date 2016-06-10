@@ -33,6 +33,11 @@ public class Level
         enemy = new ArrayList();
         other = new ArrayList();
     }
+    
+    public void init()
+    {
+        
+    }
 
     /**
      * @return the levelName

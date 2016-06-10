@@ -78,8 +78,9 @@ public class LiveSprite extends Sprite{
         }
     }
     
-    public void jump()
+    public boolean jump()
     {  
+        boolean jumping = false;
         restingLim = jumpLim;
         if(brinco && !collisionTop)
         {
@@ -87,6 +88,7 @@ public class LiveSprite extends Sprite{
             {
                 y = y-gameSpeed;
                 restingLim= restingLim-gameSpeed;
+                jumping = true;
             }
             else
             {
@@ -94,6 +96,7 @@ public class LiveSprite extends Sprite{
                 movingUp = false;
                 jumpLim = 0;
                 restingLim = 0;
+                jumping = false;
             }
         }
         else
@@ -105,9 +108,12 @@ public class LiveSprite extends Sprite{
             {
                 window.setRestingLim(restingLim);
             }
+            jumping = false;
         }
         
         super.setLocation(x, y);
+        
+        return jumping;
     }
 
     public void fall()

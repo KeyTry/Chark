@@ -26,16 +26,12 @@ public class TestLevel extends Level
         init();
     }
     
+    @Override
     public void init()
     {
         setPlatforms();
         setEnemies();
         setOther();
-    }
-    
-    public Player getPlayer()
-    {
-        return player;
     }
     
     public void setPlatforms()
@@ -84,7 +80,9 @@ public class TestLevel extends Level
         Other lifeB = new Other(400, 255,"LifeBig.png","LifeBig");
         Other lifeS = new Other(1600,255,"Life.gif","Life");
         Other lifeS2 = new Other(1300,100,"Life.gif","Life");
+        Other door = new Other(0,125,"door1.png","Door");
         
+        other.add(door);
         other.add(chest);
         other.add(lifeB);
         other.add(lifeS);
