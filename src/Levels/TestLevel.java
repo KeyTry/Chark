@@ -37,12 +37,12 @@ public class TestLevel extends Level
     public void setPlatforms()
     {
         platform = new Platform[14];
-        platform[0] = new Platform(-200,300,"Platform");
-        platform[1] = new Platform(50,300,"Platform");
-        platform[2] = new Platform(200,300,"Platform");
-        platform[3] = new Platform(400,300,"Platform");
-        platform[4] = new Platform(600,300,"Platform");
-        platform[5] = new Platform(800,300,"Platform");
+        platform[0] = new Platform(-200,500,"Platform");
+        platform[1] = new Platform(50,500,"Platform");
+        platform[2] = new Platform(200,500,"Platform");
+        platform[3] = new Platform(400,500,"Platform");
+        platform[4] = new Platform(600,500,"Platform");
+        platform[5] = new Platform(800,500,"Platform");
         platform[6] = new Platform(1000,300,"Platform");
         platform[7] = new Platform(1300,300,"Platform");
         platform[8] = new Platform(90,40,"Wooden");
@@ -51,7 +51,7 @@ public class TestLevel extends Level
         platform[10] = new Platform(1400,-100,"wall2");
         platform[11] = new Platform(600,100,"Wooden");
         platform[12] = new Platform(1000,200,"Wooden");
-        platform[13] = new Platform(-10,-250,"top1");
+        platform[13] = new Platform(-10,-400,"top1");
         
         for(int i = 0; i<platform.length; i++)
         {

@@ -18,6 +18,15 @@ public class LiveSprite extends Sprite{
     
     String facing = "right";
     
+    int jumpQuant;
+    
+    public boolean jumping;
+    public boolean falling;
+    
+    double jumpSpeed;
+    double fallSpeed;
+    int restJumpLimit;
+    
     public LiveSprite(int x, int y, Window window, int health)
     {
         this.window = window;
@@ -27,19 +36,61 @@ public class LiveSprite extends Sprite{
         super.setLocation(x, y);
         jumpInt = 200;
     }
+
+    /**
+     * @return the restLimit
+     */
+    public int getRestJumpLimit() {
+        return restJumpLimit;
+    }
+
+    /**
+     * @param restLimit the restLimit to set
+     */
+    public void setRestJumpLimit(int restJumpLimit) {
+        this.restJumpLimit = restJumpLimit;
+    }
+
+    /**
+     * @return the falling
+     */
+    public boolean isFalling() {
+        return falling;
+    }
+
+    /**
+     * @param falling the falling to set
+     */
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
+
+    /**
+     * @return the jumping
+     */
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    /**
+     * @param jumping the jumping to set
+     */
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
     
     public void moveOnX()
     {
         if(dx > 0)
         {
-            if(collisionRight == false)
+            if(isCollisionRight() == false)
             {
                 x += dx;
             }
         }
         if(dx < 0)
         {
-            if(collisionLeft == false)
+            if(isCollisionLeft() == false)
             {
                 x += dx;
             }
@@ -52,14 +103,14 @@ public class LiveSprite extends Sprite{
         System.out.println("Moviendo jugador estático");
         if(dx > 0)
         {
-            if(collisionRight)
+            if(isCollisionRight())
             {
                 x += -dx;
             }
         }
         if(dx < 0)
         {
-            if(collisionLeft)
+            if(isCollisionLeft())
             {
                 x += -dx;
             }
@@ -68,12 +119,12 @@ public class LiveSprite extends Sprite{
         super.setLocation(x, y);
     }
     
-    public void prepareJump()
+    /*public void prepareJump()
     {
-        if(!collisionTop && collisionBot && !brinco)
+        if(!collisionTop && collisionBot && !playerJumping)
         {
             jumpLim = getY()-jumpInt;
-            brinco = true;
+            playerJumping = true;
             movingUp = true;
         }
     }
@@ -82,17 +133,18 @@ public class LiveSprite extends Sprite{
     {  
         boolean jumping = false;
         restingLim = jumpLim;
-        if(brinco && !collisionTop)
+        
+        if(playerJumping && !collisionTop)
         {
             if(getY() > getJumpLim())
             {
                 y = y-gameSpeed;
-                restingLim= restingLim-gameSpeed;
+                restingLim = restingLim-gameSpeed;
                 jumping = true;
             }
             else
             {
-                brinco = false;
+                playerJumping = false;
                 movingUp = false;
                 jumpLim = 0;
                 restingLim = 0;
@@ -102,7 +154,7 @@ public class LiveSprite extends Sprite{
         else
         {
             movingUp = false;
-            brinco = false;
+            playerJumping = false;
             restingLim = 0;
             if(collisionTop)
             {
@@ -114,20 +166,26 @@ public class LiveSprite extends Sprite{
         super.setLocation(x, y);
         
         return jumping;
+    }*/
+    
+    public void prepareFall()
+    {
+        if(!falling && !isCollisionBot() && !jumping)
+        {
+            setFalling(true);
+        }
     }
 
     public void fall()
-    {
-        if(!collisionBot && !brinco)
+    {      
+        if(!isCollisionBot() && !jumping && falling)
         {
-            dy = gameSpeed;
-            y += dy;
-            movingDown = true;
+            y += gameSpeed;
+            setFalling(true);
         }
         else
         {
-            dy = 0;
-            movingDown = false;
+            setFalling(false);
         }
         
         super.setLocation(x, y);
@@ -135,7 +193,7 @@ public class LiveSprite extends Sprite{
     
     public void setMovingDown()
     {
-        if(!collisionBot && !brinco)
+        if(!isCollisionBot() && !playerJumping)
         {
             movingDown = true;
         }

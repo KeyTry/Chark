@@ -29,7 +29,7 @@ public class PlatformCollision
     int[] platformsX2;
     int[] platformsY2;
     
-    int leeway = 12;
+    int leeway = 9;
     
     public PlatformCollision()
     {

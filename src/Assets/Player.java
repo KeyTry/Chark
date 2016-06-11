@@ -18,6 +18,13 @@ public class Player extends LiveSprite
     Estados: cayendo, suelo, subiendo
     */
     
+    
+    int jumpQuant;
+        
+    double jumpSpeed;
+    double fallSpeed;
+    public int restJumpLimit;
+    
     public Player(int x, int y, Window window, int health)
     {
         super(x,y,window,health);
@@ -25,7 +32,70 @@ public class Player extends LiveSprite
         icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/CharkIdleAnim.gif"))); 
         super.setIcon(icon);
         setImageDimensions();
-        prepareJump();   
+        jumpQuant = 200;
+        //prepareJump();   
+    }
+
+    /**
+     * @return the restJumpLimit
+     */
+    public int getRestJumpLimit() {
+        return restJumpLimit;
+    }
+
+    /**
+     * @param restJumpLimit the restJumpLimit to set
+     */
+    public void setRestJumpLimit(int restJumpLimit) {
+        this.restJumpLimit = restJumpLimit;
+    }
+
+    /**
+     * @return the jumping
+     */
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    /**
+     * @param jumping the jumping to set
+     */
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
+    
+    public void prepareJump()
+    {
+        if(!isJumping() && isCollisionBot())
+        {
+            jumpLim = getY() - jumpQuant;
+            setJumping(true);
+        }
+    }
+    
+    public void jump()
+    {
+        if(isJumping() && !falling)
+        {
+            if(y > jumpLim && !isCollisionTop())
+            {
+                y -= gameSpeed;
+                setRestJumpLimit(y - jumpLim);
+                setJumping(true);
+                super.setLocation(x, y);
+            }
+            else
+            {
+                setRestJumpLimit(0);
+                fall();
+                setJumping(false);
+            }
+        }
+        else
+        {   
+            setJumping(false);
+            fall();
+        }
     }
     
     public void keyPressed(KeyEvent e)
@@ -48,7 +118,7 @@ public class Player extends LiveSprite
         }
         
         if(key == KeyEvent.VK_UP) {
-            prepareJump();            
+            prepareJump();  
         }            
                 
         super.setIcon(icon);
@@ -70,6 +140,10 @@ public class Player extends LiveSprite
             movingRight = false;
             icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Chark/CharkIdleAnim.gif"))); 
         }
+        
+        if(key == KeyEvent.VK_UP) {
+            //prepareJump();         
+        }     
         
         if(key == KeyEvent.VK_SPACE){
             try

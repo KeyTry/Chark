@@ -9,17 +9,24 @@ import Model.AI.EnemyAI;
 import View.Window;
 import static java.lang.Thread.sleep;
 import javax.swing.Timer;
+import static java.lang.Thread.sleep;
 
 /**
  *
  * @author DanielSQ
  */
 public class Enemy extends NPLiveSprite{
+    public boolean playerJumping;
+    public boolean playerFalling;
+    public boolean staticsJumping;
+    
     public EnemyAI ai;
     String hitDrawing;
     String defaultDrawing;
     
     public int damage;
+    
+    public int jumpLimit;
     
     public Enemy(int x, int y, Window window, int health)
     {
@@ -49,6 +56,48 @@ public class Enemy extends NPLiveSprite{
     {
         this.hitDrawing = hitDrawing;
     }
+
+    /**
+     * @return the jumpLimit
+     */
+    public int getJumpLimit() {
+        return jumpLimit;
+    }
+
+    /**
+     * @param jumpLimit the jumpLimit to set
+     */
+    public void setJumpLimit(int jumpLimit) {
+        this.jumpLimit = jumpLimit;
+    }
+
+    /**
+     * @return the playerFalling
+     */
+    public boolean isPlayerFalling() {
+        return playerFalling;
+    }
+
+    /**
+     * @param playerFalling the playerFalling to set
+     */
+    public void setPlayerFalling(boolean playerFalling) {
+        this.playerFalling = playerFalling;
+    }
+
+    /**
+     * @return the staticsJumping
+     */
+    public boolean isStaticsJumping() {
+        return staticsJumping;
+    }
+
+    /**
+     * @param staticsJumping the staticsJumping to set
+     */
+    public void setStaticsJumping(boolean staticsJumping) {
+        this.staticsJumping = staticsJumping;
+    }
     
     public void showHitDrawing()
     {
@@ -61,6 +110,51 @@ public class Enemy extends NPLiveSprite{
         icon = new javax.swing.ImageIcon(getClass().getResource("/IMG/Enemies/"+defaultDrawing+""));
         super.setIcon(icon);
     }
+    
+    public void playerJump(boolean collisionTop, double restingLimit, boolean jumping)
+    {
+        
+        if(!isStaticsJumping())
+        {
+            setJumpLimit((int) (y+restingLimit));
+            setStaticsJumping(true);
+            setPlayerJumping(true);            
+            System.out.println("Alcanzado arriba! Resting lim: "+restingLim);
+
+            System.out.println("Alcanzado arriba! calculando limite: "+getJumpLimit());
+        }
+        
+        if(isStaticsJumping() && !collisionTop)
+        {
+            System.out.println("Moviendo mundo");
+            if(jumping)
+            {
+                if(y < getJumpLimit())
+                {
+                    System.out.println("Intentando mover mundo!");
+                    y += gameSpeed;
+                    super.setLocation(x, y);
+                    setPlayerJumping(true);
+                    setStaticsJumping(true);
+                }
+                else
+                {
+                    setPlayerJumping(false);
+                    setStaticsJumping(false);
+                }
+            }
+        }
+    }
+    
+    public void playerFall(boolean falling)
+    {
+        if(falling)
+        {
+            y-=gameSpeed;
+            super.setLocation(x, y);
+        }
+    }
+    
     
     public void aiOps()
     {

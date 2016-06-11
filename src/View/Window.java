@@ -20,7 +20,6 @@ import Thread.MainThread;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static java.lang.Thread.sleep;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -71,6 +70,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     ArrayList<Other> arrayOther;
     
     boolean bulletExploding = false;
+    public boolean outsideJumping;
+    public boolean outsideFalling;
     
     int[] platformsX;
     int[] platformsY;
@@ -188,6 +189,34 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         file.writeTime(time);
         
         file.writeToFile();
+    }
+
+    /**
+     * @return the outsideFalling
+     */
+    public boolean isOutsideFalling() {
+        return outsideFalling;
+    }
+
+    /**
+     * @param outsideFalling the outsideFalling to set
+     */
+    public void setOutsideFalling(boolean outsideFalling) {
+        this.outsideFalling = outsideFalling;
+    }
+
+    /**
+     * @return the outsideJumping
+     */
+    public boolean isOutsideJumping() {
+        return outsideJumping;
+    }
+
+    /**
+     * @param outsideJumping the outsideJumping to set
+     */
+    public void setOutsideJumping(boolean outsideJumping) {
+        this.outsideJumping = outsideJumping;
     }
     
     public String[] printTimes()
@@ -410,7 +439,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         moveEnemiesOnY();
         
-        player.setMovingDown();
+        player.prepareFall();
         
         detectBulletEnemyHit();
         
@@ -431,11 +460,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void decideMovements()
     {
-        if(player.isMovingLeft() && player.getX() > 50)
+        if(player.isMovingLeft() && player.getX() > 150)
         {
             movePlayerOnX();
         }
-        if(player.isMovingLeft() && player.getX() <= 50)
+        if(player.isMovingLeft() && player.getX() <= 150)
         {
             moveWorldOnX();
         }
@@ -447,29 +476,33 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         {  
             moveWorldOnX();
         }
-        if(player.isMovingUp() && player.getY() > 12)
+        if(player.isJumping() && player.getY() > 100)
         {
-            movePlayerOnY();
+            player.jump();
         }
-        if(player.isMovingUp() && player.getY() <= 12)
+        if(player.isJumping() && player.getY() <= 150)
         {
-            prepareJumpWorld();
+            setOutsideJumping(player.isJumping());
+            /*prepareJumpWorld();
             if(player.jump())
+            {*/
+            if(outsideJumping)
             {
                 jumpWorld();
-            }
+            }    
         }
         if(player.isMovingDown() && player.getY2() < 650)
         {
-            movePlayerOnY();
+            player.fall();
         }
         if(player.isMovingDown() && player.getY2() >= 650)
         {
+            setOutsideFalling(player.isFalling());
             fallWorld();
         }
     }
     
-    public void prepareJumpWorld()
+    /*public void prepareJumpWorld()
     {
         for(int i = 0; i < platform.length; i++)
         {
@@ -488,7 +521,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             arrayOther.get(i).prepareJump(getRestingLim());
             System.out.println("Brinco preparado para otro: "+arrayOther.get(i).getName());
         }
-    }
+    }*/
     
     public void updatePlatforms()
     {
@@ -686,11 +719,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         player.moveOnX();
     }
     
-    public void movePlayerOnY()
+    /*public void movePlayerOnY()
     {
         player.fall();
         player.jump();
-    }
+    }*/
     
     public void moveEnemiesOnY()
     {
@@ -716,48 +749,81 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {       
         for(int i = 0; i < platform.length; i++)
         {
-            platform[i].jump(player.isBrinco(), player.isMovingUp());
+            platform[i].playerJump(player.isCollisionTop(), player.getRestJumpLimit(),player.isJumping());
         }
         
         for(int i = 0; i < arrayBullets.size(); i++)
         {
-            arrayBullets.get(i).jump(player.isBrinco(), player.isMovingUp());
+            arrayBullets.get(i).playerJump(player.isCollisionTop(),player.getRestJumpLimit(),player.isJumping());
         }
         
         for(int i = 0; i < arrayEnemies.size(); i++)
         {
-            arrayEnemies.get(i).jumpStatic(player.isBrinco(), player.isMovingUp());
+            arrayEnemies.get(i).playerJump(player.isCollisionTop(),player.getRestJumpLimit(),player.isJumping());
         }
         
         for(int i = 0; i<arrayOther.size(); i++)
         {
-            arrayOther.get(i).jump(player.isBrinco(), player.isMovingUp());
+            arrayOther.get(i).playerJump(player.isCollisionTop(),player.getRestJumpLimit(),player.isJumping());
         }
         
-        player.setBrinco(platform[0].isBrinco());
-        player.setMovingUp(platform[0].isMovingUp());
+        setOutsideJumping(platform[0].isPlayerJumping());
+        player.setJumping(platform[0].isPlayerJumping());
+        
+        for(int i = 0; i < arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).setPlayerJumping(platform[0].isPlayerJumping());
+        }
+        
+        for(int i = 0; i < arrayEnemies.size(); i++)
+        {
+            arrayEnemies.get(i).setPlayerJumping(platform[0].isPlayerJumping()); 
+        }
+        
+        for(int i = 0; i<arrayOther.size(); i++)
+        {
+            arrayOther.get(i).setPlayerJumping(platform[0].isPlayerJumping());
+        }
     }
     
     public void fallWorld()
     {
         for(int i = 0; i < platform.length; i++)
         {
-            platform[i].fall(player.isBrinco(), player.isMovingDown());
+            platform[i].playerFall(player.isFalling());
         }
         
         for(int i = 0; i < arrayBullets.size(); i++)
         {
-            arrayBullets.get(i).fall(player.isBrinco(), player.isMovingDown());
+            arrayBullets.get(i).playerFall(player.isFalling());
         }
         
         for(int i = 0; i < arrayEnemies.size(); i++)
         {
-            arrayEnemies.get(i).fallStatic(player.isBrinco(), player.isMovingDown());
+            arrayEnemies.get(i).playerFall(player.isFalling());
         }
         
         for(int i = 0; i<arrayOther.size(); i++)
         {
-            arrayOther.get(i).fall(player.isBrinco(), player.isMovingDown());
+            arrayOther.get(i).playerFall(player.isFalling());
+        }
+        
+        setOutsideFalling(platform[0].isPlayerFalling());
+        player.setFalling(platform[0].isPlayerFalling());
+        
+        for(int i = 0; i < arrayBullets.size(); i++)
+        {
+            arrayBullets.get(i).setPlayerFalling(platform[0].isPlayerFalling());
+        }
+        
+        for(int i = 0; i < arrayEnemies.size(); i++)
+        {
+            arrayEnemies.get(i).setPlayerFalling(platform[0].isPlayerFalling());
+        }
+        
+        for(int i = 0; i<arrayOther.size(); i++)
+        {
+            arrayOther.get(i).setPlayerFalling(platform[0].isPlayerFalling());
         }
     }
     
@@ -1050,7 +1116,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
     }
     
-    public void setRestingLim(int restingLim)
+    /*public void setRestingLim(int restingLim)
     {
         for(int i = 0; i < platform.length; i++)
         {
@@ -1069,7 +1135,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             arrayOther.get(i).prepareJump(restingLim);
             System.out.println("Brinco preparado para otro: "+arrayOther.get(i).getName());
         }
-    }
+    }*/
     
     public void showScores()
     {

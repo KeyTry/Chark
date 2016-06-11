@@ -37,9 +37,9 @@ public class Sprite extends JLabel
     public int jumpLim;
     int jumpInt;
     
-    public boolean brinco = false;
+    public boolean playerJumping = false;
     
-    public int gameSpeed = 12;
+    public int gameSpeed = 9;
         
     int downLim;
     int restingLim;
@@ -118,8 +118,8 @@ public class Sprite extends JLabel
     
     public void setSecBound()
     {
-        x2 = (x + w)-6;
-        y2 = (y + h)-6;
+        x2 = (x + w)-2;
+        y2 = (y + h)-2;
     }
     
     public int getDy()
@@ -131,6 +131,7 @@ public class Sprite extends JLabel
     {
         setImageDimensions();
         setSecBound();
+        //setFirstBound();
     }
 
     /**
@@ -260,36 +261,36 @@ public class Sprite extends JLabel
     }
 
     /**
-     * @return the brinco
+     * @return the playerJumping
      */
-    public boolean isBrinco() {
-        return brinco;
+    public boolean isPlayerJumping() {
+        return playerJumping;
     }
 
     /**
-     * @param brinco the brinco to set
+     * @param playerJumping the playerJumping to set
      */
-    public void setBrinco(boolean brinco) {
-        this.brinco = brinco;
+    public void setPlayerJumping(boolean playerJumping) {
+        this.playerJumping = playerJumping;
     }
     
     public void showCollisions()
     {
-        if(collisionBot)
+        if(isCollisionBot())
         {
             System.out.println("Colisiones abajo!");
         }
-        if(collisionTop)
+        if(isCollisionTop())
         {
             System.out.println("Colisiones arriba!");
 
         }
-        if(collisionRight)
+        if(isCollisionRight())
         {
             System.out.println("Colisiones derecha!");
 
         }
-        if(collisionLeft)
+        if(isCollisionLeft())
         {
             System.out.println("Colisiones izquierda!");
         }

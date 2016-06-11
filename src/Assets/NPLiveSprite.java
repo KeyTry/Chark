@@ -26,14 +26,14 @@ public class NPLiveSprite extends LiveSprite{
     {
         if(artX > 0)
         {
-            if(collisionRight == false)
+            if(isCollisionRight() == false)
             {
                 x += artX;
             }
         }
         if(artX < 0)
         {
-            if(collisionLeft == false)
+            if(isCollisionLeft() == false)
             {
                 x += artX;
             }
@@ -46,14 +46,14 @@ public class NPLiveSprite extends LiveSprite{
     {
         if(artY > 0)
         {
-            if(collisionBot == false)
+            if(isCollisionBot() == false)
             {
                 y += artY;
             }
         }
         if(artY < 0)
         {
-            if(collisionTop == false)
+            if(isCollisionTop() == false)
             {
                 y += artY;
             }
@@ -65,14 +65,14 @@ public class NPLiveSprite extends LiveSprite{
     {
         if(dx > 0)
         {
-            if(!collisionRight)
+            if(!isCollisionRight())
             {
                 x += dx;
             }
         }
         if(dx < 0)
         {
-            if(!collisionLeft)
+            if(!isCollisionLeft())
             {
                 x += dx;
             }
@@ -85,14 +85,14 @@ public class NPLiveSprite extends LiveSprite{
     {
         if(dy > 0)
         {
-            if(!collisionBot)
+            if(!isCollisionBot())
             {
                 y += dy;
             }
         }
         if(dy < 0)
         {
-            if(!collisionTop)
+            if(!isCollisionTop())
             {
                 y += dy;
             }
@@ -118,12 +118,12 @@ public class NPLiveSprite extends LiveSprite{
     {   
         if(restingLim != 0)
         {
-            this.brinco = brinco;
+            this.playerJumping = brinco;
             this.movingUp = movingUp;
             
             if(limEst)
             {
-                if(brinco && !collisionTop)
+                if(brinco && !isCollisionTop())
                 {
                     if(getY2() < downLim)
                     {
@@ -131,7 +131,7 @@ public class NPLiveSprite extends LiveSprite{
                     }
                     else
                     {
-                        this.brinco = false;
+                        this.playerJumping = false;
                         this.movingUp = false;
                         jumpLim = 0;
                         limEst = false;
@@ -140,7 +140,7 @@ public class NPLiveSprite extends LiveSprite{
                 else
                 {
                     this.movingUp = false;
-                    this.brinco = false;
+                    this.playerJumping = false;
                     limEst = false;
                 }
             }
@@ -151,7 +151,7 @@ public class NPLiveSprite extends LiveSprite{
     
     public void fallStatic(boolean brinco, boolean movingDown)
     {
-        System.out.println("Enemigo - Colision abajo: "+collisionBot);
+        System.out.println("Enemigo - Colision abajo: "+isCollisionBot());
         System.out.println("Enemigo - Brinco: "+brinco);
         if(!brinco)
         {
@@ -195,7 +195,7 @@ public class NPLiveSprite extends LiveSprite{
         
         if(key == KeyEvent.VK_UP) {
             dy = gameSpeed;
-            brinco = true;
+            playerJumping = true;
         }
     }
     

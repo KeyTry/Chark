@@ -11,17 +11,16 @@ import java.awt.event.KeyEvent;
  *
  * @author Daniel
  */
-public class Bullet extends Sprite{
+public class Bullet extends StaticSprite{
     int bulletSpeed = gameSpeed;
     int damage = 10;
     boolean exploding = false;
     
     String facing;
     public Bullet(int x, int y, String facing)
-    {        
+    {   
+        super(x,y);
         this.facing = facing;
-        this.x = x;
-        this.y = y;
         super.setLocation(x, y);
         if(facing.equals("right"))
         {
@@ -53,76 +52,28 @@ public class Bullet extends Sprite{
     public boolean getColl()
     {
         boolean collision = false;
-        if(collisionLeft || collisionRight)
+        if(isCollisionLeft() || isCollisionRight())
         {
             collision = true;
         }
         return collision;
     }
     
+    @Override
     public void moveOnX()
     {
         if(dx > 0)
         {
-            if(collisionRight == false)
+            if(isCollisionRight() == false)
             {
                 x += dx;
             }
         }
         if(dx < 0)
         {
-            if(collisionLeft == false)
+            if(isCollisionLeft() == false)
             {
                 x += dx;
-            }
-        }
-        
-        super.setLocation(x, y);
-    }
-    
-    public void prepareJump(int restingLim)
-    {
-        if(restingLim != 0)
-        {
-            if(!limEst)
-            {
-                this.restingLim = restingLim;
-                downLim = getY2() +- this.restingLim;
-                limEst = true;
-            }
-        }
-    }
-    
-    public void jump(boolean brinco, boolean movingUp)
-    {   
-        this.brinco = brinco;
-        this.movingUp = movingUp;
-        
-        if(limEst)
-        {
-            if(brinco && !collisionTop)
-            {
-                
-                System.out.println("Y2: "+getY2());
-                System.out.println("Limite: "+downLim);
-                if(getY2() < downLim)
-                {
-                    y = y+gameSpeed;
-                }
-                else
-                {
-                    this.brinco = false;
-                    this.movingUp = false;
-                    System.out.println("Brinco?: "+brinco);
-                    jumpLim = 0;
-                    limEst = false;
-                }
-            }
-            else
-            {
-                this.movingUp = false;
-                this.brinco = false;
-                limEst = false;
             }
         }
         
@@ -177,7 +128,7 @@ public class Bullet extends Sprite{
         
         if(key == KeyEvent.VK_UP) {
             dy = gameSpeed;
-            brinco = true;
+            setPlayerJumping(true);
         }
     }
     
