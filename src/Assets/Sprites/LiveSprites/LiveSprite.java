@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assets;
+package Assets.Sprites.LiveSprites;
 
+import Assets.Sprite;
+import Assets.Sprites.StaticSprites.Bullet;
 import View.Window;
 
 /**
@@ -118,55 +120,6 @@ public class LiveSprite extends Sprite{
         
         super.setLocation(x, y);
     }
-    
-    /*public void prepareJump()
-    {
-        if(!collisionTop && collisionBot && !playerJumping)
-        {
-            jumpLim = getY()-jumpInt;
-            playerJumping = true;
-            movingUp = true;
-        }
-    }
-    
-    public boolean jump()
-    {  
-        boolean jumping = false;
-        restingLim = jumpLim;
-        
-        if(playerJumping && !collisionTop)
-        {
-            if(getY() > getJumpLim())
-            {
-                y = y-gameSpeed;
-                restingLim = restingLim-gameSpeed;
-                jumping = true;
-            }
-            else
-            {
-                playerJumping = false;
-                movingUp = false;
-                jumpLim = 0;
-                restingLim = 0;
-                jumping = false;
-            }
-        }
-        else
-        {
-            movingUp = false;
-            playerJumping = false;
-            restingLim = 0;
-            if(collisionTop)
-            {
-                window.setRestingLim(restingLim);
-            }
-            jumping = false;
-        }
-        
-        super.setLocation(x, y);
-        
-        return jumping;
-    }*/
     
     public void prepareFall()
     {

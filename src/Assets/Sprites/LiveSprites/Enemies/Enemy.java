@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assets;
+package Assets.Sprites.LiveSprites.Enemies;
 
+import Assets.Sprites.LiveSprites.NPLiveSprite;
+import Assets.Sprites.LiveSprites.NPLiveSprite;
 import Model.AI.EnemyAI;
 import View.Window;
 import static java.lang.Thread.sleep;

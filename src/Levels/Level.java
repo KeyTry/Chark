@@ -5,10 +5,10 @@
  */
 package Levels;
 
-import Assets.Enemy;
-import Assets.Other;
-import Assets.Platform;
-import Assets.Player;
+import Assets.Sprites.LiveSprites.Enemies.Enemy;
+import Assets.Sprites.StaticSprites.Other;
+import Assets.Sprites.StaticSprites.Platform;
+import Assets.Sprites.LiveSprites.Player;
 import View.Window;
 import java.util.ArrayList;
 import javax.swing.Icon;

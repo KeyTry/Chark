@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assets;
+package Assets.Sprites.LiveSprites;
 
 import View.Window;
 import java.awt.event.KeyEvent;
@@ -17,7 +17,7 @@ public class Player extends LiveSprite
     /*
     Estados: cayendo, suelo, subiendo
     */
-    
+    public boolean hurt;
     
     int jumpQuant;
         
@@ -48,6 +48,20 @@ public class Player extends LiveSprite
      */
     public void setRestJumpLimit(int restJumpLimit) {
         this.restJumpLimit = restJumpLimit;
+    }
+
+    /**
+     * @return the hurt
+     */
+    public boolean isHurt() {
+        return hurt;
+    }
+
+    /**
+     * @param hurt the hurt to set
+     */
+    public void setHurt(boolean hurt) {
+        this.hurt = hurt;
     }
 
     /**

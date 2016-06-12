@@ -5,12 +5,12 @@
  */
 package Levels;
 
-import Assets.Enemies.Reck;
-import Assets.Enemies.Slim;
-import Assets.Enemy;
-import Assets.Other;
-import Assets.Platform;
-import Assets.Player;
+import Assets.Sprites.LiveSprites.Enemies.Reck;
+import Assets.Sprites.LiveSprites.Enemies.Slim;
+import Assets.Sprites.LiveSprites.Enemies.Enemy;
+import Assets.Sprites.StaticSprites.Other;
+import Assets.Sprites.StaticSprites.Platform;
+import Assets.Sprites.LiveSprites.Player;
 import View.Window;
 
 /**
@@ -36,18 +36,26 @@ public class Level1 extends Level{
     
     public void setPlatforms()
     {
-        platform = new Platform[9];
+        platform = new Platform[24];
         
-        platform[0] = new Platform(-200,-50,"wall1");
-        platform[1] = new Platform(-50,600,"Platform");
-        platform[2] = new Platform(150,600,"Platform");
-        platform[3] = new Platform(300,600,"Platform");
-        platform[4] = new Platform(450,600,"Platform");
-        platform[5] = new Platform(600,800,"Platform");
-        platform[6] = new Platform(750,800,"Platform");
-        platform[7] = new Platform(900,1000,"Platform");
-        platform[8] = new Platform(1050,1000,"Platform");
-        
+        /*platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();
+        platform[] = new Platform();*/
+
         
         for(int i = 0; i<platform.length; i++)
         {

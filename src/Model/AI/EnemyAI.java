@@ -5,7 +5,7 @@
  */
 package Model.AI;
 
-import Assets.Enemy;
+import Assets.Sprites.LiveSprites.Enemies.Enemy;
 
 /**
  *
@@ -16,6 +16,8 @@ public class EnemyAI
     Enemy enemy;
     
     int distance;
+    
+    int speed;
     
     int iniPosX;
     int finPosX;
@@ -91,7 +93,7 @@ public class EnemyAI
             if(enemy.getY2() > finPosY)
             {
                 moving = true;
-                enemy.setArtY(-10);
+                enemy.setArtY(-speed);
             }
             else
             {
@@ -106,7 +108,7 @@ public class EnemyAI
             if(enemy.getY2() < finPosY)
             {
                 moving = true;
-                enemy.setArtY(10);
+                enemy.setArtY(speed);
             }
             else
             {
@@ -161,7 +163,7 @@ public class EnemyAI
             if(enemy.getX() > finPosX)
             {
                 moving = true;
-                enemy.setArtX(-10);
+                enemy.setArtX(-speed);
             }
             else
             {
@@ -176,7 +178,7 @@ public class EnemyAI
             if(enemy.getX() < finPosX)
             {
                 moving = true;
-                enemy.setArtX(10);
+                enemy.setArtX(speed);
             }
             else
             {

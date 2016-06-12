@@ -15,6 +15,8 @@ import javax.swing.JLabel;
  */
 public class Sprite extends JLabel
 {
+
+    private static final long serialVersionUID = 1L;
     public int x;
     public int y;
     public int x2;
@@ -35,16 +37,16 @@ public class Sprite extends JLabel
     public boolean movingDown = true;
     public boolean movingUp = true;
     public int jumpLim;
-    int jumpInt;
+    public int jumpInt;
     
     public boolean playerJumping = false;
     
-    public int gameSpeed = 9;
+    public int gameSpeed =7;
         
-    int downLim;
-    int restingLim;
+    public int downLim;
+    public int restingLim;
     
-    boolean limEst;
+    public boolean limEst;
     
     
     public ImageIcon icon;
@@ -59,8 +61,8 @@ public class Sprite extends JLabel
     
     public void setAssetLocation(int x, int y)
     {
-        this.x = x-3;
-        this.y = y-3;
+        this.x = x;
+        this.y = y;
         
         super.setLocation(x, y);
     }

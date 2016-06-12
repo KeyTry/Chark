@@ -27,10 +27,13 @@ public class MainThread extends Thread
         {
             while(true)
             {
-                sleep(24);
-                if(window.isLevelLoaded())
+                sleep(18);
+                if(window.isRunning())
                 {
-                    window.update();  
+                    if(window.isLevelLoaded())
+                    {
+                        window.update();  
+                    }
                 }
             }
         }

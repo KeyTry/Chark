@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assets;
+package Assets.Sprites.StaticSprites;
 
+import Assets.Sprites.StaticSprites.StaticSprite;
 import java.awt.event.KeyEvent;
 
 /**

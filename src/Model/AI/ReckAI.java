@@ -5,7 +5,7 @@
  */
 package Model.AI;
 
-import Assets.Enemy;
+import Assets.Sprites.LiveSprites.Enemies.Enemy;
 
 /**
  *
@@ -16,22 +16,16 @@ public class ReckAI extends EnemyAI{
     public ReckAI(Enemy enemy) {
         super(enemy);
         distance = 300;
+        speed = 10;
     }
     
      @Override
     public void runOps()
     {
-        //System.out.println("Corriendo operaciones para Slim");
         setIniPosOnY();
         
         setFinalPosOnY();
         
         moveEnemyOnY();
-        
-        /*setIniPosOnX();
-        
-        setFinalPosOnX();
-        
-        moveEnemyOnX();*/
     }
 }

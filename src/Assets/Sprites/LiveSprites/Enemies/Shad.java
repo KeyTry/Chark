@@ -3,14 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assets;
+package Assets.Sprites.LiveSprites.Enemies;
+
+import View.Window;
 
 /**
  *
  * @author DanielSQ
  */
-public class HUDElement extends Sprite{
-    public HUDElement()
-    {
+public class Shad extends Enemy{
+    
+    public Shad(int x, int y, Window window, int health) {
+        super(x, y, window, health);
     }
+    
 }

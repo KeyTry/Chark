@@ -5,8 +5,8 @@
  */
 package Model.LevelMethods;
 
-import Assets.Other;
-import Assets.Player;
+import Assets.Sprites.StaticSprites.Other;
+import Assets.Sprites.LiveSprites.Player;
 import View.Window;
 import java.awt.Rectangle;
 import java.util.ArrayList;

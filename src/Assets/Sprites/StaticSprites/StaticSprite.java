@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assets;
+package Assets.Sprites.StaticSprites;
 
+import Assets.Sprite;
 import java.awt.event.KeyEvent;
 
 /**
@@ -16,7 +17,7 @@ public class StaticSprite extends Sprite{
     public boolean playerFalling;
     public boolean staticsJumping;
     
-    int jumpLimit;
+    double jumpLimit;
     
     public StaticSprite(int x, int y)
     {
@@ -89,10 +90,9 @@ public class StaticSprite extends Sprite{
     
     public void playerJump(boolean collisionTop, double restingLimit, boolean jumping)
     {
-        
-        if(!isStaticsJumping())
+        if(!isStaticsJumping() && !collisionTop)
         {
-            jumpLimit = (int) (y+restingLimit);
+            jumpLimit = y+restingLimit;
             setStaticsJumping(true);
             setPlayerJumping(true);            
             System.out.println("Alcanzado arriba! Resting lim: "+restingLim);
@@ -100,24 +100,20 @@ public class StaticSprite extends Sprite{
             System.out.println("Alcanzado arriba! calculando limite: "+jumpLimit);
         }
         
-        if(isStaticsJumping() && !collisionTop)
+        if(isStaticsJumping() && jumping)
         {
-            System.out.println("Moviendo mundo");
-            if(jumping)
+            if(y < jumpLimit && !collisionTop)
             {
-                if(y < jumpLimit)
-                {
-                    System.out.println("Intentando mover mundo!");
-                    y += gameSpeed;
-                    super.setLocation(x, y);
-                    setPlayerJumping(true);
-                    setStaticsJumping(true);
-                }
-                else
-                {
-                    setPlayerJumping(false);
-                    setStaticsJumping(false);
-                }
+                System.out.println("Intentando mover mundo!");
+                y += gameSpeed;
+                super.setLocation(x, y);
+                setPlayerJumping(true);
+                setStaticsJumping(true);
+            }
+            else
+            {
+                setPlayerJumping(false);
+                setStaticsJumping(false);
             }
         }
     }

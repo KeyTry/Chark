@@ -5,6 +5,11 @@
  */
 package View;
 
+import Assets.Sprites.LiveSprites.Enemies.Enemy;
+import Assets.Sprites.StaticSprites.Other;
+import Assets.Sprites.StaticSprites.Platform;
+import Assets.Sprites.StaticSprites.Bullet;
+import Assets.Sprites.LiveSprites.Player;
 import Model.LevelMethods.GeneralMethods;
 import Assets.*;
 import Levels.*;
@@ -17,12 +22,14 @@ import Model.LevelMethods.Level1Methods;
 import Model.LevelMethods.LevelMethods;
 import Model.LevelMethods.TestMethods;
 import Thread.MainThread;
+import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
 
 /**
@@ -120,12 +127,15 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     JLabel times2;
     JLabel times3;
     
+    public boolean running;
+    
     /**
      * Creates new form Window
      */
     public Window() {
         initComponents();
         initWindow();
+        running = true;
     }
 
     /**
@@ -217,6 +227,20 @@ public class Window extends javax.swing.JFrame implements ActionListener{
      */
     public void setOutsideJumping(boolean outsideJumping) {
         this.outsideJumping = outsideJumping;
+    }
+
+    /**
+     * @return the running
+     */
+    public boolean isRunning() {
+        return running;
+    }
+
+    /**
+     * @param running the running to set
+     */
+    public void setRunning(boolean running) {
+        this.running = running;
     }
     
     public String[] printTimes()
@@ -407,9 +431,9 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void update()
     {
-        updateElements();
-        
         decideMovements();
+        
+        updateElements();
     }
     
     public void updateElements()
@@ -437,7 +461,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         setEnemyCollisions();
         
-        moveEnemiesOnY();
+        fallEnemies();
         
         player.prepareFall();
         
@@ -480,7 +504,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         {
             player.jump();
         }
-        if(player.isJumping() && player.getY() <= 150)
+        if(player.isJumping() && player.getY() <= 100)
         {
             setOutsideJumping(player.isJumping());
             /*prepareJumpWorld();
@@ -491,7 +515,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
                 jumpWorld();
             }    
         }
-        if(player.isMovingDown() && player.getY2() < 650)
+        if(player.isFalling() && player.getY2() < 650)
         {
             player.fall();
         }
@@ -551,6 +575,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             enemiesY[i] = arrayEnemies.get(i).getY();
             enemiesX2[i] = arrayEnemies.get(i).getX2();
             enemiesY2[i] = arrayEnemies.get(i).getY2();
+            arrayEnemies.get(i).prepareFall();
         }  
     }
     
@@ -683,6 +708,10 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void detectEnemyPlayerHit()
     {
+        int enemyPlayerHits = 0;
+        int damage = 0;
+        int index = -1;
+        
         HitDetection enemyPlayerHit = new HitDetection();
         
         for(int i = 0; i<arrayEnemies.size();i++)
@@ -690,27 +719,25 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             enemyPlayerHit.setSprites(player, arrayEnemies.get(i));
             if(enemyPlayerHit.detectCollision())
             {
-                System.out.println("Player Hit?: "+playerHit);
-                if(!playerHit)
-                {
-                    System.out.println("JUGADOR GOLPEADO POR ENEMIGO");
-                    player.lowerHealth(arrayEnemies.get(i).getDamage());
-                    arrayEnemies.get(i).lowerHealth(3);
-                    System.out.println("Salud del enemigo: "+arrayEnemies.get(i).getHealth());
-                    System.out.println("Player Hit?: "+playerHit);
-                    System.out.println("Salud del jugador: "+player.getHealth());
-                    playerHit = true;
-                    System.out.println("Player Hit?: "+playerHit);
-                }
+                enemyPlayerHits++;
+                damage = arrayEnemies.get(i).getDamage();
+                index = i;
             }
-            else
+        }
+        
+        if(enemyPlayerHits != 0)
+        {        
+            if(!player.isHurt())
             {
-                if(playerHit)
-                {
-                    playerHit = false;
-                    System.out.println("Player Hit?: "+playerHit);
-                }
+                player.setHurt(true);
+                enemyPlayerHits = 0;
+                player.lowerHealth(damage);
+                arrayEnemies.get(index).lowerHealth(3);
             }
+        }
+        else
+        {
+            player.setHurt(false);
         }
     }
     
@@ -725,7 +752,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         player.jump();
     }*/
     
-    public void moveEnemiesOnY()
+    public void fallEnemies()
     {
         for(int i = 0; i < arrayEnemies.size(); i++)
         {
@@ -749,40 +776,34 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     {       
         for(int i = 0; i < platform.length; i++)
         {
+            platform[i].setPlayerJumping(player.isJumping());
             platform[i].playerJump(player.isCollisionTop(), player.getRestJumpLimit(),player.isJumping());
         }
         
         for(int i = 0; i < arrayBullets.size(); i++)
         {
+            arrayBullets.get(i).setPlayerJumping(player.isJumping());
             arrayBullets.get(i).playerJump(player.isCollisionTop(),player.getRestJumpLimit(),player.isJumping());
         }
         
         for(int i = 0; i < arrayEnemies.size(); i++)
         {
+            arrayEnemies.get(i).setPlayerJumping(player.isJumping());
             arrayEnemies.get(i).playerJump(player.isCollisionTop(),player.getRestJumpLimit(),player.isJumping());
         }
         
         for(int i = 0; i<arrayOther.size(); i++)
         {
+            arrayOther.get(i).setPlayerJumping(player.isJumping());
             arrayOther.get(i).playerJump(player.isCollisionTop(),player.getRestJumpLimit(),player.isJumping());
         }
         
         setOutsideJumping(platform[0].isPlayerJumping());
         player.setJumping(platform[0].isPlayerJumping());
         
-        for(int i = 0; i < arrayBullets.size(); i++)
+        if(!player.isJumping())
         {
-            arrayBullets.get(i).setPlayerJumping(platform[0].isPlayerJumping());
-        }
-        
-        for(int i = 0; i < arrayEnemies.size(); i++)
-        {
-            arrayEnemies.get(i).setPlayerJumping(platform[0].isPlayerJumping()); 
-        }
-        
-        for(int i = 0; i<arrayOther.size(); i++)
-        {
-            arrayOther.get(i).setPlayerJumping(platform[0].isPlayerJumping());
+            player.fall();
         }
     }
     
@@ -1038,20 +1059,20 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             gameOver.setForeground(new java.awt.Color(255, 255, 255));
             gameOver.setText("Game Over");
             getContentPane().add(gameOver);
-            gameOver.setBounds(240, 125, 340, 50);
+            gameOver.setBounds(450, 125, 340, 50);
             
             JLabel timeTaken = new JLabel();
             timeTaken.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
             timeTaken.setForeground(new java.awt.Color(255, 255, 255));
             timeTaken.setText("Total Time: "+showableTime+" seconds");
             getContentPane().add(timeTaken);
-            timeTaken.setBounds(75, 200, 800, 50);
+            timeTaken.setBounds(300, 300, 800, 50);
             
             Icon brknChrk = new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/BrokenChark.png"));
             JLabel brokenChark = new JLabel();
             brokenChark.setIcon(brknChrk);
             getContentPane().add(brokenChark);
-            brokenChark.setBounds(350,290,brknChrk.getIconHeight()+50,brknChrk.getIconWidth()+50);
+            brokenChark.setBounds(575,500,brknChrk.getIconHeight()+50,brknChrk.getIconWidth()+50);
             
             repaint();
             sleep(3000);
@@ -1085,14 +1106,14 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             gameOver.setForeground(new java.awt.Color(255, 255, 255));
             gameOver.setText("Amazing!");
             getContentPane().add(gameOver);
-            gameOver.setBounds(240, 125, 340, 50);
+            gameOver.setBounds(450, 200, 340, 50);
             
             JLabel timeTaken = new JLabel();
             timeTaken.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
             timeTaken.setForeground(new java.awt.Color(255, 255, 255));
             timeTaken.setText("Total Time: "+showableTime+" seconds");
             getContentPane().add(timeTaken);
-            timeTaken.setBounds(75, 200, 800, 50);
+            timeTaken.setBounds(300, 350, 800, 50);
             
             Icon amazin = new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/Amazing.png"));
             JLabel brokenChark = new JLabel();
@@ -1116,27 +1137,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         }
     }
     
-    /*public void setRestingLim(int restingLim)
-    {
-        for(int i = 0; i < platform.length; i++)
-        {
-            platform[i].prepareJump(restingLim);
-        }
-        for(int i = 0; i < arrayBullets.size(); i++)
-        {
-            arrayBullets.get(i).prepareJump(restingLim);
-        }
-        for(int i = 0; i < arrayEnemies.size(); i++)
-        {
-            arrayEnemies.get(i).prepareJumpStatic(restingLim);
-        }
-        for(int i = 0;i<arrayOther.size();i++)
-        {
-            arrayOther.get(i).prepareJump(restingLim);
-            System.out.println("Brinco preparado para otro: "+arrayOther.get(i).getName());
-        }
-    }*/
-    
     public void showScores()
     {
         revalidate();
@@ -1145,31 +1145,31 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         Icon scoreBoard = new javax.swing.ImageIcon(getClass().getResource("/IMG/Others/board.png"));
         board = new JLabel();
         board.setIcon(scoreBoard);
-        board.setBounds(250,100,scoreBoard.getIconHeight()+50,scoreBoard.getIconWidth()+50);
+        board.setBounds(300,0,scoreBoard.getIconHeight()+50,scoreBoard.getIconWidth()+50);
         
         timesTitle = new JLabel();
-        timesTitle.setFont(new java.awt.Font("Arial Black", 1, 32)); // NOI18N
+        timesTitle.setFont(new java.awt.Font("Arial Black", 1, 72)); // NOI18N
         timesTitle.setForeground(new java.awt.Color(255, 255, 255));
         timesTitle.setText("Best Times");
-        timesTitle.setBounds(300, 165, 800, 60);
+        timesTitle.setBounds(370, 75, 800, 60);
         
         times1 = new JLabel();
-        times1.setFont(new java.awt.Font("Arial Black", 1, 28)); // NOI18N
+        times1.setFont(new java.awt.Font("Arial Black", 1, 48)); // NOI18N
         times1.setForeground(new java.awt.Color(255, 255, 255));
         times1.setText(printTimes()[0]+" seconds");
-        times1.setBounds(300, 225, 800, 50);
+        times1.setBounds(425, 180, 800, 50);
         
         times2 = new JLabel();
-        times2.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
+        times2.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         times2.setForeground(new java.awt.Color(255, 255, 255));
         times2.setText(printTimes()[1]+" seconds");
-        times2.setBounds(330, 270, 800, 50);
+        times2.setBounds(465, 270, 800, 50);
         
         times3 = new JLabel();
-        times3.setFont(new java.awt.Font("Arial Black", 1, 20)); // NOI18N
+        times3.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
         times3.setForeground(new java.awt.Color(255, 255, 255));
         times3.setText(printTimes()[2]+" seconds");
-        times3.setBounds(330, 320, 800, 50);
+        times3.setBounds(465, 360, 800, 50);
         
         getContentPane().add(board);
         getContentPane().setComponentZOrder(board, 0);
@@ -1253,6 +1253,9 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        
+        int key = evt.getKeyCode();
+        
         player.keyPressed(evt);
         for(int i = 0; i < platform.length; i++)
         {
@@ -1269,6 +1272,20 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         for(int i = 0; i<arrayOther.size(); i++)
         {
             arrayOther.get(i).keyPressed(evt);
+        }
+        
+        if(key == KeyEvent.VK_0)
+        {
+            if(running)
+            {
+                running = false;
+                System.out.println("Running?: "+running);
+            }
+            else
+            {
+                running = true;                
+                System.out.println("Running?: "+running);
+            }
         }
     }//GEN-LAST:event_formKeyPressed
 

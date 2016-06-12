@@ -5,11 +5,12 @@
  */
 package Levels;
 
-import Assets.Enemy;
-import Assets.Platform;
-import Assets.Enemies.*;
-import Assets.Other;
-import Assets.Player;
+import Assets.Sprites.LiveSprites.Enemies.Slim;
+import Assets.Sprites.LiveSprites.Enemies.Reck;
+import Assets.Sprites.LiveSprites.Enemies.Enemy;
+import Assets.Sprites.StaticSprites.Platform;
+import Assets.Sprites.StaticSprites.Other;
+import Assets.Sprites.LiveSprites.Player;
 import View.Window;
 
 /**
@@ -22,7 +23,7 @@ public class TestLevel extends Level
     {
         super(window);
         levelName = "Test";
-        player = new Player(60, 50,window,144);
+        player = new Player(400, 50,window,144);
         init();
     }
     
@@ -37,6 +38,7 @@ public class TestLevel extends Level
     public void setPlatforms()
     {
         platform = new Platform[14];
+        
         platform[0] = new Platform(-200,500,"Platform");
         platform[1] = new Platform(50,500,"Platform");
         platform[2] = new Platform(200,500,"Platform");
@@ -62,16 +64,24 @@ public class TestLevel extends Level
     public void setEnemies()
     {
         Enemy slim1 = new Slim(600,180,window);
-        Enemy slim2 = new Slim(1000,180,window);
-        Enemy reck1 = new Reck(250, 180,window);
-        Enemy reck2 = new Reck(175, 150,window);
-        Enemy reck3 = new Reck(325, 115,window);
+        Enemy slim2 = new Slim(300,180,window);
+        Enemy slim3 = new Slim(900,180,window);
+        Enemy slim4 = new Slim(1000,180,window);
+        Enemy slim5 = new Slim(800,180,window);
+        Enemy slim6 = new Slim(500,180,window);
+        Enemy slim8 = new Slim(400,180,window);
+        Enemy slim7 = new Slim(1100,180,window);
+        Enemy slim9 = new Slim(1200,180,window);
         
         enemy.add(slim1);
         enemy.add(slim2);
-        enemy.add(reck1);
-        enemy.add(reck2);
-        enemy.add(reck3);
+        enemy.add(slim3);
+        enemy.add(slim4);
+        enemy.add(slim5);
+        enemy.add(slim6);
+        enemy.add(slim7);
+        enemy.add(slim8);
+        enemy.add(slim9);
     }
     
     public void setOther()

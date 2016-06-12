@@ -1,7 +1,7 @@
 package Model.Detection.Collision;
 
-import Assets.Platform;
-import Assets.Player;
+import Assets.Sprites.StaticSprites.Platform;
+import Assets.Sprites.LiveSprites.Player;
 import Assets.Sprite;
 
 /*
@@ -29,7 +29,7 @@ public class PlatformCollision
     int[] platformsX2;
     int[] platformsY2;
     
-    int leeway = 9;
+    int leeway = 7;
     
     public PlatformCollision()
     {
@@ -62,7 +62,7 @@ public class PlatformCollision
         {
             if((((sprite.getX()) >= (platformsX[i])) && ((sprite.getX()) <= (platformsX2[i]))) || (((sprite.getX2()) >= (platformsX[i])) && ((sprite.getX2()) <= (platformsX2[i]))))
             {
-                if(((sprite.getY()) > (platformsY[i]-leeway)) && ((sprite.getY()) < (platformsY2[i]+leeway)))
+                if(((sprite.getY()) > (platformsY[i])) && ((sprite.getY()) < (platformsY2[i])))
                 {
                     colisiones++;
                 }
@@ -118,7 +118,7 @@ public class PlatformCollision
         {
             if((((sprite.getY()) > platformsY[i]) && ((sprite.getY()) < platformsY2[i])) || (((sprite.getY2()) > platformsY[i]) && ((sprite.getY2()) < platformsY2[i])))
             {
-                if(((sprite.getX()) > (platformsX[i]-(leeway+2))) && ((sprite.getX()) < (platformsX2[i]+(leeway+2))))
+                if(((sprite.getX()) > (platformsX[i]-(leeway+(leeway/3)))) && ((sprite.getX()) < (platformsX2[i]+(leeway+(leeway/3)))))
                 {
                     colisiones++;
                 }
@@ -146,7 +146,7 @@ public class PlatformCollision
         {
             if((((sprite.getY()) > platformsY[i]) && ((sprite.getY()) < platformsY2[i])) || (((sprite.getY2()) > platformsY[i]) && ((sprite.getY2()) < platformsY2[i])))
             {
-                if((sprite.getX2() < platformsX2[i]+(leeway+2)) && (sprite.getX2() > platformsX[i]-(leeway+2)))
+                if((sprite.getX2() < platformsX2[i]+(leeway+(leeway/3))) && (sprite.getX2() > platformsX[i]-(leeway+(leeway/3))))
                 {
                     colisiones++;
                 }

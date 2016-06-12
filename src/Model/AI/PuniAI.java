@@ -11,23 +11,24 @@ import Assets.Sprites.LiveSprites.Enemies.Enemy;
  *
  * @author DanielSQ
  */
-public class SlimAI extends EnemyAI
-{
-    public SlimAI(Enemy enemy)
-    {
+public class PuniAI extends EnemyAI{
+    
+    public PuniAI(Enemy enemy) {
         super(enemy);
-        distance = 200;
-        speed = 10;
+        
+        distance = 50;
+        speed = 15;
     }
     
-    @Override
+    
+     @Override
     public void runOps()
     {
-        //System.out.println("Corriendo operaciones para Slim");
         setIniPosOnX();
         
         setFinalPosOnX();
         
         moveEnemyOnX();
     }
+    
 }

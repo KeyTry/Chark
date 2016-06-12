@@ -5,9 +5,9 @@
  */
 package Levels;
 
-import Assets.Other;
-import Assets.Platform;
-import Assets.Player;
+import Assets.Sprites.StaticSprites.Other;
+import Assets.Sprites.StaticSprites.Platform;
+import Assets.Sprites.LiveSprites.Player;
 import View.Window;
 
 /**
