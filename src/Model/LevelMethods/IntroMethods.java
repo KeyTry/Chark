@@ -6,6 +6,7 @@
 package Model.LevelMethods;
 
 import View.Window;
+import java.applet.AudioClip;
 
 /**
  *
@@ -13,6 +14,7 @@ import View.Window;
  */
 public class IntroMethods extends LevelMethods
 {    
+    boolean musicPlayed = false;
     boolean showingScores = false;
     public IntroMethods(Window window)
     {
@@ -25,6 +27,8 @@ public class IntroMethods extends LevelMethods
     {
         enterDoor1();
         enterScoreBoard();
+        createRectangles();
+        showHidden("chest1", "MusAtt");
     }
     
     public void enterDoor1()
@@ -45,6 +49,11 @@ public class IntroMethods extends LevelMethods
             window.loadLevel(window.getLevel1());
             window.startTime();
             window.showHealthLabel();
+            if(!musicPlayed)
+            {
+                window.playMusic(window.getChibiNinja());
+                musicPlayed = true;
+            }
         }
     }
     

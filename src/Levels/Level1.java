@@ -36,7 +36,7 @@ public class Level1 extends Level{
     
     public void setPlatforms()
     {
-        platform = new Platform[57];
+        platform = new Platform[69];
         
         
         platform[0] = new Platform(0,0,"PlatWoodH");
@@ -71,7 +71,7 @@ public class Level1 extends Level{
         platform[29] = new Platform(3510,710,"PlatWoodH");
         platform[30] = new Platform(3870,710,"PlatWoodH");
         platform[31] = new Platform(3040,30,"PlatWoodH");
-        platform[32] = new Platform(3600,250, "PlatRockH");
+        platform[32] = new Platform(3620,250, "PlatRockH");
         platform[33] = new Platform(3960,310,"PlatRockL");
         platform[34] = new Platform(4230,370,"PlatRockS");
         platform[35] = new Platform(4230,430,"PlatRockS");
@@ -96,7 +96,21 @@ public class Level1 extends Level{
         platform[54] = new Platform(3600,1760,"PlatHardH");
         platform[55] = new Platform(3960,1760,"PlatHardH");
         platform[56] = new Platform(3330,1640,"PlatHardM");
-        //platform[57] = new Platform(,,"");
+        platform[57] = new Platform(3460,1210,"PlatHardW");
+        platform[58] = new Platform(3190,1520,"PlatRockM");
+        platform[59] = new Platform(3190,1340,"PlatRockX");
+        platform[60] = new Platform(2920,1580,"PlatHardW");
+        platform[61] = new Platform(2650,1520,"PlatHardM");
+        platform[62] = new Platform(2470,1460,"PlatHardS");
+        platform[63] = new Platform(2690,1270,"PlatHardW");
+        platform[64] = new Platform(2140,1340,"PlatHardH");
+        platform[65] = new Platform(2140,1220,"PlatHardV");
+        platform[66] = new Platform(2140,950,"PlatHardY");
+        platform[66] = new Platform(2140,1200,"PlatHardY");
+        platform[67] = new Platform(2140,980,"PlatHardY");
+        platform[68] = new Platform(2140,900,"PlatHardY");
+        //platform[66] = new Platform(,,"");
+        //platform[67] = new Platform(,,"");
         
         //platform[] = new Platform(,,"");
 
@@ -119,6 +133,8 @@ public class Level1 extends Level{
         Enemy slim8 = new Slim(4300, 600, window);
         Enemy slim9 = new Slim(4300, 1410, window);
         Enemy slim10 = new Slim(3630,1650,window);
+        Enemy slim11 = new Slim(2235,1236,window);
+        Enemy slim12 = new Slim(2395,1235,window);
         
         Enemy reck1 = new Reck(2877, 288, window);
         Enemy reck2 = new Reck(2980, 360, window);
@@ -128,11 +144,22 @@ public class Level1 extends Level{
         Enemy reck6 = new Reck(3672, 530, window);
         Enemy reck7 = new Reck(3888, 615, window);
         Enemy reck8 = new Reck(4240, 525, window);
+        Enemy reck9 = new Reck(3523,1045,window);
+        Enemy reck10 = new Reck(2745,1060,window);
+        Enemy reck11 = new Reck(2813,1152,window);
+        Enemy reck12 = new Reck(2790,1360,window);
         
         Enemy puni1 = new Puni(4570,1060, window);
         Enemy puni2 = new Puni(4490, 1020, window);
         Enemy puni3 = new Puni(4420, 1030, window);
         Enemy puni4 = new Puni(4520,1345,window);
+        Enemy puni5 = new Puni(3310,1410,window);
+        Enemy puni6 = new Puni(2960,1530,window);
+        Enemy puni7 = new Puni(2895,1215,window);
+        Enemy puni8 = new Puni(2690,1170,window);
+        Enemy puni9 = new Puni(2680,1400,window);
+        
+        
         
         enemy.add(slim1);
         enemy.add(slim2);
@@ -144,6 +171,8 @@ public class Level1 extends Level{
         enemy.add(slim8);
         enemy.add(slim9);
         enemy.add(slim10);
+        enemy.add(slim11);
+        enemy.add(slim12);
         
         enemy.add(reck1);
         enemy.add(reck2);
@@ -153,31 +182,44 @@ public class Level1 extends Level{
         enemy.add(reck6);
         enemy.add(reck7);
         enemy.add(reck8);
+        enemy.add(reck9);
+        enemy.add(reck10);
+        enemy.add(reck11);
+        enemy.add(reck12);
         
         enemy.add(puni1);
         enemy.add(puni2);
         enemy.add(puni3);
         enemy.add(puni4);
+        enemy.add(puni5);
+        enemy.add(puni6);
+        enemy.add(puni7);
+        enemy.add(puni8);
+        enemy.add(puni9);
     }
     
     public void setOther()
     {
         Other enterDoor = new Other(350,330,"door1.png","enterDoor");
         Other pydsign = new Other(590,360,"PYDSign.png","PYD");
-        Other life1 = new Other(2790,440,"Life.png","Life");
-        Other life2 = new Other(3615,210,"LifeBig.png","LifeBig");
+        Other life1 = new Other(2790,430,"Life.png","Life");
+        Other life2 = new Other(3630,210,"LifeBig.png","LifeBig");
         Other life3 = new Other(4650,1490,"Life.png","Life");
+        Other life4 = new Other(3654,1162,"LifeBig.png","LifeBig");
+        Other chest = new Other(2250,1300,"Chest.gif","Chest");
         
         other.add(enterDoor);
         other.add(pydsign);
         other.add(life1);
         other.add(life2);
         other.add(life3);
+        other.add(life4);
+        other.add(chest);
     }
     
     public void setHidden()
     {
-        Hidden pyd = new Hidden(500,50,"Sign.png","PYDSign");
+        Hidden pyd = new Hidden(700,50,"Sign.png","PYDSign");
         
         hidden.add(pyd);
     }

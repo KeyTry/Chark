@@ -65,14 +65,15 @@ public class GeneralMethods extends LevelMethods{
             {
                 indice = i;
             }
-        }
-        
-        if(indice != -1)
-        {
-            if(playerRect.intersects(arrayOtherRect[indice]))
+            
+            if(indice != -1)
             {
-                window.raisePlayerHealth(raise);
-                window.removeOther(indice);
+                if(playerRect.intersects(arrayOtherRect[indice]))
+                {
+                    window.raisePlayerHealth(raise);
+                    window.removeOther(indice);
+                    i = arrayOther.size();
+                }
             }
         }
     }
@@ -88,14 +89,15 @@ public class GeneralMethods extends LevelMethods{
             {
                 indice = i;
             }
-        }
-        
-        if(indice != -1)
-        {
-            if(playerRect.intersects(arrayOtherRect[indice]))
+            
+            if(indice != -1)
             {
-                window.raisePlayerHealth(raise);
-                window.removeOther(indice);
+                if(playerRect.intersects(arrayOtherRect[indice]))
+                {
+                    window.raisePlayerHealth(raise);
+                    window.removeOther(indice);                    
+                    i = arrayOther.size();
+                }
             }
         }
     }

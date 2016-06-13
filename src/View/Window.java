@@ -24,12 +24,45 @@ import Model.LevelMethods.LevelMethods;
 import Model.LevelMethods.TestMethods;
 import Thread.MainThread;
 import com.sun.glass.events.KeyEvent;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
@@ -78,6 +111,8 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             }
         });
     }
+    AudioClip chibiNinja;
+    
     Player player;
     Platform platform[];
     ArrayList <Enemy> arrayEnemies;
@@ -179,6 +214,20 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     }
 
     /**
+     * @return the chibiNinja
+     */
+    public AudioClip getChibiNinja() {
+        return chibiNinja;
+    }
+
+    /**
+     * @param chibiNinja the chibiNinja to set
+     */
+    public void setChibiNinja(AudioClip chibiNinja) {
+        this.chibiNinja = chibiNinja;
+    }
+
+    /**
      * @return the testLevel
      */
     public Level getTestLevel() {
@@ -192,6 +241,16 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         this.testLevel = testLevel;
     }
     
+    public void playMusic(AudioClip song)
+    {
+        chibiNinja.play();
+    }
+    
+    public void StopMusic()
+    {
+        chibiNinja.stop();
+    }
+    
     public void initWindow()
     {        
         this.setLocationRelativeTo(null);
@@ -201,6 +260,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         getContentPane().setBackground(Color.BLACK);
         createLevels();
         loadLevel(getIntroLevel());
+        chibiNinja = java.applet.Applet.newAudioClip(getClass().getResource("/Music/Chibi_Ninja.wav"));
         createLevelMethods();
         mThread = new MainThread(this);
         mThread.start();
@@ -819,11 +879,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
                 {
                     try
                     {
-                        //player.lowerHealth(arrayEnemies.get(i).getDamage());
+                        /*player.lowerHealth(arrayEnemies.get(i).getDamage());
                         getContentPane().setBackground(Color.red);
                         enemyHurts[i] = true;
                         sleep(3);
-                        getContentPane().setBackground(Color.black);
+                        getContentPane().setBackground(Color.black);*/
                     }
                     catch(Exception e)
                     {
@@ -1032,7 +1092,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             {
                 try{
                     arrayEnemies.get(i).setVisible(false);
-                    raisePlayerHealth(12);
+                    raisePlayerHealth(6);
                     arrayEnemies.remove(i);
                 }
                 catch(Exception e)
@@ -1109,6 +1169,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public void removeOther(int index)
     {
         arrayOther.get(index).setVisible(false);
+        getContentPane().remove(arrayOther.get(index));
         arrayOther.remove(index);
         repaint();
     }

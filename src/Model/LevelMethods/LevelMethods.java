@@ -42,6 +42,23 @@ public class LevelMethods {
                 Rectangle tempRect = new Rectangle(arrayOther.get(i).getX(),arrayOther.get(i).getY(),arrayOther.get(i).getW(),arrayOther.get(i).getH());
                 arrayOtherRect[i] = tempRect;
         }
+        
+        System.out.println("Tamaño de rectángulos: "+arrayOtherRect.length);
+        if(player != null)
+        {
+            System.out.println("Jugador existe!");
+            if(playerRect != null)
+            {
+                System.out.println("Rectángulo de jugador existe!");
+                for(int i = 0; i < arrayOtherRect.length;i++)
+                {
+                    if(arrayOtherRect != null)
+                    {
+                        System.out.println("Array Other Rect: "+i+" existe!");
+                    }
+                }
+            }
+        }
     }
     
     public void showHidden(String trigger, String hiddenName)

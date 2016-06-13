@@ -8,6 +8,7 @@ package Levels;
 import Assets.Sprites.StaticSprites.Other;
 import Assets.Sprites.StaticSprites.Platform;
 import Assets.Sprites.LiveSprites.Player;
+import Assets.Sprites.StaticSprites.Hidden;
 import View.Window;
 
 /**
@@ -24,11 +25,12 @@ public class IntroLevel extends Level
         init();
     }
     
-        public void init()
+    public void init()
     {
         setPlatforms();
         setEnemies();
         setOther();
+        setHidden();
     }
     
     public Player getPlayer()
@@ -75,5 +77,12 @@ public class IntroLevel extends Level
     
     public void setEnemies()
     {
+    }
+    
+    public void setHidden()
+    {
+        Hidden musAtt = new Hidden(50,50,"MusAtt.png","MusAtt");
+        
+        hidden.add(musAtt);
     }
 }
