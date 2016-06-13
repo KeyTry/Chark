@@ -36,7 +36,7 @@ public class Level1 extends Level{
     
     public void setPlatforms()
     {
-        platform = new Platform[51];
+        platform = new Platform[57];
         
         
         platform[0] = new Platform(0,0,"PlatWoodH");
@@ -95,8 +95,8 @@ public class Level1 extends Level{
         platform[53] = new Platform(4050,1520,"PlatHardW");
         platform[54] = new Platform(3600,1760,"PlatHardH");
         platform[55] = new Platform(3960,1760,"PlatHardH");
-        
-        
+        platform[56] = new Platform(3330,1640,"PlatHardM");
+        //platform[57] = new Platform(,,"");
         
         //platform[] = new Platform(,,"");
 
@@ -118,6 +118,7 @@ public class Level1 extends Level{
         Enemy slim7 = new Slim(4000, 600, window);
         Enemy slim8 = new Slim(4300, 600, window);
         Enemy slim9 = new Slim(4300, 1410, window);
+        Enemy slim10 = new Slim(3630,1650,window);
         
         Enemy reck1 = new Reck(2877, 288, window);
         Enemy reck2 = new Reck(2980, 360, window);
@@ -142,6 +143,7 @@ public class Level1 extends Level{
         enemy.add(slim7);
         enemy.add(slim8);
         enemy.add(slim9);
+        enemy.add(slim10);
         
         enemy.add(reck1);
         enemy.add(reck2);
