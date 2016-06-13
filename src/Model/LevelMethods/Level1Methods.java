@@ -17,4 +17,10 @@ public class Level1Methods extends LevelMethods
         super(window);
     }
     
+    @Override
+    public void ops()
+    {
+        createRectangles();
+        showHidden("PYD", "PYDSign");
+    }
 }

@@ -134,7 +134,7 @@ public class LiveSprite extends Sprite{
         if(!isCollisionBot() && !jumping && falling)
         {
             y += gameSpeed;
-            setFalling(true);
+            setFalling(false);
         }
         else
         {

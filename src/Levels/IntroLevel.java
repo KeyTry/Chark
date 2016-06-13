@@ -38,13 +38,18 @@ public class IntroLevel extends Level
     
     public void setPlatforms()
     {
-        platform = new Platform[6];
+        platform = new Platform[10];
+        
         platform[0] = new Platform(-25,-200,"top1");
-        platform[1] = new Platform(-200,650,"bot1");
-        platform[2] = new Platform(-50,-5,"Side");
-        platform[3] = new Platform(1000,-50,"Side2");
-        platform[4] = new Platform(800,300,"Wooden");
-        platform[5] = new Platform(600,475,"Wooden");
+        platform[1] = new Platform(-200,650,"bot1");       
+        platform[2] = new Platform(-200,0,"PlatWoodH");
+        platform[3] = new Platform(-200,240,"PlatWoodH");
+        platform[4] = new Platform(-200,480,"PlatWoodH");
+        platform[5] = new Platform(1000,0,"PlatWoodH");
+        platform[6] = new Platform(1000,240,"PlatWoodH");
+        platform[7] = new Platform(1000,480,"PlatWoodH");
+        platform[8] = new Platform(800,300,"PlatWoodW");
+        platform[9] = new Platform(600,450,"PlatWoodW");
         
         
         for(int i = 0; i<platform.length; i++)

@@ -17,12 +17,12 @@ public class Puni extends Enemy{
     {        
         super(x,y,window,90);
         ai = new SlimAI(this);
-        damage = 15;
-        String hitDrawing = "slimHit.gif";
-        String defaultDrawing = "Slim.gif";
+        damage = 42;
+        String hitDrawing = "Puni.png";
+        String defaultDrawing = "Puni.png";
         super.setHitDrawing(hitDrawing);
         super.setDefaultDrawing(defaultDrawing);
-        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Enemies/slim.gif"))); 
+        icon = (new javax.swing.ImageIcon(getClass().getResource("/IMG/Enemies/Puni.png"))); 
         super.setIcon(icon);
         setImageDimensions();
         super.setBounds(0, 0, getW(), getH());

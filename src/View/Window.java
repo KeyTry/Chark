@@ -12,6 +12,7 @@ import Assets.Sprites.StaticSprites.Bullet;
 import Assets.Sprites.LiveSprites.Player;
 import Model.LevelMethods.GeneralMethods;
 import Assets.*;
+import Assets.Sprites.StaticSprites.Hidden;
 import Levels.*;
 import Model.Detection.Collision.PlatformCollision;
 import Model.Detection.Hit.HitDetection;
@@ -29,6 +30,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
+import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
 import static java.lang.Thread.sleep;
 
@@ -75,10 +82,12 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     Platform platform[];
     ArrayList <Enemy> arrayEnemies;
     ArrayList<Other> arrayOther;
+    ArrayList<Hidden> arrayHidden;
     
     boolean bulletExploding = false;
     public boolean outsideJumping;
     public boolean outsideFalling;
+    public boolean showingHidden;
     
     int[] platformsX;
     int[] platformsY;
@@ -126,6 +135,9 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     JLabel times1;
     JLabel times2;
     JLabel times3;
+    
+    boolean[] arrayHits;
+    boolean[] enemyHurts;
     
     public boolean running;
     
@@ -181,7 +193,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     }
     
     public void initWindow()
-    {
+    {        
         this.setLocationRelativeTo(null);
         file = new FileMethods(this);
         /*enterTimes();
@@ -241,6 +253,20 @@ public class Window extends javax.swing.JFrame implements ActionListener{
      */
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    /**
+     * @return the showingHidden
+     */
+    public boolean isShowingHidden() {
+        return showingHidden;
+    }
+
+    /**
+     * @param showingHidden the showingHidden to set
+     */
+    public void setShowingHidden(boolean showingHidden) {
+        this.showingHidden = showingHidden;
     }
     
     public String[] printTimes()
@@ -303,6 +329,12 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             testMethods.setPlayer(player);
             testMethods.ops();        
         }
+        if(levelName.equals("Level1"))
+        {
+            level1Methods.setArrayOther(arrayOther);
+            level1Methods.setPlayer(player);
+            level1Methods.ops();        
+        }
     }
     
     public void startTime()
@@ -345,8 +377,18 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         loadEnemies(level);
         loadOther(level);
         loadLevelName(level);
+        loadHidden(level);
         
         levelLoaded = true;
+        
+        updateEnemiesForCollision();
+    }
+    
+    public void updateEnemiesForCollision()
+    {
+        arrayHits = new boolean[arrayEnemies.size()];
+        
+        enemyHurts = new boolean[arrayEnemies.size()];
     }
     
     public void showHealthLabel()
@@ -404,8 +446,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void loadOther(Level level)
     {
-        System.out.println("Nivel: ");
-        
         arrayOther = level.getOther();
         
         for(int i = 0; i<level.getOtherSize(); i++)
@@ -418,6 +458,16 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         updateOther();
     }
     
+    public void loadHidden(Level level)
+    {
+        arrayHidden = level.getHidden();
+        
+        for(int i = 0; i<level.getHiddenSize(); i++)
+        {
+            arrayHidden.get(i).setBounds(0,0, arrayHidden.get(i).getW(), arrayHidden.get(i).getH());
+        }
+    }
+    
     public void loadPlayer(Level level)
     {
         player = level.getPlayer();
@@ -427,6 +477,34 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     public void loadLevelName(Level level)
     {
         this.levelName = level.getLevelName();
+    }
+    
+    public void showHidden(String name)
+    {
+        for(int i=0;i<arrayHidden.size();i++)
+        {
+            if(arrayHidden.get(i).getName().equals(name))
+            {
+                arrayHidden.get(i).setVisible(true);
+                getContentPane().add(arrayHidden.get(i));
+                getContentPane().setComponentZOrder(arrayHidden.get(i), 0);
+            }
+        }
+        setShowingHidden(true);
+        System.out.println("Mostrando escondido!");
+    }
+    
+    public void hideHidden(String name)
+    {
+        for(int i=0;i<arrayHidden.size();i++)
+        {
+            if(arrayHidden.get(i).getName().equals(name))
+            {
+                arrayHidden.get(i).setVisible(false);
+                getContentPane().remove(arrayHidden.get(i));
+            }
+        }
+        setShowingHidden(false);
     }
     
     public void update()
@@ -484,19 +562,19 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     
     public void decideMovements()
     {
-        if(player.isMovingLeft() && player.getX() > 150)
+        if(player.isMovingLeft() && player.getX() > 350)
         {
             movePlayerOnX();
         }
-        if(player.isMovingLeft() && player.getX() <= 150)
+        if(player.isMovingLeft() && player.getX() <= 350)
         {
             moveWorldOnX();
         }
-        if(player.isMovingRight() && player.getX2() < 800)
+        if(player.isMovingRight() && player.getX2() < 930)
         {            
             movePlayerOnX();
         }
-        if(player.isMovingRight() && player.getX2() >= 800)
+        if(player.isMovingRight() && player.getX2() >= 930)
         {  
             moveWorldOnX();
         }
@@ -707,11 +785,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
     }
     
     public void detectEnemyPlayerHit()
-    {
-        int enemyPlayerHits = 0;
-        int damage = 0;
-        int index = -1;
-        
+    {        
         HitDetection enemyPlayerHit = new HitDetection();
         
         for(int i = 0; i<arrayEnemies.size();i++)
@@ -719,25 +793,48 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             enemyPlayerHit.setSprites(player, arrayEnemies.get(i));
             if(enemyPlayerHit.detectCollision())
             {
-                enemyPlayerHits++;
-                damage = arrayEnemies.get(i).getDamage();
-                index = i;
+                System.out.println("Colision detectada con enemigo: "+i+" Arrayhits?: "+arrayHits[i]);
+                if(!arrayHits[i])
+                {
+                    System.out.println("No existia colision previa");
+                    arrayHits[i] = true;
+                    System.out.println("ArrayHits "+i+"?: "+arrayHits[i]);
+                }
+            }
+            else
+            {
+                if(arrayHits[i])
+                {
+                    arrayHits[i] = false;
+                    System.out.println("Elimado colisión con enemigo "+i+": "+arrayHits[i]);
+                }
             }
         }
         
-        if(enemyPlayerHits != 0)
-        {        
-            if(!player.isHurt())
-            {
-                player.setHurt(true);
-                enemyPlayerHits = 0;
-                player.lowerHealth(damage);
-                arrayEnemies.get(index).lowerHealth(3);
-            }
-        }
-        else
+        for(int i = 0; i<arrayHits.length;i++)
         {
-            player.setHurt(false);
+            if(arrayHits[i])
+            {
+                if(!enemyHurts[i])
+                {
+                    try
+                    {
+                        //player.lowerHealth(arrayEnemies.get(i).getDamage());
+                        getContentPane().setBackground(Color.red);
+                        enemyHurts[i] = true;
+                        sleep(3);
+                        getContentPane().setBackground(Color.black);
+                    }
+                    catch(Exception e)
+                    {
+                        
+                    }
+                }
+            }
+            else
+            {
+                enemyHurts[i] = false;
+            }
         }
     }
     
@@ -831,21 +928,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         
         setOutsideFalling(platform[0].isPlayerFalling());
         player.setFalling(platform[0].isPlayerFalling());
-        
-        for(int i = 0; i < arrayBullets.size(); i++)
-        {
-            arrayBullets.get(i).setPlayerFalling(platform[0].isPlayerFalling());
-        }
-        
-        for(int i = 0; i < arrayEnemies.size(); i++)
-        {
-            arrayEnemies.get(i).setPlayerFalling(platform[0].isPlayerFalling());
-        }
-        
-        for(int i = 0; i<arrayOther.size(); i++)
-        {
-            arrayOther.get(i).setPlayerFalling(platform[0].isPlayerFalling());
-        }
     }
     
     public void moveWorldOnX()
@@ -883,7 +965,6 @@ public class Window extends javax.swing.JFrame implements ActionListener{
         try
         {
             explodeBullet(i);
-            sleep(20);
             removeBullet(i);
         }
         catch(Exception e)
@@ -951,7 +1032,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             {
                 try{
                     arrayEnemies.get(i).setVisible(false);
-                    sleep(3);
+                    raisePlayerHealth(12);
                     arrayEnemies.remove(i);
                 }
                 catch(Exception e)
@@ -1274,7 +1355,7 @@ public class Window extends javax.swing.JFrame implements ActionListener{
             arrayOther.get(i).keyPressed(evt);
         }
         
-        if(key == KeyEvent.VK_0)
+        if(key == KeyEvent.VK_ESCAPE)
         {
             if(running)
             {

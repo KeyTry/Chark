@@ -45,6 +45,10 @@ public class HitDetection
         {
             collision = true;
         }
+        else
+        {
+            collision = false;
+        }
         
         return collision;
     }

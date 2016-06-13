@@ -27,7 +27,7 @@ public class MainThread extends Thread
         {
             while(true)
             {
-                sleep(18);
+                sleep(24);
                 if(window.isRunning())
                 {
                     if(window.isLevelLoaded())

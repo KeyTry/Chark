@@ -9,6 +9,7 @@ import Assets.Sprites.LiveSprites.Enemies.Enemy;
 import Assets.Sprites.StaticSprites.Other;
 import Assets.Sprites.StaticSprites.Platform;
 import Assets.Sprites.LiveSprites.Player;
+import Assets.Sprites.StaticSprites.Hidden;
 import View.Window;
 import java.util.ArrayList;
 import javax.swing.Icon;
@@ -22,6 +23,7 @@ public class Level
     Platform[] platform;
     ArrayList<Enemy> enemy;
     ArrayList<Other> other;
+    ArrayList<Hidden> hidden;
     Icon background;
     Player player;
     Window window;
@@ -32,6 +34,7 @@ public class Level
         this.window = window;
         enemy = new ArrayList();
         other = new ArrayList();
+        hidden = new ArrayList();
     }
     
     public void init()
@@ -73,6 +76,11 @@ public class Level
         return other;
     }
     
+    public ArrayList <Hidden> getHidden()
+    {
+        return hidden;
+    }
+    
     public int getPlatformSize()
     {
         return platform.length;
@@ -86,5 +94,10 @@ public class Level
     public int getOtherSize()
     {
         return other.size();
+    }
+    
+    public int getHiddenSize()
+    {
+        return hidden.size();
     }
 }

@@ -41,7 +41,7 @@ public class Sprite extends JLabel
     
     public boolean playerJumping = false;
     
-    public int gameSpeed =7;
+    public int gameSpeed =12;
         
     public int downLim;
     public int restingLim;

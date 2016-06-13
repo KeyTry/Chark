@@ -44,6 +44,37 @@ public class LevelMethods {
         }
     }
     
+    public void showHidden(String trigger, String hiddenName)
+    {
+        int index = -1;
+        
+        for(int i = 0;i<arrayOther.size();i++)
+        {
+            if(arrayOther.get(i).getName().equals(trigger))
+            {
+                index = i;
+            }
+        }
+        
+        if(index != -1)
+        {
+            if(playerRect.intersects(arrayOtherRect[index]))
+            {
+                if(!window.isShowingHidden())
+                {
+                    window.showHidden(hiddenName);
+                }
+            }
+            else
+            {
+                if(window.isShowingHidden())
+                {
+                    window.hideHidden(hiddenName);
+                }
+            }
+        }
+    }
+    
     /**
      * @return the arrayOther
      */

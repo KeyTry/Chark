@@ -17,7 +17,7 @@ public class Slim extends Enemy{
     {        
         super(x,y,window,90);
         ai = new SlimAI(this);
-        damage = 15;
+        damage = 30;
         String hitDrawing = "slimHit.gif";
         String defaultDrawing = "Slim.gif";
         super.setHitDrawing(hitDrawing);

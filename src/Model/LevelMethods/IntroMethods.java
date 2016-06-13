@@ -24,7 +24,7 @@ public class IntroMethods extends LevelMethods
     public void ops()
     {
         enterDoor1();
-        enterDoor2();
+        enterScoreBoard();
     }
     
     public void enterDoor1()
@@ -48,7 +48,7 @@ public class IntroMethods extends LevelMethods
         }
     }
     
-    public void enterDoor2()
+    public void enterScoreBoard()
     {
         int index = -1;
         

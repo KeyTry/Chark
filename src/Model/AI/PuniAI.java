@@ -16,8 +16,8 @@ public class PuniAI extends EnemyAI{
     public PuniAI(Enemy enemy) {
         super(enemy);
         
-        distance = 50;
-        speed = 15;
+        distance = 300;
+        speed = 60;
     }
     
     

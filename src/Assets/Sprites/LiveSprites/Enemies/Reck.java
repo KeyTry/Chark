@@ -19,7 +19,7 @@ public class Reck extends Enemy{
     {        
         super(x,y,window,40);
         ai = new ReckAI(this);
-        damage = 2;
+        damage = 24;
         String hitDrawing = "ReckHit.png";
         String defaultDrawing = "Reck.gif";
         super.setHitDrawing(hitDrawing);
