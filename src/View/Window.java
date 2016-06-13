@@ -879,11 +879,11 @@ public class Window extends javax.swing.JFrame implements ActionListener{
                 {
                     try
                     {
-                        /*player.lowerHealth(arrayEnemies.get(i).getDamage());
+                        player.lowerHealth(arrayEnemies.get(i).getDamage());
                         getContentPane().setBackground(Color.red);
                         enemyHurts[i] = true;
                         sleep(3);
-                        getContentPane().setBackground(Color.black);*/
+                        getContentPane().setBackground(Color.black);
                     }
                     catch(Exception e)
                     {
